@@ -3,13 +3,11 @@ project:
   output-dir: docs
 
 website:
-  title: "My Website"
+  title: "Portfolio"
   navbar:
     left:
       - href: Blog.qmd
         text: Blog
-      - href: https://ambrois.github.io/webby/
-        text: Recursion
       - href: about.qmd
         text: About
       - icon: linkedin
