@@ -6,7 +6,6 @@ about:
     - icon: linkedin
       text: Linkedin
       href: https://www.linkedin.com/in/matthew-huang-67b835231/
-    # (additional links excluded for brevity)
 title-block-banner: true
 ---
 

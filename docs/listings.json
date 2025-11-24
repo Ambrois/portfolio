@@ -1,11 +1,5 @@
 [
   {
-    "listing": "/Projects.html",
-    "items": [
-      "/posts/transformers.html"
-    ]
-  },
-  {
     "listing": "/Blog.html",
     "items": [
       "/posts/Stat365/Matthew-Visualization.html",
