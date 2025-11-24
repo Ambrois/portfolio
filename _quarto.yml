@@ -16,7 +16,7 @@ website:
         href: https://github.com/Ambrois
 format:
   html:
-    theme: vapor
+    theme: slate
     css: styles.css
 
 editor: source
