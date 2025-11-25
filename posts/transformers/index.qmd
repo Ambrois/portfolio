@@ -1,0 +1,150 @@
+---
+title: "Transformer Notes (Draft)"
+date: "2025-06-02"
+image: "transformers.webp"
+---
+# Notes on "A Mathematical Framework for Transformers"
+
+[Transformer Circuits Thread (transformer-circuits.pub)](https://transformer-circuits.pub/)
+
+TESTING EDIT
+
+## Things I don't get:
+privileged basis definition
+
+"activation", in the context of activation vs parameter
+
+how exactly is position embedded into a vector space (in the space that the key and query vectors are in)
+- and if it even does encode position (or like subsets of positions within context)
+- and can this position embedding be more generalized to other methods of storing tokens, instead of just a rly long string
+	- hierarchical
+	- graphical
+	- 
+
+## Notes
+
+**residual stream**: linear combination of inputs and attention layer outputs
+- it's entirely linear, and acts as a subspace
+- attention layers perform projections onto the subspace
+- due to linearity, at any 2 points, can make a matrix which represents the whole transformation up to that point
+	- **?** could this be used in actual transformers to reduce the amount of computation used?
+		- has to be in parts which are linear
+
+## Basic Definitions
+
+#### Main Model Stuff
+
+**T(t)** : Predicted Logits from input tokens (the Transformer Output)
+	(context x vocab) matrix
+	- "Activation, Privileged Basis"
+
+**t** : a vector of tokens (each of which is a one-hot encoded vector) in the context
+	(context x vocab) matrix
+	- "Activation, Privileged Basis"
+
+$x^n$ : vector of **embedding vectors** in the residual stream (at layer n)
+	(context x semantic dims) matrix
+- each vector is the updated semantic representation of a context token after n layers
+	- "Activation, Not Privileged Basis"
+
+$W_E$ : **Embedding Weights**, a transformation from one-hot input vectors to embedding vectors
+	(semantic dims x vocab) transformation matrix
+- input is a vector of tokens (the context), output is a vector of embedding vectors
+	- only takes into account the type of tokens 
+		- (frequency?)
+- *Parameter*
+
+$W_P$ : **Positional Embedding Weights**, a transformation from position in context to embedding vector
+	(semantic dims x context) transformation matrix
+- input is a vector of tokens (the context), output is a vector of embedding vectors
+	- only takes into account the positions 
+		- (time?)
+- *Parameter*
+
+$W_U$ : **Unembedding Weights**, a transformation from embedding vectors to vocab vectors (logits)
+	(vocab x semantic dims) transformation matrix
+- (is this the inverse of W_E?)
+- includes softmax?
+- *Parameter*
+
+#### Attention Heads Stuff
+
+$H_n$ : **Attention Heads**, the set of attention heads at a layer n
+
+$h \in H_n$ : **An attention head**, a function from embedding vectors to embedding vectors
+
+$h(x)$ : The **output** of attention head $h$ given some embedding vectors $x$
+	(context, semantic dims) matrix
+	- a vector of semantic embedding vectors of each token of the context
+
+$\bf{A}^h$ : **Attention pattern** of head h, **Not sure what this is**, the matrix representing the linear transformation? a transformation from embedded context vectors to embedded context vectors?
+	(context, context) transformation matrix
+
+For each head h: this is how you go from input $x_i$ to output $h(x)_i$
+Informally:
+	embedding vector -(Value Matrix)->  value vector  -(Attention Pattern)-> result vector -(Output Matrix)> output embedding vector
+Formally:
+	$W_V​x_i = v_i$ , then $\sum_j{ A_{i, j} v_j} = r_i$ , then $W_Or_i=h(x)_i$
+
+
+
+
+## Notes
+
+
+### Privileged Basis
+*"A privileged basis occurs when some aspect of a model’s architecture encourages neural network features to align with basis dimensions"*
+
+**Confusion**:
+A privileged basis is when vectors (aka directions) have specific meanings and can't be rotated without changing those meanings?
+- but don't embedding values have meanings assigned to specific directions? unless the meanings are all relative to other vectors
+- what are the embedding values if their directions don't have specific meanings
+- or maybe the directions do have specific meanings, but these meanings don't have to align to particular neurons
+
+**Examples**:
+*"for example (a privileged basis occurs) because of a sparse activation function such as ReLU"*
+
+Vectors which do **not** have a privileged basis:
+	*"it doesn't really make sense to look at the "neurons" (ie. basis dimensions) of activations like the residual stream, keys, queries or values, which don't have a privileged basis."*
+- residual stream / embedding
+- Output of attention head $h$
+- Query, key, value and result vectors of attention head $h$
+- Output of MLP layer $m$
+
+
+Vectors which **do** have a privileged basis:
+- Transformer logits
+- One-hot encoded tokens
+- Attention pattern of attention head $h$
+- Activations of MLP layer $m$
+
+
+
+### Value Output Matrixes
+
+when combined, is the transformation of the input to output
+
+value matrix is the input token, output is the output token
+- and when multiplied together, they make up the transformation
+
+**Speculative** what if you find the nearest token (or token sequence) to this final output value vector, to get a description
+
+
+
+
+
+### Speculative
+
+From a point in embedding space, how to efficiently find a sequence of tokens which approximates that value
+- maybe given a minimum variance or distance from target
+- can we even actually represent sequences of tokens as a single point in the embedding space?
+
+how to represent an arbitrary sequence of tokens as a single point in an embedding space
+- what are the scaling difficulties of representing more and more complex stuff in a single embedding space?
+	- relationship of necessary dim size to token sequence length?
+		- like maybe the more tokens in a sequence you'd like to represent, the more embedding dimensions you need to represent the semantic information
+	- maybe instead of using the same embedding dim for everything, use different ones for different "levels" of token sequence length
+		- sort of representing complexity? abstraction?
+
+construct graph relations from
+- attention to get 

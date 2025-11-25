@@ -1,9 +1,11 @@
 [
   {
-    "listing": "/Blog.html",
+    "listing": "/projects.html",
     "items": [
-      "/posts/Stat365/Matthew-Visualization.html",
-      "/posts/transformers/transformers.html"
+      "/posts/blackholesim/index.html",
+      "/posts/bayesian/index.html",
+      "/posts/Stat365/index.html",
+      "/posts/transformers/index.html"
     ]
   }
 ]

@@ -1,24 +1,48 @@
 ---
-title: "Black Hole Raymarcher"
+title: "Black Hole Visualizer"
 date: 2025-11-24
-image: blackholesim.png
+image: recent_screenshot.png
+description: Black hole raymarcher from scratch, using C++, SFML, and GLSL
 ---
+### Introduction
 
-An in-progress exploration of black hole visualization written in C++, SFML, and GLSL. Each pixel launches a light ray, integrates the Schwarzschild null geodesic equations with adaptive-step RK4, and shades based on what the ray hits (star field, accretion disk, photon ring, or the singularity).
+TODO
 
-![Black hole raymarcher render](blackholesim.png)
+- Using C++, SFML, and GLSL
+  - my first C++ and graphics project so please forgive strange and bad design choices
+- The simulation marches a grid of light rays (one per pixel) from the camera and numerically approximates the null geodesic equations for the Schwarzschild metric. The light rays curve and hit objects, which determine the color of the pixel.
+  - numerical approximation is done via RK4 with adaptive step size
+- For efficiency of computation, and accurate due to spherical symmetry of the SC spacetime, null geodesics are computed in 2D on the equator and rotated into place in 3D.
 
-## How it works
-- Rays are marched in 2D on the equatorial plane and rotated into 3D to leverage spherical symmetry.
-- Numerical integration uses adaptive-step RK4 to keep curved light paths stable near the horizon.
-- Shading pulls from simple models: a background star map, disk temperature to approximate black-body color, and object bounds for debugging.
+### Milestone Screenshots
 
-## Recent milestones
-- Added background stars and more realistic disk color via temperature-based black-body approximation.
-- Photon ring resolves cleanly in the most recent render.
-- Object bounds rendering and earlier Euclidean engine provided scaffolding before moving fully to curved spacetime.
+TODO add screen recording
 
-## Next steps to explore
-- Improve behavior at the center where phi-parameterization breaks down; adapt step size with respect to phi.
-- Implement parallel transport so camera orientation stays stable while moving.
-- Refine the accretion disk (flare the shape, lean on intersection data instead of skipped segments).
+- Added background stars
+- Made disk color more realistic: calculate temp -> approximate black body radiation -> color
+- Photon ring visible
+![Most Recent Screenshot](screenshots/2025-11-22.png)
+
+- Object bounds rendering
+![Older Screenshot](screenshots/2025-11-17.png)
+
+- Got light to curve coherently in 3D
+![Older Screenshot](screenshots/2025-11-15.png)
+
+- Figured out null geodesic equations
+![Older Screenshot](screenshots/2025-11-04.png)
+
+- Built euclidean engine first
+![Older Screenshot](screenshots/2025-10-21.png)
+
+- Drew a circle!
+![Older Screenshot](screenshots/2025-10-18.png)
+
+
+### Next Steps:
+- the center of the bh has trouble rendering bc parameterizing with phi, make step size also adjust for phi
+- if you move, your camera turns because I've yet to implement parallel transport of the camera directions
+- accretion disk
+  - should be flared out bc intertia
+  - needs to use intersections fully, the ray skipped segments are noticable
+

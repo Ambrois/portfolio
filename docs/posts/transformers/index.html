@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2025-06-02">
 
-<title>Matthew Huang – Portfolio</title>
+<title>Transformer Notes (Draft) – Portfolio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,23 +24,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b651517ce65839d647a86e2780455cfb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-aaffb796335526f5050059a5dd561096.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b651517ce65839d647a86e2780455cfb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-aaffb796335526f5050059a5dd561096.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,6 +70,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -78,9 +109,9 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Portfolio</span>
     </a>
   </div>
@@ -91,11 +122,11 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./projects.html"> 
+    <a class="nav-link" href="../../projects.html"> 
 <span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -121,35 +152,104 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     
 <!-- main -->
-<div class="quarto-about-jolla">
-  <img src="blurryPfp.jfif" class="about-image
-  round " style="height: 15em; width: 15em;">
- <header id="title-block-header" class="quarto-title-block default">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Matthew Huang</h1>
+<h1 class="title">Transformer Notes (Draft)</h1>
 </div>
+
+
+
 <div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 2, 2025</p>
+    </div>
   </div>
-</header><main class="content" id="quarto-document-content">
-<p>Welcome to my portfolio</p>
+  
+    
+  </div>
+  
 
 
-</main> 
-  <hr class="about-sep">
-   <div class="about-links">
-  <a href="https://www.linkedin.com/in/matthew-huang-67b835231/" class="about-link" rel="" target="">
-    <i class="bi bi-linkedin"></i>
-     <span class="about-link-text">LinkedIn</span>
-  </a>
-  <a href="https://github.com/Ambrois" class="about-link" rel="" target="">
-    <i class="bi bi-github"></i>
-     <span class="about-link-text">Github</span>
-  </a>
-</div>
-</div>
- <!-- /main -->
+</header>
+
+
+<section id="notes-on-a-mathematical-framework-for-transformers" class="level1">
+<h1>Notes on “A Mathematical Framework for Transformers”</h1>
+<p><a href="https://transformer-circuits.pub/">Transformer Circuits Thread (transformer-circuits.pub)</a></p>
+<p>TESTING EDIT</p>
+<section id="things-i-dont-get" class="level2">
+<h2 class="anchored" data-anchor-id="things-i-dont-get">Things I don’t get:</h2>
+<p>privileged basis definition</p>
+<p>“activation”, in the context of activation vs parameter</p>
+<p>how exactly is position embedded into a vector space (in the space that the key and query vectors are in) - and if it even does encode position (or like subsets of positions within context) - and can this position embedding be more generalized to other methods of storing tokens, instead of just a rly long string - hierarchical - graphical -</p>
+</section>
+<section id="notes" class="level2">
+<h2 class="anchored" data-anchor-id="notes">Notes</h2>
+<p><strong>residual stream</strong>: linear combination of inputs and attention layer outputs - it’s entirely linear, and acts as a subspace - attention layers perform projections onto the subspace - due to linearity, at any 2 points, can make a matrix which represents the whole transformation up to that point - <strong>?</strong> could this be used in actual transformers to reduce the amount of computation used? - has to be in parts which are linear</p>
+</section>
+<section id="basic-definitions" class="level2">
+<h2 class="anchored" data-anchor-id="basic-definitions">Basic Definitions</h2>
+<section id="main-model-stuff" class="level4">
+<h4 class="anchored" data-anchor-id="main-model-stuff">Main Model Stuff</h4>
+<p><strong>T(t)</strong> : Predicted Logits from input tokens (the Transformer Output) (context x vocab) matrix - “Activation, Privileged Basis”</p>
+<p><strong>t</strong> : a vector of tokens (each of which is a one-hot encoded vector) in the context (context x vocab) matrix - “Activation, Privileged Basis”</p>
+<p><span class="math inline">\(x^n\)</span> : vector of <strong>embedding vectors</strong> in the residual stream (at layer n) (context x semantic dims) matrix - each vector is the updated semantic representation of a context token after n layers - “Activation, Not Privileged Basis”</p>
+<p><span class="math inline">\(W_E\)</span> : <strong>Embedding Weights</strong>, a transformation from one-hot input vectors to embedding vectors (semantic dims x vocab) transformation matrix - input is a vector of tokens (the context), output is a vector of embedding vectors - only takes into account the type of tokens - (frequency?) - <em>Parameter</em></p>
+<p><span class="math inline">\(W_P\)</span> : <strong>Positional Embedding Weights</strong>, a transformation from position in context to embedding vector (semantic dims x context) transformation matrix - input is a vector of tokens (the context), output is a vector of embedding vectors - only takes into account the positions - (time?) - <em>Parameter</em></p>
+<p><span class="math inline">\(W_U\)</span> : <strong>Unembedding Weights</strong>, a transformation from embedding vectors to vocab vectors (logits) (vocab x semantic dims) transformation matrix - (is this the inverse of W_E?) - includes softmax? - <em>Parameter</em></p>
+</section>
+<section id="attention-heads-stuff" class="level4">
+<h4 class="anchored" data-anchor-id="attention-heads-stuff">Attention Heads Stuff</h4>
+<p><span class="math inline">\(H_n\)</span> : <strong>Attention Heads</strong>, the set of attention heads at a layer n</p>
+<p><span class="math inline">\(h \in H_n\)</span> : <strong>An attention head</strong>, a function from embedding vectors to embedding vectors</p>
+<p><span class="math inline">\(h(x)\)</span> : The <strong>output</strong> of attention head <span class="math inline">\(h\)</span> given some embedding vectors <span class="math inline">\(x\)</span> (context, semantic dims) matrix - a vector of semantic embedding vectors of each token of the context</p>
+<p><span class="math inline">\(\bf{A}^h\)</span> : <strong>Attention pattern</strong> of head h, <strong>Not sure what this is</strong>, the matrix representing the linear transformation? a transformation from embedded context vectors to embedded context vectors? (context, context) transformation matrix</p>
+<p>For each head h: this is how you go from input <span class="math inline">\(x_i\)</span> to output <span class="math inline">\(h(x)_i\)</span> Informally: embedding vector -(Value Matrix)-&gt; value vector -(Attention Pattern)-&gt; result vector -(Output Matrix)&gt; output embedding vector Formally: <span class="math inline">\(W_V​x_i = v_i\)</span> , then <span class="math inline">\(\sum_j{ A_{i, j} v_j} = r_i\)</span> , then <span class="math inline">\(W_Or_i=h(x)_i\)</span></p>
+</section>
+</section>
+<section id="notes-1" class="level2">
+<h2 class="anchored" data-anchor-id="notes-1">Notes</h2>
+<section id="privileged-basis" class="level3">
+<h3 class="anchored" data-anchor-id="privileged-basis">Privileged Basis</h3>
+<p><em>“A privileged basis occurs when some aspect of a model’s architecture encourages neural network features to align with basis dimensions”</em></p>
+<p><strong>Confusion</strong>: A privileged basis is when vectors (aka directions) have specific meanings and can’t be rotated without changing those meanings? - but don’t embedding values have meanings assigned to specific directions? unless the meanings are all relative to other vectors - what are the embedding values if their directions don’t have specific meanings - or maybe the directions do have specific meanings, but these meanings don’t have to align to particular neurons</p>
+<p><strong>Examples</strong>: <em>“for example (a privileged basis occurs) because of a sparse activation function such as ReLU”</em></p>
+<p>Vectors which do <strong>not</strong> have a privileged basis: <em>“it doesn’t really make sense to look at the”neurons” (ie. basis dimensions) of activations like the residual stream, keys, queries or values, which don’t have a privileged basis.”</em> - residual stream / embedding - Output of attention head&nbsp;<span class="math inline">\(h\)</span> - Query, key, value and result vectors of attention head&nbsp;<span class="math inline">\(h\)</span> - Output of MLP layer <span class="math inline">\(m\)</span></p>
+<p>Vectors which <strong>do</strong> have a privileged basis: - Transformer logits - One-hot encoded tokens - Attention pattern of attention head&nbsp;<span class="math inline">\(h\)</span> - Activations of MLP layer&nbsp;<span class="math inline">\(m\)</span></p>
+</section>
+<section id="value-output-matrixes" class="level3">
+<h3 class="anchored" data-anchor-id="value-output-matrixes">Value Output Matrixes</h3>
+<p>when combined, is the transformation of the input to output</p>
+<p>value matrix is the input token, output is the output token - and when multiplied together, they make up the transformation</p>
+<p><strong>Speculative</strong> what if you find the nearest token (or token sequence) to this final output value vector, to get a description</p>
+</section>
+<section id="speculative" class="level3">
+<h3 class="anchored" data-anchor-id="speculative">Speculative</h3>
+<p>From a point in embedding space, how to efficiently find a sequence of tokens which approximates that value - maybe given a minimum variance or distance from target - can we even actually represent sequences of tokens as a single point in the embedding space?</p>
+<p>how to represent an arbitrary sequence of tokens as a single point in an embedding space - what are the scaling difficulties of representing more and more complex stuff in a single embedding space? - relationship of necessary dim size to token sequence length? - like maybe the more tokens in a sequence you’d like to represent, the more embedding dimensions you need to represent the semantic information - maybe instead of using the same embedding dim for everything, use different ones for different “levels” of token sequence length - sort of representing complexity? abstraction?</p>
+<p>construct graph relations from - attention to get</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     

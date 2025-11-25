@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2025-11-24">
+<meta name="description" content="Black hole raymarcher from scratch, using C++, SFML, and GLSL">
 
-<title>Matthew Huang – Portfolio</title>
+<title>Black Hole Visualizer – Portfolio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,23 +25,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b651517ce65839d647a86e2780455cfb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-aaffb796335526f5050059a5dd561096.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b651517ce65839d647a86e2780455cfb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-aaffb796335526f5050059a5dd561096.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -78,9 +81,9 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Portfolio</span>
     </a>
   </div>
@@ -91,11 +94,11 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./projects.html"> 
+    <a class="nav-link" href="../../projects.html"> 
 <span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -121,35 +124,92 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     
 <!-- main -->
-<div class="quarto-about-jolla">
-  <img src="blurryPfp.jfif" class="about-image
-  round " style="height: 15em; width: 15em;">
- <header id="title-block-header" class="quarto-title-block default">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Matthew Huang</h1>
+<h1 class="title">Black Hole Visualizer</h1>
 </div>
-<div class="quarto-title-meta">
+
+<div>
+  <div class="description">
+    Black hole raymarcher from scratch, using C++, SFML, and GLSL
   </div>
-</header><main class="content" id="quarto-document-content">
-<p>Welcome to my portfolio</p>
+</div>
 
 
-</main> 
-  <hr class="about-sep">
-   <div class="about-links">
-  <a href="https://www.linkedin.com/in/matthew-huang-67b835231/" class="about-link" rel="" target="">
-    <i class="bi bi-linkedin"></i>
-     <span class="about-link-text">LinkedIn</span>
-  </a>
-  <a href="https://github.com/Ambrois" class="about-link" rel="" target="">
-    <i class="bi bi-github"></i>
-     <span class="about-link-text">Github</span>
-  </a>
-</div>
-</div>
- <!-- /main -->
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 24, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+<p>TODO</p>
+<ul>
+<li>Using C++, SFML, and GLSL
+<ul>
+<li>my first C++ and graphics project so please forgive strange and bad design choices</li>
+</ul></li>
+<li>The simulation marches a grid of light rays (one per pixel) from the camera and numerically approximates the null geodesic equations for the Schwarzschild metric. The light rays curve and hit objects, which determine the color of the pixel.
+<ul>
+<li>numerical approximation is done via RK4 with adaptive step size</li>
+</ul></li>
+<li>For efficiency of computation, and accurate due to spherical symmetry of the SC spacetime, null geodesics are computed in 2D on the equator and rotated into place in 3D.</li>
+</ul>
+</section>
+<section id="milestone-screenshots" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-screenshots">Milestone Screenshots</h3>
+<p>TODO add screen recording</p>
+<ul>
+<li><p>Added background stars</p></li>
+<li><p>Made disk color more realistic: calculate temp -&gt; approximate black body radiation -&gt; color</p></li>
+<li><p>Photon ring visible <img src="screenshots/2025-11-22.png" class="img-fluid" alt="Most Recent Screenshot"></p></li>
+<li><p>Object bounds rendering <img src="screenshots/2025-11-17.png" class="img-fluid" alt="Older Screenshot"></p></li>
+<li><p>Got light to curve coherently in 3D <img src="screenshots/2025-11-15.png" class="img-fluid" alt="Older Screenshot"></p></li>
+<li><p>Figured out null geodesic equations <img src="screenshots/2025-11-04.png" class="img-fluid" alt="Older Screenshot"></p></li>
+<li><p>Built euclidean engine first <img src="screenshots/2025-10-21.png" class="img-fluid" alt="Older Screenshot"></p></li>
+<li><p>Drew a circle! <img src="screenshots/2025-10-18.png" class="img-fluid" alt="Older Screenshot"></p></li>
+</ul>
+</section>
+<section id="next-steps" class="level3">
+<h3 class="anchored" data-anchor-id="next-steps">Next Steps:</h3>
+<ul>
+<li>the center of the bh has trouble rendering bc parameterizing with phi, make step size also adjust for phi</li>
+<li>if you move, your camera turns because I’ve yet to implement parallel transport of the camera directions</li>
+<li>accretion disk
+<ul>
+<li>should be flared out bc intertia</li>
+<li>needs to use intersections fully, the ray skipped segments are noticable</li>
+</ul></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     
