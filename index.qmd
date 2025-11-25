@@ -2,7 +2,9 @@
 title: "Matthew Huang"
 image: blurryPfp.jfif
 about:
-  template: jolla
+  template: trestles
+  image-shape: rectangle
+  image-width: 15em
   links:
     - icon: linkedin
       text: LinkedIn
@@ -10,9 +12,24 @@ about:
     - icon: github
       text: Github
       href: https://github.com/Ambrois
+listing:
+  contents:
+    - projects
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: false
 
 ---
 
-Welcome to my portfolio
+Hi I'm Matthew,
 
+I'm a 2025 graduate from Cal Poly SLO with a bachelor's in Statistics and minors in Mathematics and Computer Science.
+
+I'm interested in math and sciences of all sorts, but especially mathematical/statistical/computational modeling.
+
+Welcome to my portfolio. This website was made with Quarto.
+
+## Projects
 

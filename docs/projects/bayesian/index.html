@@ -9,7 +9,7 @@
 <meta name="dcterms.date" content="2025-06-03">
 <meta name="description" content="Comparing bayesian predictive distributions under examples of model misspecification.">
 
-<title>Analysis of Examples of Bayesian Model Misspecification – Portfolio</title>
+<title>Analysis of Bayesian Model Misspecification – Portfolio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -196,7 +196,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Analysis of Examples of Bayesian Model Misspecification</h1>
+<h1 class="title">Analysis of Bayesian Model Misspecification</h1>
   <div class="quarto-categories">
     <div class="quarto-category">stats</div>
   </div>
@@ -235,7 +235,7 @@ window.Quarto = {
 
 <section id="introduction" class="level3">
 <h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
-<p>The accuracy of Bayesian inference depends on how well the chosen model captures the underlying data-generating process. However, in practice, models are often misspecified, with assumptions violated in various degrees. This analysis looks at two examples of model misspecification, comparing predictive distributions from correctly specified models with those from simpler misspecified alternatives.</p>
+<p>The accuracy of Bayesian inference depends on how well your chosen model(s) capture the underlying data-generating process. However, in practice, models are approximate and thus somewhat misspecified, with assumptions violated in various degrees. This analysis looks at two examples of mild model misspecification, comparing predictive distributions from correctly specified models with those from simpler misspecified alternatives.</p>
 <p>To facilitate accurate comparison, we match prior predictive distributions across models, which means that observed discrepancies in the posterior arise primarily due to model misspecification. To compare predictive distributions, we use total variation distance (TVD) and visualizalizations. We use naive rejection sampling for posterior sampling because we lack an explicit formula for likelihood for the dependent model, parameter dimensions are small, and for consistency across examples.</p>
 <p>Two examples are considered:</p>
 <ol type="1">
@@ -243,12 +243,14 @@ window.Quarto = {
 <li><p>When the true process involves dependent observations modeled as a drifting Markov chain.</p></li>
 </ol>
 </section>
-<section id="example-1.-real-data-is-hierarchical" class="level2">
-<h2 class="anchored" data-anchor-id="example-1.-real-data-is-hierarchical">Example 1. Real Data is Hierarchical</h2>
-<p>Our data y follows the following hierarchical distribution, which we’ll denote D1.</p>
+<section id="example-1.-real-data-is-hierarchical-but-we-assume-flat" class="level2">
+<h2 class="anchored" data-anchor-id="example-1.-real-data-is-hierarchical-but-we-assume-flat">Example 1. Real data is hierarchical, but we assume flat</h2>
+<p>Our data <span class="math inline">\(y\)</span> follows the following hierarchical distribution, which we’ll denote <span class="math inline">\(D_1\)</span>.</p>
 <p><span class="math display">\[
-Y \sim Binom(100, p) \\
-p \sim Beta(3, 4)
+\begin{align}
+Y &amp;\sim Binom(100, p) \\
+p &amp;\sim Beta(3, 4)
+\end{align}
 \]</span></p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>n_obs <span class="ot">=</span> <span class="dv">100</span></span>
@@ -260,9 +262,11 @@ p \sim Beta(3, 4)
 </div>
 </div>
 <p>Now, we will misspecify the model.</p>
-<p>We now assume the data comes from a binomial distribution, and assign a beta(5,3) prior on the proportion, where Y is the sum of the data, We’ll call this model M (for “Misspecified”). <span class="math display">\[
-Y \sim Binom(n=100, p) \\
-(Prior) \quad p \sim Beta(5, 3)
+<p>We now assume the data comes from a binomial distribution, and assign a beta(5,3) prior on the proportion, where Y is the sum of the data, We’ll call this model <span class="math inline">\(M\)</span> (for “Misspecified”). <span class="math display">\[
+\begin{aligned}
+Y &amp;\sim \text{Binom}(n = 100, p) \\
+(Prior)\quad p &amp;\sim \text{Beta}(5, 3)
+\end{aligned}
 \]</span></p>
 <p>Prior Predictive distribution:</p>
 <div class="cell">
@@ -272,11 +276,13 @@ Y \sim Binom(n=100, p) \\
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>prior_pred_M <span class="ot">=</span> <span class="fu">r_beta_binom</span>(pp_sample_size, n_obs, <span class="dv">5</span>, <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now to find an equivalent prior for the real model</p>
-<p>The real model (D1): <span class="math display">\[
-Y \sim Binom(n=100, p) \\
-p \sim Beta(\alpha, \beta) \\
-(Prior) \quad \alpha \sim logN(\mu_1, \sigma_1) \\
-(Prior) \quad \beta \sim logN(\mu_2, \sigma_2)
+<p>The real model (<span class="math inline">\(D_1\)</span>): <span class="math display">\[
+\begin{aligned}
+Y &amp;\sim \text{Binom}(n=100, p) \\
+p &amp;\sim \text{Beta}(\alpha, \beta) \\
+(Prior)\quad \alpha &amp;\sim \log \mathcal{N}(\mu_1, \sigma_1) \\
+(Prior)\quad \beta &amp;\sim \log \mathcal{N}(\mu_2, \sigma_2)
+\end{aligned}
 \]</span></p>
 <p>A function to sample from the prior predictive distribution:</p>
 <div class="cell">
@@ -289,7 +295,7 @@ p \sim Beta(\alpha, \beta) \\
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(sample)</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>We will use logN(log(5),0.01) and logN(log(3),0.01) as the priors for alpha and beta in model D1, it was chosen specifically to create a very similar prior predictive distribution to the prior for M.</p>
+<p>We will use lognormal <span class="math inline">\(\log \mathcal{N}(\log 5,\ 0.01)\)</span> and <span class="math inline">\(\log \mathcal{N}(\log 3,\ 0.01)\)</span> as the priors for <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> in model <span class="math inline">\(D_1\)</span>, chosen to create a very similar prior predictive distribution to the prior for <span class="math inline">\(M\)</span>.</p>
 <p>These are the prior predictive distributions compared:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prior_pred_D1 <span class="ot">=</span> <span class="fu">sample_from_pp_D1</span>(<span class="at">n =</span> pp_sample_size,</span>
@@ -316,41 +322,46 @@ p \sim Beta(\alpha, \beta) \\
 <p>As you can see, the predictive distributions for the two models are extremely similar, which suggests the two priors are effectively equivalent.</p>
 <p>This implies that any differences observed in the posterior distributions after updating on data are likely attributable to differences in the models themselves, rather than the priors.</p>
 <p>Now let’s find the posteriors of each and see how they vary.</p>
-<section id="updating-d1" class="level3">
-<h3 class="anchored" data-anchor-id="updating-d1">Updating D1</h3>
+<section id="updating-d_1" class="level3">
+<h3 class="anchored" data-anchor-id="updating-d_1">Updating <span class="math inline">\(D_1\)</span></h3>
 <p>Finding posterior via naive simulation</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We sample from the prior a lot, predict with the param values from the prior, and keep if the prediction is equal to the observed data</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">alpha =</span> <span class="fu">numeric</span>(), <span class="at">beta =</span> <span class="fu">numeric</span>())</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>i <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (i <span class="sc">&lt;=</span> pp_sample_size) {</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  alpha <span class="ot">=</span> <span class="fu">rlnorm</span>(<span class="dv">1</span>, <span class="fu">log</span>(<span class="dv">5</span>), <span class="fl">0.01</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  beta <span class="ot">=</span> <span class="fu">rlnorm</span>(<span class="dv">1</span>, <span class="fu">log</span>(<span class="dv">3</span>), <span class="fl">0.01</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  y_pred <span class="ot">=</span> <span class="fu">r_beta_binom</span>(<span class="dv">1</span>, n_obs, alpha, beta)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (y_pred <span class="sc">==</span> y_obs) {</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    df <span class="ot">=</span> <span class="fu">rbind</span>(df, <span class="fu">data.frame</span>(<span class="at">alpha=</span>alpha, <span class="at">beta=</span>beta))</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    i <span class="ot">=</span> i<span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">mutate</span>(df, <span class="at">post_pred =</span> <span class="fu">r_beta_binom</span>(<span class="fu">n</span>(), n_obs, alpha, beta))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We sample from the prior a lot, predict with the param values from the prior,</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and keep if the prediction is equal to the observed data</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">alpha =</span> <span class="fu">numeric</span>(), <span class="at">beta =</span> <span class="fu">numeric</span>())</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>i <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (i <span class="sc">&lt;=</span> pp_sample_size) {</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  alpha <span class="ot">=</span> <span class="fu">rlnorm</span>(<span class="dv">1</span>, <span class="fu">log</span>(<span class="dv">5</span>), <span class="fl">0.01</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  beta <span class="ot">=</span> <span class="fu">rlnorm</span>(<span class="dv">1</span>, <span class="fu">log</span>(<span class="dv">3</span>), <span class="fl">0.01</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  y_pred <span class="ot">=</span> <span class="fu">r_beta_binom</span>(<span class="dv">1</span>, n_obs, alpha, beta)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (y_pred <span class="sc">==</span> y_obs) {</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    df <span class="ot">=</span> <span class="fu">rbind</span>(df, <span class="fu">data.frame</span>(<span class="at">alpha=</span>alpha, <span class="at">beta=</span>beta))</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    i <span class="ot">=</span> i<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">mutate</span>(df, <span class="at">post_pred =</span> <span class="fu">r_beta_binom</span>(<span class="fu">n</span>(), n_obs, alpha, beta))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="updating-m" class="level3">
-<h3 class="anchored" data-anchor-id="updating-m">Updating M</h3>
-<p>This is a very straightforward application of the Beta-Binomial Prior.</p>
-<p>Y ~ binomial(100, p), with p ~ Beta(5,3)</p>
-<p>so p|Y=42` ~ Beta(5+42, 3+58)</p>
+<h3 class="anchored" data-anchor-id="updating-m">Updating <span class="math inline">\(M\)</span></h3>
+<p>This is a straightforward application of the Beta-Binomial Prior.</p>
+<p><span class="math display">\[
+Y \sim Binom(100, p), \quad p \sim Beta(5, 3)
+\]</span></p>
+<p>so <span class="math display">\[
+p \mid Y = 42 \sim Beta\!\big(5+42,\ 3+58\big)
+\]</span></p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>post_predictive_M <span class="ot">=</span> <span class="fu">r_beta_binom</span>(pp_sample_size, n_obs, <span class="dv">5</span><span class="sc">+</span>y_obs, <span class="dv">3</span><span class="sc">+</span>n_obs<span class="sc">-</span>y_obs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="comparing-analysis-for-m-vs-equivalent-analysis-for-d1" class="level3">
-<h3 class="anchored" data-anchor-id="comparing-analysis-for-m-vs-equivalent-analysis-for-d1">Comparing analysis for M vs equivalent analysis for D1</h3>
+<section id="comparing-analysis-for-m-vs-equivalent-analysis-for-d_1" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-analysis-for-m-vs-equivalent-analysis-for-d_1">Comparing analysis for <span class="math inline">\(M\)</span> vs equivalent analysis for <span class="math inline">\(D_1\)</span></h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tvd_post <span class="ot">=</span> <span class="fu">pp_sample_distance</span>(df<span class="sc">$</span>post_pred, post_predictive_M)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -368,9 +379,9 @@ p \sim Beta(\alpha, \beta) \\
 <p>The posterior predictive distributions are quite different, with a Total Variational Distance of 0.648 (a 14.4966443 time increase from the prior TVD), so the model misspecification in this case seems to have a significant impact on results.</p>
 </section>
 </section>
-<section id="example-2.-real-data-is-dependent" class="level2">
-<h2 class="anchored" data-anchor-id="example-2.-real-data-is-dependent">Example 2. Real Data is Dependent</h2>
-<p>Now, we explore what happens if our sample comes from a dependent model. Specifically, we generate a sample from summing a Markov Chain of <span class="math inline">\(n\)</span> drifting Bernoulli trials, denoted as model D2.</p>
+<section id="example-2.-real-data-is-dependent-but-we-assume-independent" class="level2">
+<h2 class="anchored" data-anchor-id="example-2.-real-data-is-dependent-but-we-assume-independent">Example 2. Real data is dependent, but we assume independent</h2>
+<p>Now, we explore what happens if our sample comes from a dependent model. Specifically, we generate a sample from summing a Markov Chain of <span class="math inline">\(n\)</span> drifting Bernoulli trials, denoted as model <span class="math inline">\(D_2\)</span>.</p>
 <p><span class="math display">\[
 Y \sim MC(n=100, \ p_0=0.4, \ \delta=0.1)
 \]</span> (MC for Markov Counts, details for sampling are in the helper functions section)</p>
@@ -384,15 +395,19 @@ Y \sim MC(n=100, \ p_0=0.4, \ \delta=0.1)
 <pre><code>[1] 34</code></pre>
 </div>
 </div>
-<p>Again, we will misspecify the model by assuming the data comes from a binomial distribution. We assign the same beta(5,3) prior on <span class="math inline">\(p\)</span>. Again, we call this model M. <span class="math display">\[
-Y \sim Binom(n=100, p) \\
-(Prior) \quad p \sim Beta(5, 3)
+<p>Again, we will misspecify the model by assuming the data comes from a binomial distribution. We assign the same <span class="math inline">\(\text{Beta}(5, 3)\)</span> prior on <span class="math inline">\(p\)</span>. Again, we call this model <span class="math inline">\(M\)</span>. <span class="math display">\[
+\begin{aligned}
+Y &amp;\sim \text{Binom}(n=100, p) \\
+(Prior)\quad p &amp;\sim \text{Beta}(5, 3)
+\end{aligned}
 \]</span></p>
-<p>Let’s then find an equivalent prior for model D2. <span class="math display">\[
-Y \sim MC(n=100, p_0, \delta) \\
-(Prior) \quad p_0 \sim Beta(\alpha, \beta) \\
-(Prior) \quad \delta \sim  Exp(\lambda)
-\]</span> We’ll need a function to sample a prior predictive distribution for D2.</p>
+<p>Let’s then find an equivalent prior for model <span class="math inline">\(D_2\)</span>. <span class="math display">\[
+\begin{aligned}
+Y &amp;\sim MC(n=100, p_0, \delta) \\
+(Prior)\quad p_0 &amp;\sim \text{Beta}(\alpha, \beta) \\
+(Prior)\quad \delta &amp;\sim \text{Exp}(\lambda)
+\end{aligned}
+\]</span> We’ll need a function to sample a prior predictive distribution for <span class="math inline">\(D_2\)</span>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sample_from_pp_D2 <span class="ot">=</span> <span class="cf">function</span>(n, size, alpha, beta, rate) {</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    p0 <span class="ot">=</span> <span class="fu">rbeta</span>(n, alpha, beta)</span>
@@ -402,9 +417,11 @@ Y \sim MC(n=100, p_0, \delta) \\
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s use this prior distribution: <span class="math display">\[
-Y \sim MC(n=100, \ p_0, \ \delta) \\
-(Prior) \quad p_0 \sim Beta(5, 3) \\
-(Prior) \quad \delta \sim Exp(100)
+\begin{aligned}
+Y &amp;\sim MC(n=100, \ p_0, \ \delta) \\
+(Prior)\quad p_0 &amp;\sim \text{Beta}(5, 3) \\
+(Prior)\quad \delta &amp;\sim \text{Exp}(100)
+\end{aligned}
 \]</span></p>
 <p>And compare the prior predictive distributions:</p>
 <div class="cell">
@@ -430,8 +447,8 @@ Y \sim MC(n=100, \ p_0, \ \delta) \\
 </div>
 <p>As shown, the priors are effectively equivalent.</p>
 <p>Let’s proceed with updating both models to see what kind of discrepancy there is.</p>
-<section id="updating-d2" class="level3">
-<h3 class="anchored" data-anchor-id="updating-d2">Updating D2</h3>
+<section id="updating-d_2" class="level3">
+<h3 class="anchored" data-anchor-id="updating-d_2">Updating <span class="math inline">\(D_2\)</span></h3>
 <p>We use naive simulation again to create a posterior sample for D2. (This one is much slower, so we’re also accepting if the predicted is within 1 of the observed, which makes the posterior a bit less accurate.)</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">p0 =</span> <span class="fu">numeric</span>(), <span class="at">drift_sd =</span> <span class="fu">numeric</span>())</span>
@@ -453,7 +470,7 @@ Y \sim MC(n=100, \ p_0, \ \delta) \\
 </div>
 </section>
 <section id="updating-m-1" class="level3">
-<h3 class="anchored" data-anchor-id="updating-m-1">Updating M</h3>
+<h3 class="anchored" data-anchor-id="updating-m-1">Updating <span class="math inline">\(M\)</span></h3>
 <p>Again, a straightforward updating of the Beta-Binomial Prior.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>post_predictive_M <span class="ot">=</span> <span class="fu">r_beta_binom</span>(pp_sample_size, n_obs, <span class="dv">5</span><span class="sc">+</span>y_obs, <span class="dv">3</span><span class="sc">+</span>n_obs<span class="sc">-</span>y_obs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -480,11 +497,23 @@ Y \sim MC(n=100, \ p_0, \ \delta) \\
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>These examples demonstrate that model misspecification can have significant impacts of the results of a bayesian analyses. In terms of real world implications, it’s unclear how realistic the examples we’ve used are, but it can still serve as a cautionary tale to not blindly trust your model.</p>
-<p>It has proven to be very difficult to find prior distributions such that they have some specified prior predictive distribution. For future work, we could look for a more viable and general method of searching for priors.</p>
+<p>These examples demonstrate that model misspecification can have significant impacts of the results of a bayesian analyses. In terms of real world implications, these examples can serve as a cautionary tale to not blindly trust a model, even one with a reasonable prior predictive distribution.</p>
+<section id="future-work" class="level3">
+<h3 class="anchored" data-anchor-id="future-work">Future Work</h3>
+<p>An end goal of this project would be to analyze which statistics and tests are robust to varying degrees of model misspecification. To do this, we anticipate we’ll need to figure out the following:</p>
+<ul>
+<li>Given a true underlying model, a method for quantifying or classifying how different (and therefore misspecified) a proposed model is.</li>
+<li>Given a true model and proposed model (+prior distribution), an efficient method for finding prior distributions for the true model such that their predictive distribution matches that of the propsed model. This would let us find effectively equivalent prior distributions, which we need to isolate the effects of model differences. (2)</li>
+</ul>
+<ol start="2" type="1">
+<li>It has proven to be very difficult to find prior distributions such that they have some specified prior predictive distribution, because the search space of prior distributions is very very large. For future work, we could look for a more viable and general method of searching for priors.</li>
+</ol>
 </section>
-<section id="helper-functions-appendix" class="level2">
-<h2 class="anchored" data-anchor-id="helper-functions-appendix">Helper Functions (appendix)</h2>
+</section>
+<section id="appendix" class="level2">
+<h2 class="anchored" data-anchor-id="appendix">Appendix</h2>
+<section id="helper-functions" class="level3">
+<h3 class="anchored" data-anchor-id="helper-functions">Helper Functions</h3>
 <p>Functions are sourced at the top so they stay out of the way while reading. Full helper code is shown here for reference.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a> r_beta_bernoulli <span class="ot">=</span> <span class="cf">function</span>(n, alpha, beta) {</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  probs <span class="ot">=</span> <span class="fu">rbeta</span>(n, alpha, beta)</span>
@@ -603,9 +632,9 @@ Y \sim MC(n=100, \ p_0, \ \delta) \\
 <span id="cb20-115"><a href="#cb20-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(sample)</span>
 <span id="cb20-116"><a href="#cb20-116" aria-hidden="true" tabindex="-1"></a>} </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="errata" class="level2">
-<h2 class="anchored" data-anchor-id="errata">Errata</h2>
-<p>We tried using grid search to find priors with equivalent prior predictive distributions, but it did not work well at all.</p>
+<section id="errata" class="level3">
+<h3 class="anchored" data-anchor-id="errata">Errata</h3>
+<p>We tried using grid search over parameterized priors to find priors with equivalent prior predictive distributions, but it did not work well at all.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># grid = expand.grid(</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   mu1 = seq(1, 50, by=5),</span></span>
@@ -651,6 +680,7 @@ Y \sim MC(n=100, \ p_0, \ \delta) \\
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

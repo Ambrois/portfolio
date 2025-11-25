@@ -1,0 +1,15 @@
+---
+title: "Stats"
+listing:
+  contents:
+    - posts/bayesian
+    - posts_archived/Stat365
+  sort: "date desc"
+  type: default
+  categories: false
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+---
+
+Statistics and inference projects.

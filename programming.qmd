@@ -1,0 +1,15 @@
+---
+title: "Programming Projects"
+listing:
+  contents:
+    - posts/blackholesim
+    - posts_archived/transformers
+  sort: "date desc"
+  type: default
+  categories: false
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+---
+
+Programming-heavy work and experiments.
