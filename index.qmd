@@ -27,7 +27,7 @@ Hi I'm Matthew,
 
 I'm a 2025 graduate from Cal Poly SLO with a bachelor's in Statistics and minors in Mathematics and Computer Science.
 
-I'm interested in math and sciences of all sorts, but especially mathematical/statistical/computational modeling.
+I'm interested in math and sciences of all sorts, but especially modeling and it's limitiations.
 
 Welcome to my portfolio. This website was made with Quarto.
 

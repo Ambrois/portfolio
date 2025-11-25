@@ -6,12 +6,6 @@ website:
   title: "Portfolio"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
-      - href: stats.qmd
-        text: Stats
-      - href: programming.qmd
-        text: Programming
       - icon: linkedin
         href: https://www.linkedin.com/in/matthew-huang-67b835231/
       - icon: github

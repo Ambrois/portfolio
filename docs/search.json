@@ -60,7 +60,7 @@
     "href": "index.html",
     "title": "Matthew Huang",
     "section": "",
-    "text": "Hi I’m Matthew,\nI’m a 2025 graduate from Cal Poly SLO with a bachelor’s in Statistics and minors in Mathematics and Computer Science.\nI’m interested in math and sciences of all sorts, but especially mathematical/statistical/computational modeling.\nWelcome to my portfolio. This website was made with Quarto."
+    "text": "Hi I’m Matthew,\nI’m a 2025 graduate from Cal Poly SLO with a bachelor’s in Statistics and minors in Mathematics and Computer Science.\nI’m interested in math and sciences of all sorts, but especially modeling and it’s limitiations.\nWelcome to my portfolio. This website was made with Quarto."
   },
   {
     "objectID": "projects.html",
@@ -278,5 +278,12 @@
     "title": "Matthew Huang",
     "section": "Projects",
     "text": "Projects"
+  },
+  {
+    "objectID": "projects/bayesian/index.html#introduction",
+    "href": "projects/bayesian/index.html#introduction",
+    "title": "Analysis of Bayesian Model Misspecification",
+    "section": "",
+    "text": "The accuracy of Bayesian inference depends on how well your chosen model(s) capture the underlying data-generating process. However, in practice, models are approximate and thus somewhat misspecified, with assumptions violated in various degrees. This analysis looks at two examples of mild model misspecification, comparing predictive distributions from correctly specified models with those from simpler misspecified alternatives.\nTo facilitate accurate comparison, we match prior predictive distributions across models, which means that observed discrepancies in the posterior arise primarily due to model misspecification. To compare predictive distributions, we use total variation distance (TVD) and visualizalizations. We use naive rejection sampling for posterior sampling because we lack an explicit formula for likelihood for the dependent model, parameter dimensions are small, and for consistency across examples.\nTwo examples are considered:\n\nWhen the true data-generating process is hierarchical (Beta-Binomial).\nWhen the true process involves dependent observations modeled as a drifting Markov chain."
   }
 ]
