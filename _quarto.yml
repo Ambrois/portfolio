@@ -6,8 +6,8 @@ website:
   title: "Portfolio"
   navbar:
     left:
-      - href: Blog.qmd
-        text: Blog
+      - href: projects.qmd
+        text: Projects
       - href: about.qmd
         text: About
       - icon: linkedin
@@ -16,7 +16,6 @@ website:
         href: https://github.com/Ambrois
 format:
   html:
-    theme: vapor
-    css: styles.css
+    theme: slate
 
 editor: source

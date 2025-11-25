@@ -1,0 +1,24 @@
+---
+title: "Black Hole Raymarcher"
+date: 2025-11-24
+image: blackholesim.png
+---
+
+An in-progress exploration of black hole visualization written in C++, SFML, and GLSL. Each pixel launches a light ray, integrates the Schwarzschild null geodesic equations with adaptive-step RK4, and shades based on what the ray hits (star field, accretion disk, photon ring, or the singularity).
+
+![Black hole raymarcher render](blackholesim.png)
+
+## How it works
+- Rays are marched in 2D on the equatorial plane and rotated into 3D to leverage spherical symmetry.
+- Numerical integration uses adaptive-step RK4 to keep curved light paths stable near the horizon.
+- Shading pulls from simple models: a background star map, disk temperature to approximate black-body color, and object bounds for debugging.
+
+## Recent milestones
+- Added background stars and more realistic disk color via temperature-based black-body approximation.
+- Photon ring resolves cleanly in the most recent render.
+- Object bounds rendering and earlier Euclidean engine provided scaffolding before moving fully to curved spacetime.
+
+## Next steps to explore
+- Improve behavior at the center where phi-parameterization breaks down; adapt step size with respect to phi.
+- Implement parallel transport so camera orientation stays stable while moving.
+- Refine the accretion disk (flare the shape, lean on intersection data instead of skipped segments).
