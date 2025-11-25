@@ -18,7 +18,7 @@ library(glue)
 source("helpers.R")
 ```
 
-### Introduction
+## Introduction
 
 The accuracy of Bayesian inference depends on how well your chosen model(s) capture the underlying data-generating process. However, in practice, models are approximate and thus somewhat misspecified, with assumptions violated in various degrees. This analysis looks at two examples of mild model misspecification, comparing predictive distributions from correctly specified models with those from simpler misspecified alternatives. 
 
