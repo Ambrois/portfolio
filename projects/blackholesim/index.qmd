@@ -14,6 +14,7 @@ categories: ["programming"]
 - The simulation marches a grid of light rays (one per pixel) from the camera and numerically approximates the null geodesic equations for the Schwarzschild metric. The light rays curve and hit objects, which determine the color of the pixel.
   - numerical approximation is done via RK4 with adaptive step size
 - For efficiency of computation, and accurate due to spherical symmetry of the SC spacetime, null geodesics are computed in 2D on the equator and rotated into place in 3D.
+- The metric equations I used are unitless, so the black hole being simulated is not of any fixed size, and has some arbitrary scale. The color of the ring is given by an arbitrarily chosen inner ring temperature of 5000 Kelvin, which makes for a pretty golden color.
 
 [Link to Repository](https://github.com/Ambrois/Black-Hole-Sim)
 
@@ -24,13 +25,13 @@ categories: ["programming"]
 
 - Added background stars
 - Made disk color more realistic: calculate temperature -> approximate black body radiation -> color
-- More realistic disk sizing, note that the photon ring is now visible!
+- More realistic disk sizing, note that the photon ring is now visible! I'm not sure what that very thin ring inside the photon ring is, and it might be a bug, but that's for future me to figure out.
 
 ***
 ![Older Screenshot](screenshots/2025-11-17.png)
 - Added adaptive step sizing and other optimizations
 - Fixed object edge rendering for arbitrary step size
-- Added prettier colors and a grid to see how spacetime curves
+- Added prettier colors and a grid to see how spacetime curves, and it's very clearly showing gravitational lensing
 
 ***
 ![Older Screenshot](screenshots/2025-11-15.png)

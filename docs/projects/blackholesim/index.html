@@ -93,18 +93,6 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../stats.html"> 
-<span class="menu-text">Stats</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../programming.html"> 
-<span class="menu-text">Programming</span></a>
-  </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://www.linkedin.com/in/matthew-huang-67b835231/"> <i class="bi bi-linkedin" role="img">
 </i> 
@@ -171,13 +159,14 @@ ul.task-list li input[type="checkbox"] {
 <li>TODO write more better explanation, tex up derivation</li>
 <li>Using C++, SFML, and GLSL
 <ul>
-<li>my first C++ and graphics AND physics project so please forgive strange and bad design choices</li>
+<li>my first C++ and graphics project so please forgive strange and bad design choices</li>
 </ul></li>
 <li>The simulation marches a grid of light rays (one per pixel) from the camera and numerically approximates the null geodesic equations for the Schwarzschild metric. The light rays curve and hit objects, which determine the color of the pixel.
 <ul>
 <li>numerical approximation is done via RK4 with adaptive step size</li>
 </ul></li>
 <li>For efficiency of computation, and accurate due to spherical symmetry of the SC spacetime, null geodesics are computed in 2D on the equator and rotated into place in 3D.</li>
+<li>The metric equations I used are unitless, so the black hole being simulated is not of any fixed size, and has some arbitrary scale. The color of the ring is given by an arbitrarily chosen inner ring temperature of 5000 Kelvin, which makes for a pretty golden color.</li>
 </ul>
 <p><a href="https://github.com/Ambrois/Black-Hole-Sim">Link to Repository</a></p>
 </section>
@@ -188,10 +177,10 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>Added background stars</li>
 <li>Made disk color more realistic: calculate temperature -&gt; approximate black body radiation -&gt; color</li>
-<li>More realistic disk sizing, note that the photon ring is now visible!</li>
+<li>More realistic disk sizing, note that the photon ring is now visible! I’m not sure what that very thin ring inside the photon ring is, and it might be a bug, but that’s for future me to figure out.</li>
 </ul>
 <hr>
-<p><img src="screenshots/2025-11-17.png" class="img-fluid" alt="Older Screenshot"> - Added adaptive step sizing and other optimizations - Fixed object edge rendering for arbitrary step size - Added prettier colors and a grid to see how spacetime curves</p>
+<p><img src="screenshots/2025-11-17.png" class="img-fluid" alt="Older Screenshot"> - Added adaptive step sizing and other optimizations - Fixed object edge rendering for arbitrary step size - Added prettier colors and a grid to see how spacetime curves, and it’s very clearly showing gravitational lensing</p>
 <hr>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
