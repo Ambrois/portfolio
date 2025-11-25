@@ -2,7 +2,7 @@
 title: "Black Hole Visualizer"
 date: 2025-11-24
 image: recent_screenshot.png
-description: Black hole raymarcher from scratch using C++, SFML, and GLSL
+description: Schwarzschild Black hole raymarcher from scratch using C++, SFML, and GLSL
 categories: ["programming"]
 ---
 ## Introduction
@@ -13,7 +13,6 @@ categories: ["programming"]
   - my first C++ and graphics project so please forgive strange and bad design choices
 - The simulation marches a grid of light rays (one per pixel) from the camera and numerically approximates the null geodesic equations for the Schwarzschild metric. The light rays curve and hit objects, which determine the color of the pixel.
   - numerical approximation is done via RK4 with adaptive step size
-- For efficiency of computation, and accurate due to spherical symmetry of the SC spacetime, null geodesics are computed in 2D on the equator and rotated into place in 3D.
 - The metric equations I used are unitless, so the black hole being simulated is not of any fixed size, and has some arbitrary scale. The color of the ring is given by an arbitrarily chosen inner ring temperature of 5000 Kelvin, which makes for a pretty golden color.
 
 [Link to Repository](https://github.com/Ambrois/Black-Hole-Sim)
@@ -62,13 +61,14 @@ categories: ["programming"]
 ### Context
 I started this project independently to learn C++, shader programming, and touch on general relativity. It took about a month and is so far the most difficult project I've mostly completed. I plan to develop more but am really tired of thinking about this project for now.
 
-- I learned C++ with this wonderful [free book](https://theartofhpc.com/isp.html).
-- I learned general relativity with Sean Carrol's *Spacetime and Geometry*, which can be acquired through [allegedly legal means](https://annas-archive.org/md5/194a5d79e309d30e08bd934daa3e03fb).
-- I was inspired to start this project by this [cool video](https://www.youtube.com/watch?v=8-B6ryuBkCM), although did not look at any of his code, and used a different derivation for the geodesic equations. I was also more generally inspired by [Sebastian Lague](https://www.youtube.com/c/SebastianLague)'s very cool youtube channel to try shader programming.
+- I learned C++ with this [free book](https://theartofhpc.com/isp.html).
+- I was able to learn some general relativity with Sean Carrol's *Spacetime and Geometry*, which can be acquired through [allegedly legal means](https://annas-archive.org/md5/194a5d79e309d30e08bd934daa3e03fb).
+- I was inspired to start this project by this [cool video](https://www.youtube.com/watch?v=8-B6ryuBkCM). I did not look at any of his code, and used a different derivation for the geodesic equations. I was also more generally inspired by [Sebastian Lague](https://www.youtube.com/c/SebastianLague)'s very cool youtube channel to try shader programming.
 
 ## Future work:
-- the center of the bh has trouble rendering bc parameterizing with phi, make step size also adjust for phi
-- if you move, your camera magically turns on its own, because I've yet to implement parallel transport of the camera directions, yet
+- the center of the bh has trouble rendering bc parameterizing with phi, I'll try to minimize this by adjusting the dynamic step size to account for starting angle
+- if you move, the camera turns on its own, because I've yet to implement parallel transport of the camera directions, but this will be done
 - accretion disk adjustments
+  - needs better boundary detection
   - its shape should be flared out a little for more realism
-  - needs to use intersections fully, right now is detected a little hackily
+  - add doppler effect coloring
