@@ -1,10 +1,7 @@
 [
   {
-    "listing": "/projects.html",
-    "items": [
-      "/posts/blackholesim/index.html",
-      "/posts/bayesian/index.html"
-    ]
+    "listing": "/programming.html",
+    "items": []
   },
   {
     "listing": "/index.html",
@@ -15,16 +12,6 @@
   },
   {
     "listing": "/stats.html",
-    "items": [
-      "/posts/bayesian/index.html",
-      "/posts_archived/Stat365/index.html"
-    ]
-  },
-  {
-    "listing": "/programming.html",
-    "items": [
-      "/posts/blackholesim/index.html",
-      "/posts_archived/transformers/index.html"
-    ]
+    "items": []
   }
 ]

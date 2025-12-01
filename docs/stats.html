@@ -80,9 +80,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: [{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
+      searchColumns: [],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -151,18 +151,6 @@ window.Quarto = {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./stats.html" aria-current="page"> 
-<span class="menu-text">Stats</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./programming.html"> 
-<span class="menu-text">Programming</span></a>
-  </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://www.linkedin.com/in/matthew-huang-67b835231/"> <i class="bi bi-linkedin" role="img">
 </i> 
@@ -214,59 +202,7 @@ window.Quarto = {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="c3RhdHM=" data-listing-date-sort="1748934000000" data-listing-file-modified-sort="1764034207876" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1847">
-<div class="thumbnail"><a href="./posts/bayesian/index.html" class="no-external">
 
-<p class="card-img-top"><img src="posts/bayesian/index_files/figure-html/unnamed-chunk-4-1.png"  class="thumbnail-image card-img"/></p>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/bayesian/index.html" class="no-external">Analysis of Examples of Bayesian Model Misspecification</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/bayesian/index.html" class="no-external">
-<p>Comparing bayesian predictive distributions under examples of model misspecification.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/bayesian/index.html" class="no-external">
-<div class="listing-date">
-Jun 3, 2025
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="c3RhdHM=" data-listing-date-sort="1748847600000" data-listing-file-modified-sort="1764034222292" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="285">
-<div class="thumbnail"><a href="./posts_archived/Stat365/index.html" class="no-external">
-
-<p class="card-img-top"><img src="posts_archived/Stat365/index_files/figure-html/unnamed-chunk-2-1.png"  class="thumbnail-image card-img"/></p>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts_archived/Stat365/index.html" class="no-external">Narrative Visualization (Scratch)</a>
-</h3>
-<div class="delink listing-description"><a href="./posts_archived/Stat365/index.html" class="no-external">
-
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">counts_male <span class="ot">&lt;-</span> age_gaps <span class="sc">|&gt;</span> </span>
-<span id="cb1-2">  <span class="fu">filter</span>(character_1_gender <span class="sc">==</span> <span class="st">"man"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-3">  <span class="fu">count</span>(age_difference)</span>
-<span id="cb1-4">counts_female <span class="ot">&lt;-</span> age_gaps <span class="sc">|&gt;</span> </span>
-<span id="cb1-5">  <span class="fu">filter</span>(character_1_gender <span class="sc">==</span> <span class="st">"woman"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-6">  <span class="fu">cou…</span></span><span id="cb1-7"></span><span id="cb1-8"><span class="fu"></span><span class="sc"></span></span><span id="cb1-9"><span class="fu"></span><span class="at"></span><span class="fu"></span><span class="at"></span><span class="at"></span><span class="at"></span><span class="st"></span><span class="at"></span><span class="dv"></span><span class="sc"></span></span><span id="cb1-10"><span class="fu"></span><span class="at"></span><span class="fu"></span><span class="at"></span><span class="at"></span><span class="sc"></span><span class="at"></span><span class="st"></span><span class="at"></span><span class="dv"></span><span class="sc"></span></span><span id="cb1-11"><span class="fu"></span><span class="fu"></span><span class="at"></span><span class="dv"></span><span class="at"></span><span class="dv"></span><span class="at"></span><span class="st"></span><span class="at"></span><span class="st"></span><span class="sc"></span></span><span id="cb1-12"><span class="fu"></span><span class="fu"></span><span class="at"></span><span class="dv"></span><span class="at"></span><span class="sc"></span><span class="dv"></span><span class="at"></span><span class="st"></span><span class="at"></span><span class="st"></span><span class="sc"></span></span><span id="cb1-13"><span class="fu"></span><span class="at"></span><span class="st"></span></span><span id="cb1-14"><span class="at"></span><span class="st"></span></span><span id="cb1-15"><span class="at"></span><span class="st"></span><span class="at"></span><span class="st"></span></span><span id="cb1-16"><span class="at"></span><span class="st"></span><span class="sc"></span></span><span id="cb1-17"><span class="fu"></span></span></code></pre></div></div><div class="cell-output-display"><div class="quarto-figure quarto-figure-center"><figure class="figure"><p></p><figcaption></figcaption></figure></div></div>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts_archived/Stat365/index.html" class="no-external">
-<div class="listing-date">
-Jun 2, 2025
-</div>
-<div class="listing-author">
-Matthew Huang
-</div>
-</a>
-</div>
-</div>
 </div>
 <div class="listing-no-matching d-none">No matching items</div>
 </div></main> <!-- /main -->

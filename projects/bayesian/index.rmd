@@ -4,7 +4,7 @@ authors: "Matthew Huang, Siya Shenoi"
 output: html_document
 date: "2025-06-03"
 description: "Comparing bayesian predictive distributions under examples of model misspecification."
-categories: ["stats"]
+categories: ["R","statistics"]
 execute:
   cache: true      # cache chunk results
   freeze: auto     # skip re-execution unless the source changes

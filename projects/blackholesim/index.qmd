@@ -1,9 +1,9 @@
 ---
 title: "Black Hole Visualizer"
-date: 2025-11-24
+date: 2025-11-25
 image: recent_screenshot.png
 description: Schwarzschild Black hole raymarcher from scratch using C++, SFML, and GLSL
-categories: ["programming"]
+categories: ["C++", "physics"]
 ---
 ## Introduction
 

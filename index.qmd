@@ -1,10 +1,7 @@
 ---
 title: "Matthew Huang"
-image: blurryPfp.jfif
 about:
-  template: trestles
-  image-shape: rectangle
-  image-width: 15em
+  template: solana
   links:
     - icon: linkedin
       text: LinkedIn
@@ -23,13 +20,12 @@ listing:
 
 ---
 
-Hi I'm Matthew,
+#### Hello,
 
-I'm a 2025 graduate from Cal Poly SLO with a bachelor's in Statistics and minors in Mathematics and Computer Science.
+I am a 2025 graduate from Cal Poly SLO with a bachelor's in statistics and minors in math and computer science. I am interested in math and sciences of all sorts, but especially modeling and it's limitiations.
 
-I'm interested in math and sciences of all sorts, but especially modeling and it's limitiations.
-
-Welcome to my portfolio. This website was made with Quarto.
+Currently open to work.
 
 ## Projects
 
+***

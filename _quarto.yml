@@ -2,14 +2,6 @@ project:
   type: website
   output-dir: docs
 
-website:
-  title: "Portfolio"
-  navbar:
-    left:
-      - icon: linkedin
-        href: https://www.linkedin.com/in/matthew-huang-67b835231/
-      - icon: github
-        href: https://github.com/Ambrois
 format:
   html:
     theme: slate
