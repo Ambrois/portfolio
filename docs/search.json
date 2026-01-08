@@ -637,5 +637,16 @@
     "title": "Exploring Tuned Lenses via Subspace Ablations",
     "section": "Status",
     "text": "Status\nThis work is exploratory and incomplete. Planned extensions included propagating output-subspace importance backward through lens maps to identify circuit endpoints, but these were not completed within the available time and infrastructure constraints.\n\nView Repository\n\nReferences\nBelrose, N., Henighan, T., Turner, A. M., et al. (2023).\nThe Tuned Lens: Revealing Representations of LLMs without Intervention.\narXiv:2303.08112. https://arxiv.org/abs/2303.08112"
+  },
+  {
+    "objectID": "projects/ml_experiments/index.html",
+    "href": "projects/ml_experiments/index.html",
+    "title": "Machine Learning Experiments",
+    "section": "",
+    "text": "Experiments\n\nTuned Lens Exploration\nExploratory mechanistic interpretability experiment investigating Tuned Lenses by decomposing the lens-aligned predictive space into output-relevant and weakly output-relevant subspaces and probing their effects via targeted ablations, highlighting both diagnostic successes and sensitivity to lens quality.\n\n\nSkin Cancer Detection\nGroup project from a university course exploring skin cancer classification under extreme class imbalance using the ISIC 2024 dataset, with emphasis on diagnosing model failure modes, metric choice, and limits of standard supervised learning approaches rather than leaderboard performance.",
+    "crumbs": [
+      "Projects",
+      "ML Experiments"
+    ]
   }
 ]
