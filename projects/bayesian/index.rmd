@@ -20,9 +20,9 @@ source("helpers.R")
 
 ## Introduction
 
-In real-world data analysis, models are almost never exactly correct. Simplifying assumptions, such as independence, homogeneity, or a specific distributional form, are routinely made to keep models tractable. While Bayesian methods are often viewed as robust because they incorporate uncertainty explicitly, they are still sensitive to model misspecification: where assumed model structure does not match the true data-generating process.
+In data analysis, models are never exactly correct. Simplifying assumptions, such as independence, homogeneity, or a specific distributional form, keep models tractable. While Bayesian methods are often viewed as robust because they incorporate uncertainty explicitly, they are still sensitive to model misspecification: where assumed model structure does not match the true data-generating process.
 
-This project investigates how small, realistic forms of model misspecification can materially change Bayesian conclusions, even when prior assumptions appear reasonable. Rather than focusing on parameter estimates alone, we compare posterior predictive distributions, which directly reflect what the model believes future or unseen data will look like. This makes the analysis especially relevant for applied settings where Bayesian models are used to support forecasting, decision-making, or risk assessment.
+This project investigates how small, realistic forms of model misspecification can materially change Bayesian conclusions, even when prior assumptions appear reasonable. Rather than focusing on parameter estimates alone, we compare posterior predictive distributions, which directly reflects what the model believes future or unseen data will look like. This makes the analysis especially relevant for applied settings where Bayesian models are used to support forecasting, decision-making, or risk assessment.
 
 To isolate the effect of misspecification, we construct pairs of models where:
 
