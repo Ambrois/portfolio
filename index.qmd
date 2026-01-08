@@ -11,7 +11,7 @@ about:
       href: https://github.com/Ambrois
 listing:
   contents:
-    - projects
+    - "projects/*/index.*"
   sort: "date desc"
   type: default
   categories: true

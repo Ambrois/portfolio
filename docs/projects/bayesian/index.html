@@ -9,7 +9,7 @@
 <meta name="dcterms.date" content="2025-06-03">
 <meta name="description" content="Comparing bayesian predictive distributions under examples of model misspecification.">
 
-<title>Analysis of Bayesian Model Misspecification – Portfolio</title>
+<title>Analysis of Bayesian Model Misspecification</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -61,7 +61,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
@@ -79,11 +78,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-aaffb796335526f5050059a5dd561096.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
+  "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
+  "panel-placement": "start",
+  "type": "textbox",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
@@ -138,44 +137,11 @@ window.Quarto = {
 
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
-    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    </a>
-    <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Portfolio</span>
-    </a>
-  </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/matthew-huang-67b835231/"> <i class="bi bi-linkedin" role="img">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/Ambrois"> <i class="bi bi-github" role="img">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-</ul>
-          </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
-</div>
-      </div> <!-- /container-fluid -->
-    </nav>
-</header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
@@ -186,7 +152,6 @@ window.Quarto = {
 <div class="quarto-title">
 <h1 class="title">Analysis of Bayesian Model Misspecification</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">R</div>
     <div class="quarto-category">statistics</div>
   </div>
   </div>
@@ -224,16 +189,24 @@ window.Quarto = {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>The accuracy of Bayesian inference depends on how well your chosen model(s) capture the underlying data-generating process. However, in practice, models are approximate and thus somewhat misspecified, with assumptions violated in various degrees. This analysis looks at two examples of mild model misspecification, comparing predictive distributions from correctly specified models with those from simpler misspecified alternatives.</p>
-<p>To facilitate accurate comparison, we match prior predictive distributions across models, which means that observed discrepancies in the posterior arise primarily due to model misspecification. To compare predictive distributions, we use total variation distance (TVD) and visualizalizations. We use naive rejection sampling for posterior sampling because we lack an explicit formula for likelihood for the dependent model, parameter dimensions are small, and for consistency across examples.</p>
-<p>Two examples are considered:</p>
+<p>In real-world data analysis, models are almost never exactly correct. Simplifying assumptions, such as independence, homogeneity, or a specific distributional form, are routinely made to keep models tractable. While Bayesian methods are often viewed as robust because they incorporate uncertainty explicitly, they are still sensitive to model misspecification: where assumed model structure does not match the true data-generating process.</p>
+<p>This project investigates how small, realistic forms of model misspecification can materially change Bayesian conclusions, even when prior assumptions appear reasonable. Rather than focusing on parameter estimates alone, we compare posterior predictive distributions, which directly reflect what the model believes future or unseen data will look like. This makes the analysis especially relevant for applied settings where Bayesian models are used to support forecasting, decision-making, or risk assessment.</p>
+<p>To isolate the effect of misspecification, we construct pairs of models where:</p>
+<ul>
+<li>One model matches the true data-generating process.</li>
+<li>The other is a simpler, commonly used alternative.</li>
+<li>Both models are calibrated to have nearly identical prior predictive behavior.</li>
+</ul>
+<p>By matching prior predictive distributions, any divergence observed after seeing data can be attributed primarily to differences in model structure rather than differences in prior assumptions. We quantify these differences using total variation distance and visualize how predictive beliefs diverge after updating on the same observations.</p>
+<p>Two scenarios are examined:</p>
 <ol type="1">
-<li><p>When the true data-generating process is hierarchical (Beta-Binomial).</p></li>
-<li><p>When the true process involves dependent observations modeled as a drifting Markov chain.</p></li>
+<li>Data generated from a hierarchical process but analyzed using a non-hierarchical model.</li>
+<li>Data with dependence between observations but analyzed under an independence assumption.</li>
 </ol>
+<p>Across both cases, we find that seemingly mild misspecification can lead to substantially different posterior predictions. The results highlight an important lesson for applied Bayesian modeling: a model that appears well-calibrated before seeing data may still produce misleading inferences if its structural assumptions are wrong.</p>
 </section>
-<section id="example-1.-real-data-is-hierarchical-but-we-assume-flat" class="level2">
-<h2 class="anchored" data-anchor-id="example-1.-real-data-is-hierarchical-but-we-assume-flat">Example 1. Real data is hierarchical, but we assume flat</h2>
+<section id="example-1.-real-data-is-hierarchical-but-assumed-to-be-flat." class="level2">
+<h2 class="anchored" data-anchor-id="example-1.-real-data-is-hierarchical-but-assumed-to-be-flat.">Example 1. Real data is hierarchical, but assumed to be flat.</h2>
 <p>Our data <span class="math inline">\(y\)</span> follows the following hierarchical distribution, which we’ll denote <span class="math inline">\(D_1\)</span>.</p>
 <p><span class="math display">\[
 \begin{align}
@@ -368,8 +341,8 @@ p \mid Y = 42 \sim Beta\!\big(5+42,\ 3+58\big)
 <p>The posterior predictive distributions are quite different, with a Total Variational Distance of 0.648 (a 14.4966443 time increase from the prior TVD), so the model misspecification in this case seems to have a significant impact on results.</p>
 </section>
 </section>
-<section id="example-2.-real-data-is-dependent-but-we-assume-independent" class="level2">
-<h2 class="anchored" data-anchor-id="example-2.-real-data-is-dependent-but-we-assume-independent">Example 2. Real data is dependent, but we assume independent</h2>
+<section id="example-2.-real-data-is-dependent-but-assumed-to-be-independent." class="level2">
+<h2 class="anchored" data-anchor-id="example-2.-real-data-is-dependent-but-assumed-to-be-independent.">Example 2. Real data is dependent, but assumed to be independent.</h2>
 <p>Now, we explore what happens if our sample comes from a dependent model. Specifically, we generate a sample from summing a Markov Chain of <span class="math inline">\(n\)</span> drifting Bernoulli trials, denoted as model <span class="math inline">\(D_2\)</span>.</p>
 <p><span class="math display">\[
 Y \sim MC(n=100, \ p_0=0.4, \ \delta=0.1)

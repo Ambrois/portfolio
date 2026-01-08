@@ -6,10 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-11-25">
-<meta name="description" content="Schwarzschild Black hole raymarcher from scratch using C++, SFML, and GLSL">
+<meta name="description" content="A collection of machine learning experiments and projects">
 
-<title>Black Hole Simulation</title>
+<title>Machine Learning Experiments</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,16 +85,15 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Black Hole Simulation</h1>
+<h1 class="title">Machine Learning Experiments</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">computer-graphics</div>
-    <div class="quarto-category">physics</div>
+    <div class="quarto-category">AI</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    Schwarzschild Black hole raymarcher from scratch using C++, SFML, and GLSL
+    A collection of machine learning experiments and projects
   </div>
 </div>
 
@@ -103,12 +101,6 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">November 25, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -118,91 +110,21 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>This project is a real-time black hole visualization engine built from scratch in C++, using GPU shaders for parallel computation. The goal was to simulate how light bends near a black hole and render the resulting image on screen, while simultaneously modern C++, graphics programming, and numerical simulation techniques.</p>
-<p>At a high level, the program treats each screen pixel as a ray of light emitted from a virtual camera. These rays are numerically simulated as they travel through curved spacetime near a black hole. Depending on how each ray bends and what it intersects (background stars or an accretion disk), the program computes the final color of that pixel. The entire process runs in parallel on the GPU, allowing thousands of light paths to be simulated simultaneously.</p>
-<p>This project required building multiple systems end-to-end:</p>
-<ul>
-<li>A custom ray-marching pipeline implemented in GLSL</li>
-<li>A numerical solver (fourth-order Runge–Kutta with adaptive step size) for physically motivated differential equations</li>
-<li>A rendering pipeline integrating C++, SFML, and shaders</li>
-<li>Performance optimizations and debugging in a GPU-only environment</li>
-</ul>
-<p>Although the underlying physics is based on general relativity, the primary focus of the project was systems design, numerical methods, and performance-conscious implementation, rather than producing a scientifically exact model. This was my first C++ and graphics project, and it served as a practical way to learn lower-level programming, GPU parallelism, and how complex simulations are built and debugged in practice.</p>
-<p><a href="https://github.com/Ambrois/Black-Hole-Sim">View Repository</a></p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
 </section>
-<section id="screenshots" class="level2">
-<h2 class="anchored" data-anchor-id="screenshots">Screenshots</h2>
-<p><img src="screenshots/2025-11-22.png" class="img-fluid" alt="Most Recent Screenshot"> <img src="screenshots/2025-11-25.png" class="img-fluid" alt="Most Recent Screenshot"></p>
-<ul>
-<li>Added background stars</li>
-<li>Made disk color more realistic: calculate temperature -&gt; approximate black body radiation -&gt; color</li>
-<li>More realistic disk sizing, note that the photon ring is now visible! I’m not sure what that very thin ring inside the photon ring is, and it might be a bug, but that’s for future me to figure out.</li>
-</ul>
-<hr>
-<p><img src="screenshots/2025-11-17.png" class="img-fluid" alt="Older Screenshot"> - Added adaptive step sizing and other optimizations - Fixed object edge rendering for arbitrary step size - Added prettier colors and a grid to see how spacetime curves, and it’s very clearly showing gravitational lensing</p>
-<hr>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="screenshots/2025-11-15.png" class="img-fluid figure-img"></p>
-<figcaption>Older Screenshot</figcaption>
-</figure>
-</div>
-<ul>
-<li>Implementing RK4 for the null geodesic equations in 3D.</li>
-<li>Parallelized everything via fragment shader, which was quite difficult, as debugging information could only be encoded through pixel color. I’ve since learned that I should have used a compute shader and passed to a simple fragment shader, which would have been easier to debug and manage.</li>
-</ul>
-<hr>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="screenshots/2025-11-04.png" class="img-fluid figure-img"></p>
-<figcaption>Older Screenshot</figcaption>
-</figure>
-</div>
-<ul>
-<li>Derived the null geodesic equations in 2D via Lagrangian, here I learned the basics of general relativity.</li>
-<li>Implemented RK4 for numerically solving said equations.</li>
-</ul>
-<hr>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="screenshots/2025-10-21.png" class="img-fluid figure-img"></p>
-<figcaption>Older Screenshot</figcaption>
-</figure>
-</div>
-<ul>
-<li>Built basic euclidean raymarching engine.</li>
-<li>More of learning how to program in C++.</li>
-</ul>
-<hr>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="screenshots/2025-10-18.png" class="img-fluid figure-img"></p>
-<figcaption>Older Screenshot</figcaption>
-</figure>
-</div>
-<ul>
-<li>Drew a circle!</li>
-<li>Learned the very basics of C++, SFML, and GLSL.</li>
-</ul>
-<hr>
+<section id="projects" class="level2">
+<h2 class="anchored" data-anchor-id="projects">Projects</h2>
+<section id="tuned-lens-exploration" class="level3">
+<h3 class="anchored" data-anchor-id="tuned-lens-exploration"><a href="../../projects/ml_experiments/tunedlens.html">Tuned Lens Exploration</a></h3>
+<p>Exploratory mechanistic interpretability experiment investigating Tuned Lenses by decomposing the lens-aligned predictive space into output-relevant and weakly output-relevant subspaces and probing their effects via targeted ablations, highlighting both diagnostic successes and sensitivity to lens quality.</p>
 </section>
-<section id="future-work" class="level2">
-<h2 class="anchored" data-anchor-id="future-work">Future work:</h2>
-<ul>
-<li>A more detailed writeup of the equation derivations and algorithm details is in process.</li>
-<li>The center of the bh has trouble rendering bc parameterizing with phi, I’ll try to minimize this by adjusting the dynamic step size to account for starting angle</li>
-<li>If you move, the camera turns slightly on its own, because I’ve yet to implement parallel transport of the camera directions, but this is in progress.</li>
-<li>Accretion disk adjustments:
-<ul>
-<li>Could use better boundary detection.</li>
-<li>Its shape should be flared out a little for more realism.</li>
-<li>Could add doppler effect coloring.</li>
-</ul></li>
-</ul>
+<section id="skin-cancer-detection" class="level3">
+<h3 class="anchored" data-anchor-id="skin-cancer-detection"><a href="../../projects/ml_experiments/skincancer.html">Skin Cancer Detection</a></h3>
+<p>Group project from a university course exploring skin cancer classification under extreme class imbalance using the ISIC 2024 dataset, with emphasis on diagnosing model failure modes, metric choice, and limits of standard supervised learning approaches rather than leaderboard performance.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
