@@ -12,6 +12,7 @@ This project is a real-time black hole visualization engine built from scratch i
 At a high level, the program treats each screen pixel as a ray of light emitted from a virtual camera. These rays are numerically simulated as they travel through curved spacetime near a black hole. Depending on how each ray bends and what it intersects (background stars or an accretion disk), the program computes the final color of that pixel. The entire process runs in parallel on the GPU, allowing thousands of light paths to be simulated simultaneously.
 
 This project required building multiple systems end-to-end:
+
 - A custom ray-marching pipeline implemented in GLSL
 - A numerical solver (fourth-order Runge–Kutta with adaptive step size) for physically motivated differential equations
 - A rendering pipeline integrating C++, SFML, and shaders
@@ -63,7 +64,7 @@ Although the underlying physics is based on general relativity, the primary focu
 ***
 
 ## Future work:
-- A more detailed writeup of the equation derivations and algorithmic details is in process.
+- A more detailed writeup of the equation derivations and algorithm details is in process.
 - The center of the bh has trouble rendering bc parameterizing with phi, I'll try to minimize this by adjusting the dynamic step size to account for starting angle
 - If you move, the camera turns slightly on its own, because I've yet to implement parallel transport of the camera directions, but this is in progress.
 - Accretion disk adjustments:
