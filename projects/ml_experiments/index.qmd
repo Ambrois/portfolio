@@ -1,6 +1,7 @@
 ---
 title: "Machine Learning Experiments"
 description: "A collection of machine learning experiments and projects"
+date: 2024-8-30
 categories: ["AI"]
 ---
 

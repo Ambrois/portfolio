@@ -6,10 +6,10 @@
   {
     "listing": "/index.html",
     "items": [
-      "/projects/ml_experiments/index.html",
       "/projects/blackholesim/index.html",
       "/projects/bayesian/index.html",
-      "/projects/senior_consulting/index.html"
+      "/projects/senior_consulting/index.html",
+      "/projects/ml_experiments/index.html"
     ]
   },
   {

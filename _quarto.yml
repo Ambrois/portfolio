@@ -2,6 +2,26 @@ project:
   type: website
   output-dir: docs
 
+website:
+  bread-crumbs: false
+  sidebar:
+    style: floating
+    search: false
+    contents:
+      - text: "Home"
+        href: index.qmd
+      - text: "Projects"
+        contents:
+          - text: "Bayesian Analysis"
+            href: projects/bayesian/index.rmd
+          - text: "Black Hole Simulation"
+            href: projects/blackholesim/index.qmd
+          - text: "Statistical Consulting"
+            href: projects/senior_consulting/index.qmd
+          - text: "ML Experiments"
+            href: projects/ml_experiments/index.qmd
+
+
 format:
   html:
     theme: slate

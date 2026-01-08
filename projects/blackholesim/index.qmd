@@ -2,7 +2,7 @@
 title: "Black Hole Simulation"
 date: 2025-11-25
 image: recent_screenshot.png
-description: Schwarzschild Black hole raymarcher from scratch using C++, SFML, and GLSL
+description: Schwarzschild black hole raymarcher from scratch using C++, SFML, and GLSL
 categories: ["computer-graphics", "physics"]
 ---
 ## Introduction
