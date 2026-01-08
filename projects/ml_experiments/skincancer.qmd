@@ -29,5 +29,5 @@ Python, PyTorch, scikit-learn, XGBoost, convolutional neural networks, class-imb
 
 [View Repository](https://github.com/Ambrois/Kaggle-ISIC-2024)
 
-[View Presentation Slides](melanoma-slides.pdf)
+[View Presentation Slides](assets/skin-cancer-slides.pdf)
 

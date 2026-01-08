@@ -3,6 +3,7 @@ title: "Statistical Consulting Senior Projects"
 date: 5/1/2025
 description: "A collection of applied statistical case studies."
 categories: ["statistics"]
+image: consulting-thumbnail.png
 ---
 
 ### Overview
@@ -12,12 +13,16 @@ These projects were completed as part of an undergraduate capstone in statistica
 ### Projects
 
 #### [IBaby Month One: Maternal Depression and Technology Use](ibaby.qmd)
-Analyzed postpartum survey data to evaluate whether parenting stress and technology-related distraction are associated with maternal depression at one month postpartum. Built an interpretable logistic regression model with careful variable selection, finding strong associations between higher stress, higher perceived distraction, and elevated depression risk, while accounting for demographic covariates.
+
+Studied survey data from new mothers to see whether parenting stress and technology use are linked to depression one month after birth. Used a logistic regression model and found that higher stress and greater distraction were strongly associated with increased depression risk, even after accounting for basic demographic factors.
 
 
 #### [Sustainability Literacy: Environmental and Educational Predictors of Knowledge](sustainability.qmd)
-Evaluated whether environmental and educational background variables were associated with sustainability knowledge scores, adjusting for time in college. Used multiple linear regression on survey and census-linked data; results suggested institutional exposure dominated background effects.
+
+Studied how environmental background and education relate to sustainability knowledge, while controlling for time spent in college. Applied multiple linear regression to survey and census data and found that college-level exposure mattered more than individual background characteristics.
+
 
 #### [Manual Task Performance Under Distraction and Biomechanical Constraints](mobility.qmd)
-Analyzed how hand dominance, wrist motion direction, and cognitive distraction affect performance on a constrained manual task using a mixed-effects factorial design, with emphasis on repeated measures and power-aware interpretation.
+
+Studied how hand dominance, wrist movement, and mental distraction influence performance on a manual task. Used a mixed-effects design to account for repeated measurements and focused on interpreting results with appropriate attention to statistical power.
 

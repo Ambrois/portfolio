@@ -4,6 +4,9 @@ date: 2025-11-25
 image: recent_screenshot.png
 description: "Schwarzschild black hole raymarcher from scratch using C++, SFML, and GLSL."
 categories: ["computer-graphics", "physics"]
+format:
+  html:
+    theme: darkly
 ---
 ## Introduction
 

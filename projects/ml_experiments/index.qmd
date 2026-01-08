@@ -2,13 +2,16 @@
 title: "Machine Learning Experiments"
 description: "A collection of machine learning experiments and projects."
 date: 2024-8-30
-categories: ["AI"]
+categories: ["machine-learning"]
+image: ml-experiments-thumbnail.png
 ---
 
 ### Experiments
 
-#### [Tuned Lens Exploration](tunedlens.qmd)
-Exploratory mechanistic interpretability experiment investigating Tuned Lenses by decomposing the lens-aligned predictive space into output-relevant and weakly output-relevant subspaces and probing their effects via targeted ablations, highlighting both diagnostic successes and sensitivity to lens quality.
 
 #### [Skin Cancer Detection](skincancer.qmd)
 Group project from a university course exploring skin cancer classification under extreme class imbalance using the ISIC 2024 dataset, with emphasis on diagnosing model failure modes, metric choice, and limits of standard supervised learning approaches rather than leaderboard performance.
+
+
+#### [Tuned Lens Exploration](tunedlens.qmd)
+Exploratory transformer interpretability experiment investigating Tuned Lenses by decomposing the lens-aligned predictive space into output-relevant and weakly output-relevant subspaces and probing their effects via targeted ablations.

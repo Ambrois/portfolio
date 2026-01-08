@@ -3,11 +3,14 @@ title: "Analysis of Bayesian Model Misspecification"
 authors: "Matthew Huang, Siya Shenoi"
 output: html_document
 date: "2025-06-03"
-description: "Comparing bayesian predictive distributions under examples of model misspecification."
+description: "Comparing Bayesian predictive distributions under examples of model misspecification."
 categories: ["statistics"]
 execute:
   cache: true      # cache chunk results
   freeze: auto     # skip re-execution unless the source changes
+format:
+  html:
+    theme: cosmo
 ---
 
 ```{r setup, include=FALSE}

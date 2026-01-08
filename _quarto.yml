@@ -11,9 +11,12 @@ website:
       - text: "Home"
         href: index.qmd
       - text: "Projects"
+        href: index.qmd
         contents:
           - text: "Black Hole Simulation"
             href: projects/blackholesim/index.qmd
+          - text: "Data Visualization Gallery"
+            href: projects/visualizations/index.qmd
           - text: "Bayesian Analysis"
             href: projects/bayesian/index.rmd
           - text: "Statistical Consulting"
@@ -28,14 +31,14 @@ website:
           - text: "ML Experiments"
             href: projects/ml_experiments/index.qmd
             contents:
-              - text: "Tuned Lens"
-                href: projects/ml_experiments/tunedlens.qmd
               - text: "Skin Cancer"
                 href: projects/ml_experiments/skincancer.qmd
+              - text: "Tuned Lens"
+                href: projects/ml_experiments/tunedlens.qmd
 
 
 format:
   html:
-    theme: slate
+    theme: cosmo
 
 editor: source

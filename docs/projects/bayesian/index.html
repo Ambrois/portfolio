@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2025-06-03">
-<meta name="description" content="Comparing bayesian predictive distributions under examples of model misspecification.">
+<meta name="description" content="Comparing Bayesian predictive distributions under examples of model misspecification.">
 
 <title>Analysis of Bayesian Model Misspecification</title>
 <style>
@@ -74,10 +74,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b651517ce65839d647a86e2780455cfb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-aaffb796335526f5050059a5dd561096.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-4fc62682d0bfe8b8f3eff9bdd709d71a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -171,7 +171,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#" role="navigation" aria-expanded="true">
+            <a href="../../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Projects</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -180,14 +180,20 @@ window.Quarto = {
       <ul id="" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../projects/bayesian/index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Bayesian Analysis</span></a>
+  <a href="../../projects/blackholesim/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Black Hole Simulation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../projects/blackholesim/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Black Hole Simulation</span></a>
+  <a href="../../projects/visualizations/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Visualization Gallery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../projects/bayesian/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Bayesian Analysis</span></a>
   </div>
 </li>
           <li class="sidebar-item sidebar-item-section">
@@ -219,12 +225,29 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../projects/ml_experiments/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ML Experiments</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../projects/ml_experiments/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">ML Experiments</span></a>
+  <a href="../../projects/ml_experiments/skincancer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Skin Cancer</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../projects/ml_experiments/tunedlens.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tuned Lens</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
       </ul>
   </li>
     </ul>
@@ -246,7 +269,7 @@ window.Quarto = {
 
 <div>
   <div class="description">
-    Comparing bayesian predictive distributions under examples of model misspecification.
+    Comparing Bayesian predictive distributions under examples of model misspecification.
   </div>
 </div>
 
@@ -277,8 +300,8 @@ window.Quarto = {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>In real-world data analysis, models are almost never exactly correct. Simplifying assumptions, such as independence, homogeneity, or a specific distributional form, are routinely made to keep models tractable. While Bayesian methods are often viewed as robust because they incorporate uncertainty explicitly, they are still sensitive to model misspecification: where assumed model structure does not match the true data-generating process.</p>
-<p>This project investigates how small, realistic forms of model misspecification can materially change Bayesian conclusions, even when prior assumptions appear reasonable. Rather than focusing on parameter estimates alone, we compare posterior predictive distributions, which directly reflect what the model believes future or unseen data will look like. This makes the analysis especially relevant for applied settings where Bayesian models are used to support forecasting, decision-making, or risk assessment.</p>
+<p>In data analysis, models are never exactly correct. Simplifying assumptions, such as independence, homogeneity, or a specific distributional form, keep models tractable. While Bayesian methods are often viewed as robust because they incorporate uncertainty explicitly, they are still sensitive to model misspecification: where assumed model structure does not match the true data-generating process.</p>
+<p>This project investigates how small, realistic forms of model misspecification can materially change Bayesian conclusions, even when prior assumptions appear reasonable. Rather than focusing on parameter estimates alone, we compare posterior predictive distributions, which directly reflects what the model believes future or unseen data will look like. This makes the analysis especially relevant for applied settings where Bayesian models are used to support forecasting, decision-making, or risk assessment.</p>
 <p>To isolate the effect of misspecification, we construct pairs of models where:</p>
 <ul>
 <li>One model matches the true data-generating process.</li>

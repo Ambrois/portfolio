@@ -1,0 +1,217 @@
+---
+title: "Data Visualization Gallery"
+date: 7/1/2025
+description: "A collection of miscellaneous data visualizations I have made."
+categories: ["statistics"]
+format:
+  html:
+    theme: cosmo
+---
+
+
+
+***
+
+```{R}
+#| eval: false
+#| code-fold: true
+
+everest_plot |> 
+  ggplot(aes(x = year, y = duration,
+             color = as.factor(success_indicator),
+             shape = as.factor(success_indicator))) +
+    geom_point(alpha=0.25) +
+    scale_color_manual(values = c("0" = "deepskyblue4", "1" = "darkorange3"),
+                       labels = c("Unsuccessful", "Successful")) +
+    scale_shape_manual(values = c(16, 17),
+                       labels = c("Unsuccessful", "Successful")) +
+    labs(color = "", shape="",
+         title = "Duration and Success of Everest Expeditions Over Time",
+         subtitle = "Duration (days)",
+         x = "Year",
+         y = "",
+         caption = "Note: Success defined as reaching the summit.") +
+    scale_x_continuous(breaks = seq(min(everest$year)-1, max(everest$year), by = 10))+
+    theme_minimal()
+```
+
+![everest-vis](pics/everest-vis.png)
+
+Dot plot showing Mount Everest expedition durations by year, with points indicating individual expeditions and visual separation between successful and unsuccessful outcomes. The figure highlights long-term convergence toward shorter, more consistent expedition lengths, alongside isolated years with markedly reduced durations and success.
+
+
+
+
+
+***
+
+```{R}
+#| eval: false
+#| code-fold: true
+
+counts_male <- age_gaps |>
+  filter(character_1_gender == "man") |>
+  count(age_difference)
+
+counts_female <- age_gaps |>
+  filter(character_1_gender == "woman") |>
+  count(age_difference)
+
+ggplot() +
+  geom_col(
+    data = counts_male,
+    aes(x = age_difference, y = n),
+    fill = "steelblue"
+  ) +
+  geom_col(
+    data = counts_female,
+    aes(x = age_difference, y = -n),
+    fill = "pink"
+  ) +
+  geom_label(
+    aes(x = 30, y = 40, label = "Male")
+  ) +
+  geom_label(
+    aes(x = 30, y = -20, label = "Female")
+  ) +
+  labs(
+    title = "Age Differences in Movie Couples",
+    subtitle = "By Gender of the Older Actor",
+    x = "Age Difference (years)",
+    y = "Count"
+  ) +
+  theme_minimal()
+```
+
+
+![age-gap-mirrored](pics/age-gap-vis-1.png)
+
+Mirrored histogram comparing age-gap distributions based on whether the older actor is male or female. The male-older distribution is more right-skewed and extends to larger age differences, while the female-older distribution is more concentrated near zero.
+
+
+***
+
+
+
+![age-gap-hist](pics/age-gap-vis-2.png)
+
+Histogram showing the distribution of age differences in heterosexual movie couples, computed as male age minus female age. Positive values dominate the distribution, indicating that relationships with older male actors occur more frequently and span a wider range of age gaps than those with older female actors.
+
+
+
+
+***
+
+```{R}
+#| eval: false
+#| code-fold: true
+
+animated_plot <- ggplot(murder_happiness,
+                        aes(x = log(murder_rate_per_100k),
+                            y = happiness_score)) +
+  geom_point(color = "steelblue") +
+  geom_smooth(method = "lm", color = "black") +
+  labs(title = "Relationship Between Murder Rate and Happiness Score (2005-2019)",
+       subtitle = "Happiness Score (0-100)",
+       x = "Log-Scaled Murder Rate (per 100k)",
+       y = "",
+       caption = "Year: {frame_time}") +
+  transition_time(as.integer(year)) +
+  enter_fade() +
+  exit_fade() +
+  theme_bw() +
+  theme(plot.caption = element_text(size = 11))
+
+animate(animated_plot, renderer = gifski_renderer())
+```
+
+![murder-happiness-1](pics/murder-rate-happiness-vis.png)
+
+Scatter plot showing the relationship between log murder rate and happiness score across countries, with fitted regression lines that vary over time. The figure illustrates a generally negative association whose strength changes across different periods.
+
+
+***
+
+```{R}
+#| eval: false
+#| code-fold: true
+
+set.seed(42)
+
+predictions <- predict(linear_model, country_murder_happiness)
+residual_se <- sigma(linear_model)
+simulated_y <- predictions + rnorm(n = length(predictions), mean = 0, sd = sigma(linear_model))
+
+observed <- ggplot(country_murder_happiness, 
+             aes(x = log(avg_murder_rate), 
+                 y = avg_happiness_score)
+             ) +
+  geom_point(color = "steelblue") +
+  labs(title = "Observed Data",
+       subtitle = "Observed Happiness Score (0-100)",
+       x = "Log-Scaled Average Murder Rate (per 100k)", 
+       y = "") +
+  theme_bw()
+
+# Plot Simulated Data
+predicted <- ggplot(country_murder_happiness, 
+             aes(x = log(avg_murder_rate), 
+                 y = simulated_y)
+             ) +
+  geom_point(color = "orange3") +
+  labs(title = "Simulated Data",
+       subtitle = "Simulated Happiness Score (0-100)",
+       x = "Log-Scaled Average Murder Rate (per 100k)", 
+       y = "") +
+  theme_bw()
+
+observed + predicted
+```
+
+![murder-happiness-2](pics/murder-rate-happiness-vis-2.png)
+
+Side-by-side scatter plots comparing observed data with data simulated from a fitted linear regression model. The comparison highlights how closely the model reproduces the overall trend while revealing differences in dispersion and linearity.
+
+
+
+***
+
+```{R}
+#| eval: false
+#| code-fold: true
+
+ggplot(data = penguins,
+       aes(x = bill_length_mm**2, y = log(bill_depth_mm),
+           shape = species, color = island)) +
+  geom_point(size = 0.1, alpha = 0.5) +
+  labs(title = "PENGUIN",
+       x = "length (squared)",
+       y = "depth (log)") +
+  annotate("rect",
+           xmin = 500, xmax = 3240,
+           ymin = -0.7, ymax = 2.2,
+           fill = "yellow", alpha = 0.5) +
+  annotate("text",
+           x = 1850, y = 1.3,
+           label = "WARNING: Your Computer May Be Infected!",
+           color = "red", size = 4, fontface = "bold",
+           hjust = 0.5) +
+  annotate("text",
+           x = 1850, y = 0.2,
+           label = "Call Now for Support:\n1800-433-5055",
+           color = "blue", size = 3,
+           hjust = 0.5) +
+  scale_shape_discrete(labels = c("Species",
+                                  "Second Species",
+                                  "Species C")) +
+  scale_color_discrete(labels = c("Bisco",
+                                  "Island 2",
+                                  "Forgot the name"))
+
+
+```
+
+![ugly-vis](pics/ugly-vis.png)
+
+Plot designed to be difficult to interpret, using confusing scales, inappropriate transformations, and ineffective visual encodings. The figure demonstrates how poor labeling, over-encoding, and misleading axis choices can obscure patterns and distort interpretation rather than communicate data clearly.
+
