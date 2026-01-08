@@ -1,29 +1,31 @@
 ---
-title: "Skin Cancer Detection under Extreme Class Impabalance (ISIC 2024)"
+title: "Skin Cancer Detection under Extreme Class Imbalance (ISIC 2024)"
 date: 2024-8-30
 image: ISIC.jpeg
 categories: ["AI"]
 ---
 
+
 ### Overview
 
-This group project was part of a Artificial Intelligence course and explored supervised learning approaches for skin cancer detection using the ISIC 2024 dataset, which consists of over 400,000 lesion images extracted from 3D total body photography along with structured metadata. The task was to classify lesions as benign or malignant in a setting characterized by extreme class imbalance (approximately 1000:1 benign to malignant). The goal was not leaderboard optimization, but to understand how standard machine learning methods behave under severe imbalance and limited signal.
+This group project was part of an Artificial Intelligence course and focused on using supervised learning methods to detect skin cancer with the ISIC 2024 dataset. The dataset contains over 400,000 skin lesion images from 3D total body photography, along with structured patient and lesion metadata. The task was to classify lesions as benign or malignant in an extremely imbalanced setting, with roughly 1,000 benign cases for every malignant case. The goal was not to optimize leaderboard performance, but to study how common machine learning methods behave under severe class imbalance and weak signal.
 
 ### Data and Approach
 
-We evaluated both metadata-based and image-based models. Metadata features included patient age, lesion size, and body location, which were cleaned, normalized, and encoded prior to modeling. For structured data, we implemented logistic regression (in PyTorch), random forests, and XGBoost. For image data, we trained several convolutional architectures ranging from a simple CNN to deeper models, including a ResNet-18 variant. Models were evaluated using malignant-class precision and recall rather than overall accuracy.
+We trained models using both structured metadata and raw images. Metadata included variables such as patient age, lesion size, and body location, which were cleaned and encoded before modeling. For structured data, we used logistic regression (implemented in PyTorch), random forests, and XGBoost. For image data, we trained several convolutional neural networks, ranging from a simple CNN to a ResNet-18–based model. Model performance was evaluated using precision and recall for the malignant class rather than overall accuracy.
 
 ### Key Challenges and Findings
 
-The dominant challenge was extreme class imbalance, which caused many models to default to predicting the benign class. We experimented with loss weighting and weighted sampling strategies to mitigate this effect; weighted sampling produced more stable training behavior but did not yield consistently strong predictive performance. Across both metadata and image models, training loss often failed to exhibit a clear downward trend, suggesting limited learnable signal under the given constraints. Some configurations achieved high recall at the expense of very low precision, limiting practical usefulness.
+The main challenge was extreme class imbalance, which caused many models to overwhelmingly predict the benign class. We tested loss weighting and weighted sampling to address this issue; weighted sampling led to more stable training but did not consistently improve predictive performance. Across both metadata-based and image-based models, training loss often showed little improvement, suggesting that the available signal was limited. Some models achieved high recall by predicting many malignant cases, but this came at the cost of very low precision, reducing practical usefulness.
 
 ### Interpretation
 
-This project highlighted the limits of standard supervised learning pipelines in highly imbalanced medical imaging tasks without substantial prior structure. The results suggest that meaningful improvements would likely require stronger inductive bias (e.g., pretrained representations, asymmetric or focal loss functions, or multi-task learning) or additional curated data. The primary contribution of this work lies in diagnosing failure modes, appropriate metric selection, and understanding when increased model complexity does not compensate for data limitations.
+This project demonstrated the limitations of standard supervised learning pipelines when applied to highly imbalanced medical imaging problems without strong prior structure. The results suggest that better performance would likely require stronger inductive bias, such as pretrained image representations, specialized loss functions, or multi-task learning, as well as higher-quality or more targeted data. The main contribution of this work was identifying failure modes, choosing appropriate evaluation metrics, and understanding when increasing model complexity does not overcome data constraints.
 
 ### Tools
 
-Python, PyTorch, scikit-learn, XGBoost, convolutional neural networks, class-imbalance handling techniques.
+Python, PyTorch, scikit-learn, XGBoost, convolutional neural networks, class imbalance techniques
+
 
 ***
 

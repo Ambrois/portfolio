@@ -2,6 +2,12 @@
 title: "Exploring Tuned Lenses via Subspace Ablations"
 ---
 
+### Background
+
+Tuned Lenses are a technique from mechanistic interpretability research that let you read off the model’s internal predictions at intermediate layers. Instead of only looking at the final output, a tuned lens trains a small transformation that maps hidden states directly into the vocabulary’s space, letting you see what the model *would predict* based on partial computation at each layer.
+
+> More broadly, mechanistic interpretability is a field of AI research that tries to reverse-engineer how neural networks compute their outputs in human-understandable terms, rather than treating a model as a black box.
+
 ### Motivation
 
 Tuned Lenses provide a way to map intermediate model activations into a shared predictive space aligned with the final token distribution. This experiment explored whether that lens-aligned space admits a meaningful linear decomposition into directions that directly influence output logits versus directions with little direct effect, and whether such a distinction can be probed through targeted ablations.
@@ -21,6 +27,7 @@ The results support the view that the lens-aligned space contains linearly ident
 ### Status
 
 This work is exploratory and incomplete. Planned extensions included propagating output-subspace importance backward through lens maps to identify circuit endpoints, but these were not completed within the available time and infrastructure constraints.
+
 
 ***
 

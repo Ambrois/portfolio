@@ -120,6 +120,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../projects/visualizations/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Visualization Gallery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../projects/bayesian/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Bayesian Analysis</span></a>
   </div>
@@ -176,12 +182,6 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../projects/visualizations/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Visualization Gallery</span></a>
-  </div>
-</li>
       </ul>
   </li>
     </ul>
@@ -212,6 +212,13 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="background" class="level3">
+<h3 class="anchored" data-anchor-id="background">Background</h3>
+<p>Tuned Lenses are a technique from mechanistic interpretability research that let you read off the model’s internal predictions at intermediate layers. Instead of only looking at the final output, a tuned lens trains a small transformation that maps hidden states directly into the vocabulary’s space, letting you see what the model <em>would predict</em> based on partial computation at each layer.</p>
+<blockquote class="blockquote">
+<p>More broadly, mechanistic interpretability is a field of AI research that tries to reverse-engineer how neural networks compute their outputs in human-understandable terms, rather than treating a model as a black box.</p>
+</blockquote>
+</section>
 <section id="motivation" class="level3">
 <h3 class="anchored" data-anchor-id="motivation">Motivation</h3>
 <p>Tuned Lenses provide a way to map intermediate model activations into a shared predictive space aligned with the final token distribution. This experiment explored whether that lens-aligned space admits a meaningful linear decomposition into directions that directly influence output logits versus directions with little direct effect, and whether such a distinction can be probed through targeted ablations.</p>

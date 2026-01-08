@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2024-08-30">
 
-<title>Skin Cancer Detection under Extreme Class Impabalance (ISIC 2024)</title>
+<title>Skin Cancer Detection under Extreme Class Imbalance (ISIC 2024)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -83,7 +83,7 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title">Skin Cancer Detection under Extreme Class Impabalance (ISIC 2024)</h1>
+          <h1 class="quarto-secondary-nav-title">Skin Cancer Detection under Extreme Class Imbalance (ISIC 2024)</h1>
         </a>     
     </div>
   </nav>
@@ -117,6 +117,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../../projects/blackholesim/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Black Hole Simulation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../projects/visualizations/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Visualization Gallery</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -165,24 +171,18 @@ ul.task-list li input[type="checkbox"] {
       <ul id="" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../projects/ml_experiments/tunedlens.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tuned Lens</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../../projects/ml_experiments/skincancer.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Skin Cancer</span></a>
   </div>
 </li>
-      </ul>
-  </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../projects/visualizations/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Visualization Gallery</span></a>
+  <a href="../../projects/ml_experiments/tunedlens.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tuned Lens</span></a>
   </div>
 </li>
+      </ul>
+  </li>
       </ul>
   </li>
     </ul>
@@ -196,7 +196,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Skin Cancer Detection under Extreme Class Impabalance (ISIC 2024)</h1>
+<h1 class="title d-none d-lg-block">Skin Cancer Detection under Extreme Class Imbalance (ISIC 2024)</h1>
   <div class="quarto-categories">
     <div class="quarto-category">AI</div>
   </div>
@@ -224,23 +224,23 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="overview" class="level3">
 <h3 class="anchored" data-anchor-id="overview">Overview</h3>
-<p>This group project was part of a Artificial Intelligence course and explored supervised learning approaches for skin cancer detection using the ISIC 2024 dataset, which consists of over 400,000 lesion images extracted from 3D total body photography along with structured metadata. The task was to classify lesions as benign or malignant in a setting characterized by extreme class imbalance (approximately 1000:1 benign to malignant). The goal was not leaderboard optimization, but to understand how standard machine learning methods behave under severe imbalance and limited signal.</p>
+<p>This group project was part of an Artificial Intelligence course and focused on using supervised learning methods to detect skin cancer with the ISIC 2024 dataset. The dataset contains over 400,000 skin lesion images from 3D total body photography, along with structured patient and lesion metadata. The task was to classify lesions as benign or malignant in an extremely imbalanced setting, with roughly 1,000 benign cases for every malignant case. The goal was not to optimize leaderboard performance, but to study how common machine learning methods behave under severe class imbalance and weak signal.</p>
 </section>
 <section id="data-and-approach" class="level3">
 <h3 class="anchored" data-anchor-id="data-and-approach">Data and Approach</h3>
-<p>We evaluated both metadata-based and image-based models. Metadata features included patient age, lesion size, and body location, which were cleaned, normalized, and encoded prior to modeling. For structured data, we implemented logistic regression (in PyTorch), random forests, and XGBoost. For image data, we trained several convolutional architectures ranging from a simple CNN to deeper models, including a ResNet-18 variant. Models were evaluated using malignant-class precision and recall rather than overall accuracy.</p>
+<p>We trained models using both structured metadata and raw images. Metadata included variables such as patient age, lesion size, and body location, which were cleaned and encoded before modeling. For structured data, we used logistic regression (implemented in PyTorch), random forests, and XGBoost. For image data, we trained several convolutional neural networks, ranging from a simple CNN to a ResNet-18–based model. Model performance was evaluated using precision and recall for the malignant class rather than overall accuracy.</p>
 </section>
 <section id="key-challenges-and-findings" class="level3">
 <h3 class="anchored" data-anchor-id="key-challenges-and-findings">Key Challenges and Findings</h3>
-<p>The dominant challenge was extreme class imbalance, which caused many models to default to predicting the benign class. We experimented with loss weighting and weighted sampling strategies to mitigate this effect; weighted sampling produced more stable training behavior but did not yield consistently strong predictive performance. Across both metadata and image models, training loss often failed to exhibit a clear downward trend, suggesting limited learnable signal under the given constraints. Some configurations achieved high recall at the expense of very low precision, limiting practical usefulness.</p>
+<p>The main challenge was extreme class imbalance, which caused many models to overwhelmingly predict the benign class. We tested loss weighting and weighted sampling to address this issue; weighted sampling led to more stable training but did not consistently improve predictive performance. Across both metadata-based and image-based models, training loss often showed little improvement, suggesting that the available signal was limited. Some models achieved high recall by predicting many malignant cases, but this came at the cost of very low precision, reducing practical usefulness.</p>
 </section>
 <section id="interpretation" class="level3">
 <h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
-<p>This project highlighted the limits of standard supervised learning pipelines in highly imbalanced medical imaging tasks without substantial prior structure. The results suggest that meaningful improvements would likely require stronger inductive bias (e.g., pretrained representations, asymmetric or focal loss functions, or multi-task learning) or additional curated data. The primary contribution of this work lies in diagnosing failure modes, appropriate metric selection, and understanding when increased model complexity does not compensate for data limitations.</p>
+<p>This project demonstrated the limitations of standard supervised learning pipelines when applied to highly imbalanced medical imaging problems without strong prior structure. The results suggest that better performance would likely require stronger inductive bias, such as pretrained image representations, specialized loss functions, or multi-task learning, as well as higher-quality or more targeted data. The main contribution of this work was identifying failure modes, choosing appropriate evaluation metrics, and understanding when increasing model complexity does not overcome data constraints.</p>
 </section>
 <section id="tools" class="level3">
 <h3 class="anchored" data-anchor-id="tools">Tools</h3>
-<p>Python, PyTorch, scikit-learn, XGBoost, convolutional neural networks, class-imbalance handling techniques.</p>
+<p>Python, PyTorch, scikit-learn, XGBoost, convolutional neural networks, class imbalance techniques</p>
 <hr>
 <p><a href="https://github.com/Ambrois/Kaggle-ISIC-2024">View Repository</a></p>
 <p><a href="assets/skin-cancer-slides.pdf">View Presentation Slides</a></p>
