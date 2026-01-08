@@ -1,0 +1,25 @@
+---
+title: "Sustainability Literacy: Environmental and Educational Predictors of Knowledge"
+---
+
+### Overview
+This project analyzed survey and census-linked data to understand factors associated with students’ sustainability literacy knowledge scores (SKS). The goal was to inform potential improvements to general education curriculum by identifying whether background environmental conditions or educational context meaningfully relate to sustainability knowledge, after accounting for time spent in college.
+
+### Data
+The analysis used survey responses from Cal Poly students combined with environmental and educational variables derived from home ZIP-code census data. The response variable was a sustainability knowledge score. Predictors included air quality (PM2.5 concentration), greenspace coverage, fire frequency, ZIP-code area, and neighborhood educational attainment. Data collection involved a mix of random classroom sampling and voluntary responses, which limited population-level generalization.
+
+### Methodology
+I used multiple linear regression to estimate adjusted associations between background factors and sustainability knowledge. Two models were fit: one focusing on environmental variables and one on educational background variables. In both models, year in college was included as a control variable to account for institutional exposure. Interaction terms were intentionally excluded to reduce overfitting and preserve interpretability.
+
+### Key Findings
+Across both models, year in college was the strongest and most consistent predictor of higher sustainability knowledge scores, indicating that institutional exposure plays a dominant role. In the environmental model, higher PM2.5 concentration and larger ZIP-code area were associated with modest decreases in SKS. In the educational model, higher neighborhood college-degree attainment was associated with higher SKS, even after adjusting for year in college.
+
+### Interpretation and Limitations
+The results suggest that curriculum exposure may have a larger impact on sustainability knowledge than background factors alone, supporting curriculum-level interventions. Findings are associative rather than causal, and self-selection in survey responses and ZIP-code-level aggregation introduce uncertainty that should be considered when applying results beyond the sampled population.
+
+### Tools
+R (linear modeling, data visualization), census and environmental datasets.
+
+***
+
+[View technical report](assets/sustainability-memo.pdf)

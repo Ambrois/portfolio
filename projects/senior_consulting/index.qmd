@@ -1,0 +1,23 @@
+---
+title: "Statistical Consulting Senior Projects"
+date: 5/1/2025
+description: "A collection of applied statistical case studies."
+categories: ["statistics"]
+---
+
+### Overview
+
+These projects were completed as part of an undergraduate capstone in statistical consulting, involving real data and stakeholders.
+
+### Projects
+
+#### [IBaby Month One: Maternal Depression and Technology Use](ibaby.qmd)
+Analyzed postpartum survey data to evaluate whether parenting stress and technology-related distraction are associated with maternal depression at one month postpartum. Built an interpretable logistic regression model with careful variable selection, finding strong associations between higher stress, higher perceived distraction, and elevated depression risk, while accounting for demographic covariates.
+
+
+#### [Sustainability Literacy: Environmental and Educational Predictors of Knowledge](sustainability.qmd)
+Evaluated whether environmental and educational background variables were associated with sustainability knowledge scores, adjusting for time in college. Used multiple linear regression on survey and census-linked data; results suggested institutional exposure dominated background effects.
+
+#### [Manual Task Performance Under Distraction and Biomechanical Constraints](mobility.qmd)
+Analyzed how hand dominance, wrist motion direction, and cognitive distraction affect performance on a constrained manual task using a mixed-effects factorial design, with emphasis on repeated measures and power-aware interpretation.
+

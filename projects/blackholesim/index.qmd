@@ -3,7 +3,7 @@ title: "Black Hole Simulation"
 date: 2025-11-25
 image: recent_screenshot.png
 description: Schwarzschild Black hole raymarcher from scratch using C++, SFML, and GLSL
-categories: ["C++", "physics"]
+categories: ["computer-graphics", "physics"]
 ---
 ## Introduction
 
@@ -20,7 +20,7 @@ This project required building multiple systems end-to-end:
 
 Although the underlying physics is based on general relativity, the primary focus of the project was systems design, numerical methods, and performance-conscious implementation, rather than producing a scientifically exact model. This was my first C++ and graphics project, and it served as a practical way to learn lower-level programming, GPU parallelism, and how complex simulations are built and debugged in practice.
 
-[Link to Repository](https://github.com/Ambrois/Black-Hole-Sim)
+[View Repository](https://github.com/Ambrois/Black-Hole-Sim)
 
 ## Screenshots
 

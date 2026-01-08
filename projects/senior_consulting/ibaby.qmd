@@ -1,0 +1,35 @@
+---
+title: "IBaby Month One: Maternal Depression, Stress, and Technology Use"
+---
+
+### Overview
+
+This project supported an ongoing research study examining associations between maternal depression, parenting stress, and technology-related distraction during the first month postpartum. Using survey-based measures and demographic covariates, we evaluated whether stress and perceived distraction were associated with depression risk at one month postpartum.
+
+### Data
+
+The analysis used data from 65 mothers assessed one month after birth. Depression status was defined using a CES-D–based indicator (score ≥ 13). Predictors included summed parenting stress scores, perceived technology-related distraction, maternal age, household income, and marital status. To reduce dimensionality and improve stability given the sample size, summarized scale scores were used rather than individual survey items, and observations with substantial missing data were excluded.
+
+### Methodology
+
+A logistic regression model was used to estimate associations between depression status and the predictors of interest. Backward stepwise selection was applied to balance interpretability with the limited sample size, and continuous predictors were standardized to facilitate comparison of effect sizes through odds ratios.
+
+### Key Findings
+
+Higher parenting stress and higher perceived distraction were both associated with increased odds of depression at one month postpartum. Maternal age was negatively associated with depression risk, with older mothers showing lower odds of depression. Household income and marital status were also retained in the final model, indicating potential socioeconomic and contextual influences that warrant further investigation.
+
+### Model Performance and Diagnostics
+
+The final model showed good discrimination between depressed and non-depressed cases on the available data (ROC AUC ≈ 0.91). Diagnostic checks did not indicate major violations of logistic regression assumptions or problematic multicollinearity.
+
+### Interpretation and Limitations
+
+The results suggest that stress and technology-related distraction are meaningfully associated with early postpartum depression. Findings are observational and based on a modest sample, so effect estimates should be interpreted cautiously, particularly for demographic variables that may reflect sample imbalance or unmeasured confounding.
+
+### Tools
+
+SAS (logistic regression, model selection, diagnostics).
+
+***
+
+[View technical report](assets/ibaby-memo.pdf)
