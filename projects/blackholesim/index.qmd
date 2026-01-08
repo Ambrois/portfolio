@@ -1,5 +1,5 @@
 ---
-title: "Black Hole Visualizer"
+title: "Black Hole Simulation"
 date: 2025-11-25
 image: recent_screenshot.png
 description: Schwarzschild Black hole raymarcher from scratch using C++, SFML, and GLSL
@@ -7,17 +7,21 @@ categories: ["C++", "physics"]
 ---
 ## Introduction
 
-### How it works
-- TODO write more better explanation, tex up derivation
-- Using C++, SFML, and GLSL
-  - my first C++ and graphics project so please forgive strange and bad design choices
-- The simulation marches a grid of light rays (one per pixel) from the camera and numerically approximates the null geodesic equations for the Schwarzschild metric. The light rays curve and hit objects, which determine the color of the pixel.
-  - numerical approximation is done via RK4 with adaptive step size
-- The metric equations I used are unitless, so the black hole being simulated is not of any fixed size, and has some arbitrary scale. The color of the ring is given by an arbitrarily chosen inner ring temperature of 5000 Kelvin, which makes for a pretty golden color.
+This project is a real-time black hole visualization engine built from scratch in C++, using GPU shaders for parallel computation. The goal was to simulate how light bends near a black hole and render the resulting image on screen, while simultaneously modern C++, graphics programming, and numerical simulation techniques.
+
+At a high level, the program treats each screen pixel as a ray of light emitted from a virtual camera. These rays are numerically simulated as they travel through curved spacetime near a black hole. Depending on how each ray bends and what it intersects (background stars or an accretion disk), the program computes the final color of that pixel. The entire process runs in parallel on the GPU, allowing thousands of light paths to be simulated simultaneously.
+
+This project required building multiple systems end-to-end:
+- A custom ray-marching pipeline implemented in GLSL
+- A numerical solver (fourth-order Runge–Kutta with adaptive step size) for physically motivated differential equations
+- A rendering pipeline integrating C++, SFML, and shaders
+- Performance optimizations and debugging in a GPU-only environment
+
+Although the underlying physics is based on general relativity, the primary focus of the project was systems design, numerical methods, and performance-conscious implementation, rather than producing a scientifically exact model. This was my first C++ and graphics project, and it served as a practical way to learn lower-level programming, GPU parallelism, and how complex simulations are built and debugged in practice.
 
 [Link to Repository](https://github.com/Ambrois/Black-Hole-Sim)
 
-## Progress pictures
+## Screenshots
 
 ![Most Recent Screenshot](screenshots/2025-11-22.png)
 ![Most Recent Screenshot](screenshots/2025-11-25.png)
@@ -58,17 +62,11 @@ categories: ["C++", "physics"]
 
 ***
 
-### Context
-I started this project independently to learn C++, shader programming, and touch on general relativity. It took about a month and is so far the most difficult project I've mostly completed. I plan to develop more but am really tired of thinking about this project for now.
-
-- I learned C++ with this [free book](https://theartofhpc.com/isp.html).
-- I was able to learn some general relativity with Sean Carrol's *Spacetime and Geometry*, which can be acquired through [allegedly legal means](https://annas-archive.org/md5/194a5d79e309d30e08bd934daa3e03fb).
-- I was inspired to start this project by this [cool video](https://www.youtube.com/watch?v=8-B6ryuBkCM). I did not look at any of his code, and used a different derivation for the geodesic equations. I was also more generally inspired by [Sebastian Lague](https://www.youtube.com/c/SebastianLague)'s very cool youtube channel to try shader programming.
-
 ## Future work:
-- the center of the bh has trouble rendering bc parameterizing with phi, I'll try to minimize this by adjusting the dynamic step size to account for starting angle
-- if you move, the camera turns on its own, because I've yet to implement parallel transport of the camera directions, but this will be done
-- accretion disk adjustments
-  - needs better boundary detection
-  - its shape should be flared out a little for more realism
-  - add doppler effect coloring
+- A more detailed writeup of the equation derivations and algorithmic details is in process.
+- The center of the bh has trouble rendering bc parameterizing with phi, I'll try to minimize this by adjusting the dynamic step size to account for starting angle
+- If you move, the camera turns slightly on its own, because I've yet to implement parallel transport of the camera directions, but this is in progress.
+- Accretion disk adjustments:
+  - Could use better boundary detection.
+  - Its shape should be flared out a little for more realism.
+  - Could add doppler effect coloring.
