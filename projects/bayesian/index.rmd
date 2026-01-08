@@ -20,17 +20,26 @@ source("helpers.R")
 
 ## Introduction
 
-The accuracy of Bayesian inference depends on how well your chosen model(s) capture the underlying data-generating process. However, in practice, models are approximate and thus somewhat misspecified, with assumptions violated in various degrees. This analysis looks at two examples of mild model misspecification, comparing predictive distributions from correctly specified models with those from simpler misspecified alternatives. 
+In real-world data analysis, models are almost never exactly correct. Simplifying assumptions, such as independence, homogeneity, or a specific distributional form, are routinely made to keep models tractable. While Bayesian methods are often viewed as robust because they incorporate uncertainty explicitly, they are still sensitive to model misspecification: where assumed model structure does not match the true data-generating process.
 
-To facilitate accurate comparison, we match prior predictive distributions across models, which means that observed discrepancies in the posterior arise primarily due to model misspecification. To compare predictive distributions, we use total variation distance (TVD) and visualizalizations. We use naive rejection sampling for posterior sampling because we lack an explicit formula for likelihood for the dependent model, parameter dimensions are small, and for consistency across examples.
+This project investigates how small, realistic forms of model misspecification can materially change Bayesian conclusions, even when prior assumptions appear reasonable. Rather than focusing on parameter estimates alone, we compare posterior predictive distributions, which directly reflect what the model believes future or unseen data will look like. This makes the analysis especially relevant for applied settings where Bayesian models are used to support forecasting, decision-making, or risk assessment.
 
-Two examples are considered:
+To isolate the effect of misspecification, we construct pairs of models where:
 
-1. When the true data-generating process is hierarchical (Beta-Binomial).
+- One model matches the true data-generating process.
+- The other is a simpler, commonly used alternative.
+- Both models are calibrated to have nearly identical prior predictive behavior.
 
-2. When the true process involves dependent observations modeled as a drifting Markov chain.
+By matching prior predictive distributions, any divergence observed after seeing data can be attributed primarily to differences in model structure rather than differences in prior assumptions. We quantify these differences using total variation distance and visualize how predictive beliefs diverge after updating on the same observations.
 
-## Example 1. Real data is hierarchical, but we assume flat
+Two scenarios are examined:
+
+1. Data generated from a hierarchical process but analyzed using a non-hierarchical model.
+2. Data with dependence between observations but analyzed under an independence assumption.
+
+Across both cases, we find that seemingly mild misspecification can lead to substantially different posterior predictions. The results highlight an important lesson for applied Bayesian modeling: a model that appears well-calibrated before seeing data may still produce misleading inferences if its structural assumptions are wrong.
+
+## Example 1. Real data is hierarchical, but assumed to be flat.
 
 Our data $y$ follows the following hierarchical distribution, which we'll denote $D_1$.
 
@@ -172,7 +181,7 @@ plot_pp_difference(real_sample = df$post_pred, real_model_name = "D1",
 
 The posterior predictive distributions are quite different, with a Total Variational Distance of `r tvd_post` (a `r tvd_post/tvd_prior` time increase from the prior TVD), so the model misspecification in this case seems to have a significant impact on results.
 
-## Example 2. Real data is dependent, but we assume independent
+## Example 2. Real data is dependent, but assumed to be independent.
 
 Now, we explore what happens if our sample comes from a dependent model. Specifically, we generate a sample from summing a Markov Chain of $n$ drifting Bernoulli trials, denoted as model $D_2$.
 
