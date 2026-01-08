@@ -18,8 +18,20 @@ website:
             href: projects/blackholesim/index.qmd
           - text: "Statistical Consulting"
             href: projects/senior_consulting/index.qmd
+            contents:
+              - text: "IBaby"
+                href: projects/senior_consulting/ibaby.qmd
+              - text: "Sustainability"
+                href: projects/senior_consulting/sustainability.qmd
+              - text: "Mobility"
+                href: projects/senior_consulting/mobility.qmd
           - text: "ML Experiments"
             href: projects/ml_experiments/index.qmd
+            contents:
+              - text: "Tuned Lens"
+                href: projects/ml_experiments/tunedlens.qmd
+              - text: "Skin Cancer"
+                href: projects/ml_experiments/skincancer.qmd
 
 
 format:
