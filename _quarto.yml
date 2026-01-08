@@ -12,10 +12,10 @@ website:
         href: index.qmd
       - text: "Projects"
         contents:
-          - text: "Bayesian Analysis"
-            href: projects/bayesian/index.rmd
           - text: "Black Hole Simulation"
             href: projects/blackholesim/index.qmd
+          - text: "Bayesian Analysis"
+            href: projects/bayesian/index.rmd
           - text: "Statistical Consulting"
             href: projects/senior_consulting/index.qmd
             contents:
