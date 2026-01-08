@@ -1,0 +1,34 @@
+---
+title: "Exploring Tuned Lenses via Subspace Ablations"
+---
+
+### Motivation
+
+Tuned Lenses provide a way to map intermediate model activations into a shared predictive space aligned with the final token distribution. This experiment explored whether that lens-aligned space admits a meaningful linear decomposition into directions that directly influence output logits versus directions with little direct effect, and whether such a distinction can be probed through targeted ablations.
+
+### Core Idea
+
+Using a singular value decomposition of the unembedding matrix, we partitioned the lens-aligned predictive space into two subspaces: directions associated with large singular values (hypothesized to have strong influence on logits) and directions associated with small singular values (hypothesized to be weakly output-relevant). We then ablated activations within each subspace and measured changes in model predictions using KL divergence.
+
+### Results
+
+With pretrained Tuned Lenses, ablations of high–singular-value directions consistently produced substantially larger KL divergence than ablations of low–singular-value directions, with the effect generally increasing in later layers. In contrast, lenses trained on a small, low-quality subset of text data failed to show this separation, suggesting that the experiment is highly sensitive to lens quality and training distribution.
+
+### Interpretation and Limitations
+
+The results support the view that the lens-aligned space contains linearly identifiable directions with direct influence on the output distribution. However, conclusions are limited by dependence on pretrained lenses, lack of out-of-distribution validation, and the exploratory nature of the analysis. The experiment is best interpreted as a diagnostic probe of Tuned Lens behavior rather than a definitive decomposition of model computation.
+
+### Status
+
+This work is exploratory and incomplete. Planned extensions included propagating output-subspace importance backward through lens maps to identify circuit endpoints, but these were not completed within the available time and infrastructure constraints.
+
+***
+
+[View Repository](https://github.com/Ambrois/Tuned-Lens-Inspired-Experimentation)
+
+### References
+Belrose, N., Henighan, T., Turner, A. M., et al. (2023).  
+*The Tuned Lens: Revealing Representations of LLMs without Intervention*.  
+arXiv:2303.08112. https://arxiv.org/abs/2303.08112
+
+
