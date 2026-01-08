@@ -37,9 +37,7 @@ everest_plot |>
 
 ![everest-vis](pics/everest-vis.png)
 
-Dot plot showing Mount Everest expedition durations by year, with points indicating individual expeditions and visual separation between successful and unsuccessful outcomes. The figure highlights long-term convergence toward shorter, more consistent expedition lengths, alongside isolated years with markedly reduced durations and success.
-
-
+Dot plot showing Mount Everest expedition lengths by year, with each point representing one expedition. Successful and unsuccessful climbs are shown separately, revealing that expedition durations have become more consistent over time, with a few years showing unusually short and unsuccessful expeditions.
 
 
 
@@ -86,18 +84,15 @@ ggplot() +
 
 ![age-gap-mirrored](pics/age-gap-vis-1.png)
 
-Mirrored histogram comparing age-gap distributions based on whether the older actor is male or female. The male-older distribution is more right-skewed and extends to larger age differences, while the female-older distribution is more concentrated near zero.
+Mirrored histogram comparing age differences in movie couples based on whether the older actor is male or female. Relationships with older men tend to have larger and more varied age gaps, while relationships with older women are more tightly clustered around smaller differences.
 
 
 ***
 
 
-
 ![age-gap-hist](pics/age-gap-vis-2.png)
 
-Histogram showing the distribution of age differences in heterosexual movie couples, computed as male age minus female age. Positive values dominate the distribution, indicating that relationships with older male actors occur more frequently and span a wider range of age gaps than those with older female actors.
-
-
+Histogram showing age differences in heterosexual movie couples, calculated as male age minus female age. Most values are positive, indicating that male actors are more often older than their female partners and by a wider range of ages.
 
 
 ***
@@ -127,7 +122,7 @@ animate(animated_plot, renderer = gifski_renderer())
 
 ![murder-happiness-1](pics/murder-rate-happiness-vis.png)
 
-Scatter plot showing the relationship between log murder rate and happiness score across countries, with fitted regression lines that vary over time. The figure illustrates a generally negative association whose strength changes across different periods.
+Scatter plot showing the relationship between murder rates and happiness scores across countries, with a fitted trend line that changes over time. Overall, higher murder rates tend to be associated with lower happiness, though the strength of this relationship varies by year.
 
 
 ***
@@ -170,9 +165,7 @@ observed + predicted
 
 ![murder-happiness-2](pics/murder-rate-happiness-vis-2.png)
 
-Side-by-side scatter plots comparing observed data with data simulated from a fitted linear regression model. The comparison highlights how closely the model reproduces the overall trend while revealing differences in dispersion and linearity.
-
-
+Side-by-side scatter plots comparing the real data to data simulated from a linear regression model. The plots show that the model captures the general trend but produces more tightly clustered points than those seen in the observed data.
 
 ***
 
@@ -213,5 +206,5 @@ ggplot(data = penguins,
 
 ![ugly-vis](pics/ugly-vis.png)
 
-Plot designed to be difficult to interpret, using confusing scales, inappropriate transformations, and ineffective visual encodings. The figure demonstrates how poor labeling, over-encoding, and misleading axis choices can obscure patterns and distort interpretation rather than communicate data clearly.
+Plot intentionally designed to be confusing and unpleasant, with unclear labels, unnecessary transformations, and distracting visual elements. The figure illustrates how poor design choices can hide patterns and mislead viewers rather than communicate information effectively.
 
