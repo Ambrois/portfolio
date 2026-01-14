@@ -27,6 +27,8 @@ Although the underlying physics is based on general relativity, the primary focu
 
 ## Screenshots
 
+> The resolution is low, but these were run on a mid-tier laptop from 2017 without a dedicated GPU.
+
 ![Most Recent Screenshot](screenshots/2025-11-22.png)
 ![Most Recent Screenshot](screenshots/2025-11-25.png)
 
