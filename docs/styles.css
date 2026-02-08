@@ -132,3 +132,9 @@ body.fullcontent #quarto-document-content :is(
   margin-left: 0;
   margin-right: auto;
 }
+
+/* Light-theme pages: blend white image backgrounds into the warm canvas. */
+body:not(.theme-dark) #quarto-document-content img,
+body:not(.theme-dark) .thumbnail-image {
+  mix-blend-mode: multiply;
+}
