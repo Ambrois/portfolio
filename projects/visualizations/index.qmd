@@ -9,6 +9,8 @@ format:
 ---
 
 
+A collection of small visualization projects from classwork and personal practice.
+
 
 ***
 
@@ -37,7 +39,7 @@ everest_plot |>
 
 ![everest-vis](pics/everest-vis.png)
 
-Dot plot showing Mount Everest expedition lengths by year, with each point representing one expedition. Successful and unsuccessful climbs are shown separately, revealing that expedition durations have become more consistent over time, with sharp drops driven by external disasters. In 2014, an ice avalanche in the Khumbu Icefall killed several Sherpas and led to the cancellation of much of the climbing season. In 2015, a large earthquake in Nepal triggered avalanches that struck Everest Base Camp, forcing most expeditions to end early.
+Dot plot of Everest expedition duration by year, split by summit success. Durations become more consistent over time, with major drops during disaster years: the 2014 Khumbu Icefall avalanche and the 2015 Nepal earthquake/avalanche season.
 
 
 
@@ -84,7 +86,7 @@ ggplot() +
 
 ![age-gap-mirrored](pics/age-gap-vis-1.png)
 
-Mirrored histogram comparing age differences in movie couples based on whether the older actor is male or female. Relationships with older men tend to have larger and more varied age gaps, while relationships with older women are more tightly clustered around smaller differences.
+Mirrored histogram of age gaps in movie couples by gender of the older actor. When the older actor is male, age gaps are generally larger and more variable; when the older actor is female, gaps are tighter and usually smaller.
 
 
 ***
@@ -92,7 +94,7 @@ Mirrored histogram comparing age differences in movie couples based on whether t
 
 ![age-gap-hist](pics/age-gap-vis-2.png)
 
-Histogram showing age differences in heterosexual movie couples, calculated as male age minus female age. Most values are positive, indicating that male actors are more often older than their female partners and by a wider range of ages.
+Histogram of age differences in heterosexual movie couples (male age minus female age). The distribution is mostly positive, which means men are more often older than their female co-stars, and often by larger margins.
 
 
 ***
@@ -122,7 +124,7 @@ animate(animated_plot, renderer = gifski_renderer())
 
 ![murder-happiness-1](pics/murder-rate-happiness-vis.png)
 
-Scatter plot showing the relationship between murder rates and happiness scores across countries, with a fitted trend line that changes over time. Overall, higher murder rates tend to be associated with lower happiness, though the strength of this relationship varies by year.
+Country-level scatter plot of murder rate vs. happiness score with a fitted trend line over time. Higher murder rates are generally associated with lower happiness, though the strength of that relationship shifts year to year.
 
 
 ***
@@ -165,7 +167,7 @@ observed + predicted
 
 ![murder-happiness-2](pics/murder-rate-happiness-vis-2.png)
 
-Side-by-side scatter plots comparing the real data to data simulated from a linear regression model. The plots show that the model captures the general trend but produces more tightly clustered points than those seen in the observed data.
+Observed vs. simulated scatter plots from a linear model. The simulation captures the overall trend but is more tightly clustered than the real data, suggesting the model underestimates variability.
 
 ***
 
@@ -206,5 +208,4 @@ ggplot(data = penguins,
 
 ![ugly-vis](pics/ugly-vis.png)
 
-Plot intentionally designed to be confusing and unpleasant, with unclear labels, unnecessary transformations, and distracting visual elements. The figure illustrates how poor design choices can hide patterns and mislead viewers rather than communicate information effectively.
-
+An intentionally bad chart: unclear labels, noisy styling, unnecessary transforms, and distracting annotations. The point is to show how design choices can hide signal and mislead interpretation.

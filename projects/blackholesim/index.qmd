@@ -11,18 +11,19 @@ body-classes: theme-dark
 ---
 ## Introduction
 
-This project is a real-time black hole visualization engine built from scratch in C++, using GPU shaders for parallel computation. The goal was to simulate how light bends near a black hole and render the resulting image on screen, while simultaneously modern C++, graphics programming, and numerical simulation techniques.
+ This is a real-time black hole renderer I built from scratch with C++, SFML, and GLSL.
 
-At a high level, the program treats each screen pixel as a ray of light emitted from a virtual camera. These rays are numerically simulated as they travel through curved spacetime near a black hole. Depending on how each ray bends and what it intersects (background stars or an accretion disk), the program computes the final color of that pixel. The entire process runs in parallel on the GPU, allowing thousands of light paths to be simulated simultaneously.
+  How it works on a high level: every pixel is treated like a ray of light, which is stepped through curve spacetime by numerically integrating the appropriate equations. Depending on where the ray ends up (background stars or the accretion disk), that pixel gets its final color. Rays are processed in parallel.
 
-This project required building multiple systems end-to-end:
+  What I built:
 
-- A custom ray-marching pipeline implemented in GLSL
-- A numerical solver (fourth-order Runge–Kutta with adaptive step size) for physically motivated differential equations
-- A rendering pipeline integrating C++, SFML, and shaders
-- Performance optimizations and debugging in a GPU-only environment
+  - A custom GLSL ray-marching setup
+  - RK4 integration with adaptive step sizing
+  - C++ with SFML rendering pipeline
+  - A lot of performance tuning and so so much shader debugging
 
-Although the underlying physics is based on general relativity, the primary focus of the project was systems design, numerical methods, and performance-conscious implementation, rather than producing a scientifically exact model. This was my first C++ and graphics project, and it served as a practical way to learn lower-level programming, GPU parallelism, and how complex simulations are built and debugged in practice.
+  Main goal was learning low-level graphics and numerical simulation in a hands-on way, and this is by on means a very scientifically accurate model. The black hole is not to scale, as the equation I used was dimensionless and the accretion ring coloring was decided by a random inner temperature that made it look cool.
+
 
 [View Repository](https://github.com/Ambrois/Black-Hole-Sim)
 

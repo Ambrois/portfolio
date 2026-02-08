@@ -8,21 +8,20 @@ image: consulting-thumbnail.png
 
 ### Overview
 
-These projects were completed as part of an undergraduate capstone in statistical consulting, involving real data and stakeholders.
+Capstone consulting projects from my undergraduate statistics program.
 
 ### Projects
 
 #### [IBaby Month One: Maternal Depression and Technology Use](ibaby.qmd)
 
-Studied survey data from new mothers to see whether parenting stress and technology use are linked to depression one month after birth. Used a logistic regression model and found that higher stress and greater distraction were strongly associated with increased depression risk, even after accounting for basic demographic factors.
+Logistic regression on postpartum survey data. Higher parenting stress and tech-related distraction were both associated with higher depression risk after demographic controls.
 
 
 #### [Sustainability Literacy: Environmental and Educational Predictors of Knowledge](sustainability.qmd)
 
-Studied how environmental background and education relate to sustainability knowledge, while controlling for time spent in college. Applied multiple linear regression to survey and census data and found that college-level exposure mattered more than individual background characteristics.
+Multiple regression on survey + census-linked features. College exposure predicted sustainability knowledge more strongly than most background variables.
 
 
 #### [Manual Task Performance Under Distraction and Biomechanical Constraints](mobility.qmd)
 
-Studied how hand dominance, wrist movement, and mental distraction influence performance on a manual task. Used a mixed-effects design to account for repeated measurements and focused on interpreting results with appropriate attention to statistical power.
-
+Mixed-effects analysis of repeated manual-task trials. Hand dominance, wrist constraints, and distraction all affected performance, with power limits considered in interpretation.

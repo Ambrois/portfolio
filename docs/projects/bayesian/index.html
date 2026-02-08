@@ -301,21 +301,14 @@ window.Quarto = {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>In data analysis, models are never exactly correct. Simplifying assumptions, such as independence, homogeneity, or a specific distributional form, keep models tractable. While Bayesian methods are often viewed as robust because they incorporate uncertainty explicitly, they are still sensitive to model misspecification: where assumed model structure does not match the true data-generating process.</p>
-<p>This project investigates how small, realistic forms of model misspecification can materially change Bayesian conclusions, even when prior assumptions appear reasonable. Rather than focusing on parameter estimates alone, we compare posterior predictive distributions, which directly reflects what the model believes future or unseen data will look like. This makes the analysis especially relevant for applied settings where Bayesian models are used to support forecasting, decision-making, or risk assessment.</p>
-<p>To isolate the effect of misspecification, we construct pairs of models where:</p>
-<ul>
-<li>One model matches the true data-generating process.</li>
-<li>The other is a simpler, commonly used alternative.</li>
-<li>Both models are calibrated to have nearly identical prior predictive behavior.</li>
-</ul>
-<p>By matching prior predictive distributions, any divergence observed after seeing data can be attributed primarily to differences in model structure rather than differences in prior assumptions. We quantify these differences using total variation distance and visualize how predictive beliefs diverge after updating on the same observations.</p>
-<p>Two scenarios are examined:</p>
+<p>Bayesian methods combine prior beliefs with observed data to update uncertainty, but they are still vulnerable to model misspecification, where assumed structure (like independence or hierarchy) does not match the true data-generating process.</p>
+<p>This project asks: if two models have nearly the same prior predictive behavior, how much can mild structural misspecification still change posterior predictions?</p>
+<p>We test two cases:</p>
 <ol type="1">
-<li>Data generated from a hierarchical process but analyzed using a non-hierarchical model.</li>
-<li>Data with dependence between observations but analyzed under an independence assumption.</li>
+<li>Data are hierarchical, but the analysis model is flat.</li>
+<li>Data are dependent, but the analysis model assumes independence.</li>
 </ol>
-<p>Across both cases, we find that seemingly mild misspecification can lead to substantially different posterior predictions. The results highlight an important lesson for applied Bayesian modeling: a model that appears well-calibrated before seeing data may still produce misleading inferences if its structural assumptions are wrong.</p>
+<p>In both cases, posterior predictive distributions diverge meaningfully after seeing the same data. The practical takeaway is that a model can look well calibrated before observing data and still give misleading posterior inferences if its structure is wrong.</p>
 </section>
 <section id="example-1.-real-data-is-hierarchical-but-assumed-to-be-flat." class="level2">
 <h2 class="anchored" data-anchor-id="example-1.-real-data-is-hierarchical-but-assumed-to-be-flat.">Example 1. Real data is hierarchical, but assumed to be flat.</h2>
@@ -393,12 +386,12 @@ p &amp;\sim \text{Beta}(\alpha, \beta) \\
 </div>
 </div>
 </div>
-<p>As you can see, the predictive distributions for the two models are extremely similar, which suggests the two priors are effectively equivalent.</p>
-<p>This implies that any differences observed in the posterior distributions after updating on data are likely attributable to differences in the models themselves, rather than the priors.</p>
-<p>Now let’s find the posteriors of each and see how they vary.</p>
+<p>As shown, the prior predictive distributions are extremely similar, so these priors are effectively equivalent.</p>
+<p>That means any posterior differences after updating on data should mostly come from model structure, not prior choice.</p>
+<p>Now we update both models and compare the posterior predictives.</p>
 <section id="updating-d_1" class="level3">
 <h3 class="anchored" data-anchor-id="updating-d_1">Updating <span class="math inline">\(D_1\)</span></h3>
-<p>Finding posterior via naive simulation</p>
+<p>We approximate the posterior with naive simulation (rejection sampling).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We sample from the prior a lot, predict with the param values from the prior,</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and keep if the prediction is equal to the observed data</span></span>
@@ -450,16 +443,16 @@ p \mid Y = 42 \sim Beta\!\big(5+42,\ 3+58\big)
 </div>
 </div>
 </div>
-<p>The posterior predictive distributions are quite different, with a Total Variational Distance of 0.648 (a 14.4966443 time increase from the prior TVD), so the model misspecification in this case seems to have a significant impact on results.</p>
+<p>The posterior predictives are clearly different, with total variation distance 0.648 (a 14.4966443-fold increase over prior TVD). In this setup, misspecification has a meaningful effect on inference.</p>
 </section>
 </section>
 <section id="example-2.-real-data-is-dependent-but-assumed-to-be-independent." class="level2">
 <h2 class="anchored" data-anchor-id="example-2.-real-data-is-dependent-but-assumed-to-be-independent.">Example 2. Real data is dependent, but assumed to be independent.</h2>
-<p>Now, we explore what happens if our sample comes from a dependent model. Specifically, we generate a sample from summing a Markov Chain of <span class="math inline">\(n\)</span> drifting Bernoulli trials, denoted as model <span class="math inline">\(D_2\)</span>.</p>
+<p>Now we test a dependence misspecification case. Data are generated by summing a Markov process of <span class="math inline">\(n\)</span> drifting Bernoulli trials (model <span class="math inline">\(D_2\)</span>).</p>
 <p><span class="math display">\[
 Y \sim MC(n=100, \ p_0=0.4, \ \delta=0.1)
-\]</span> (MC for Markov Counts, details for sampling are in the helper functions section)</p>
-<p>Where for <span class="math inline">\(n\)</span> trials, <span class="math inline">\(p_0\)</span> is the initial probability of success, and <span class="math inline">\(\delta\)</span> is the standard deviation of gaussian drift added to the success probability after each trial.</p>
+\]</span> (MC = Markov Counts; sampling details are in helper functions.)</p>
+<p>Here, <span class="math inline">\(p_0\)</span> is the initial success probability and <span class="math inline">\(\delta\)</span> is the standard deviation of Gaussian drift added to the success probability after each trial.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>n_ops <span class="ot">=</span> <span class="dv">100</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">r_markov_bernoulli</span>(n_ops, <span class="at">p0=</span><span class="fl">0.4</span>, <span class="at">drift_sd=</span><span class="fl">0.1</span>)</span>
@@ -469,19 +462,19 @@ Y \sim MC(n=100, \ p_0=0.4, \ \delta=0.1)
 <pre><code>[1] 34</code></pre>
 </div>
 </div>
-<p>Again, we will misspecify the model by assuming the data comes from a binomial distribution. We assign the same <span class="math inline">\(\text{Beta}(5, 3)\)</span> prior on <span class="math inline">\(p\)</span>. Again, we call this model <span class="math inline">\(M\)</span>. <span class="math display">\[
+<p>Again, we intentionally misspecify by fitting a binomial model with the same <span class="math inline">\(\text{Beta}(5, 3)\)</span> prior on <span class="math inline">\(p\)</span> (model <span class="math inline">\(M\)</span>). <span class="math display">\[
 \begin{aligned}
 Y &amp;\sim \text{Binom}(n=100, p) \\
 (Prior)\quad p &amp;\sim \text{Beta}(5, 3)
 \end{aligned}
 \]</span></p>
-<p>Let’s then find an equivalent prior for model <span class="math inline">\(D_2\)</span>. <span class="math display">\[
+<p>Now we choose an equivalent prior for model <span class="math inline">\(D_2\)</span>. <span class="math display">\[
 \begin{aligned}
 Y &amp;\sim MC(n=100, p_0, \delta) \\
 (Prior)\quad p_0 &amp;\sim \text{Beta}(\alpha, \beta) \\
 (Prior)\quad \delta &amp;\sim \text{Exp}(\lambda)
 \end{aligned}
-\]</span> We’ll need a function to sample a prior predictive distribution for <span class="math inline">\(D_2\)</span>.</p>
+\]</span> We use the function below to sample from the prior predictive distribution of <span class="math inline">\(D_2\)</span>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sample_from_pp_D2 <span class="ot">=</span> <span class="cf">function</span>(n, size, alpha, beta, rate) {</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    p0 <span class="ot">=</span> <span class="fu">rbeta</span>(n, alpha, beta)</span>
@@ -490,14 +483,14 @@ Y &amp;\sim MC(n=100, p_0, \delta) \\
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(sample)</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Let’s use this prior distribution: <span class="math display">\[
+<p>We use this prior distribution: <span class="math display">\[
 \begin{aligned}
 Y &amp;\sim MC(n=100, \ p_0, \ \delta) \\
 (Prior)\quad p_0 &amp;\sim \text{Beta}(5, 3) \\
 (Prior)\quad \delta &amp;\sim \text{Exp}(100)
 \end{aligned}
 \]</span></p>
-<p>And compare the prior predictive distributions:</p>
+<p>Now compare the prior predictive distributions:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>prior_pred_D2 <span class="ot">=</span> <span class="fu">sample_from_pp_D2</span>(<span class="at">n=</span>pp_sample_size,</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">size =</span> n_obs,</span>
@@ -519,11 +512,12 @@ Y &amp;\sim MC(n=100, \ p_0, \ \delta) \\
 </div>
 </div>
 </div>
-<p>As shown, the priors are effectively equivalent.</p>
-<p>Let’s proceed with updating both models to see what kind of discrepancy there is.</p>
+<p>Again, the prior predictives are effectively equivalent.</p>
+<p>Next we update both models and measure how much the posterior predictives diverge.</p>
 <section id="updating-d_2" class="level3">
 <h3 class="anchored" data-anchor-id="updating-d_2">Updating <span class="math inline">\(D_2\)</span></h3>
-<p>We use naive simulation again to create a posterior sample for D2. (This one is much slower, so we’re also accepting if the predicted is within 1 of the observed, which makes the posterior a bit less accurate.)</p>
+<p>We use naive simulation again to get a posterior sample for <span class="math inline">\(D_2\)</span>.<br>
+This step is slower, so we accept draws within 1 of the observed count, which makes the approximation slightly rougher.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">p0 =</span> <span class="fu">numeric</span>(), <span class="at">drift_sd =</span> <span class="fu">numeric</span>())</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -545,7 +539,7 @@ Y &amp;\sim MC(n=100, \ p_0, \ \delta) \\
 </section>
 <section id="updating-m-1" class="level3">
 <h3 class="anchored" data-anchor-id="updating-m-1">Updating <span class="math inline">\(M\)</span></h3>
-<p>Again, a straightforward updating of the Beta-Binomial Prior.</p>
+<p>Again, this is a straightforward Beta-Binomial update.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>post_predictive_M <span class="ot">=</span> <span class="fu">r_beta_binom</span>(pp_sample_size, n_obs, <span class="dv">5</span><span class="sc">+</span>y_obs, <span class="dv">3</span><span class="sc">+</span>n_obs<span class="sc">-</span>y_obs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -566,21 +560,21 @@ Y &amp;\sim MC(n=100, \ p_0, \ \delta) \\
 </div>
 </div>
 </div>
-<p>There is a Total Variational Distance of 0.214 (a 3.5607321 time increase from the prior TVD), and we can see from the plot, the posterior predictive distributions are visibly different.</p>
+<p>The total variation distance is 0.214 (a 3.5607321-fold increase from prior TVD), and the posterior predictive distributions are visibly different.</p>
 </section>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>These examples demonstrate that model misspecification can have significant impacts of the results of a bayesian analyses. In terms of real world implications, these examples can serve as a cautionary tale to not blindly trust a model, even one with a reasonable prior predictive distribution.</p>
+<p>These examples show that mild misspecification can materially change Bayesian conclusions, even when prior predictive checks look reasonable. In practice, this is a warning: prior calibration is helpful, but it does not protect you if structural assumptions are wrong.</p>
 <section id="future-work" class="level3">
 <h3 class="anchored" data-anchor-id="future-work">Future Work</h3>
-<p>An end goal of this project would be to analyze which statistics and tests are robust to varying degrees of model misspecification. To do this, we anticipate we’ll need to figure out the following:</p>
+<p>A next step is to identify which analyses and test statistics stay robust under different kinds and degrees of misspecification. To do that, we need:</p>
 <ul>
-<li>Given a true underlying model, a method for quantifying or classifying how different (and therefore misspecified) a proposed model is.</li>
-<li>Given a true model and proposed model (+prior distribution), an efficient method for finding prior distributions for the true model such that their predictive distribution matches that of the propsed model. This would let us find effectively equivalent prior distributions, which we need to isolate the effects of model differences. (2)</li>
+<li>A principled way to quantify how far a proposed model is from the true data-generating process.</li>
+<li>An efficient method for choosing priors on the true model that match the proposed model’s prior predictive distribution, so structural effects can be isolated cleanly. (2)</li>
 </ul>
 <ol start="2" type="1">
-<li>It has proven to be very difficult to find prior distributions such that they have some specified prior predictive distribution, because the search space of prior distributions is very very large. For future work, we could look for a more viable and general method of searching for priors.</li>
+<li>In practice, matching a target prior predictive distribution is hard because the prior search space is large. A more general and computationally efficient search method would make this workflow much more usable.</li>
 </ol>
 </section>
 </section>
@@ -708,7 +702,7 @@ Y &amp;\sim MC(n=100, \ p_0, \ \delta) \\
 </section>
 <section id="errata" class="level3">
 <h3 class="anchored" data-anchor-id="errata">Errata</h3>
-<p>We tried using grid search over parameterized priors to find priors with equivalent prior predictive distributions, but it did not work well at all.</p>
+<p>We first tried grid search over parameterized priors to match prior predictives, but it performed poorly.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># grid = expand.grid(</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   mu1 = seq(1, 50, by=5),</span></span>
@@ -730,7 +724,7 @@ Y &amp;\sim MC(n=100, \ p_0, \ \delta) \\
 <span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) |&gt; </span></span>
 <span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="co">#   arrange(distances)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>We tried to use a different kind of markov model originally, but could not find priors which made equivalent prior predictive distributions for it.</p>
+<p>We also tried a different Markov model variant, but could not find priors that produced equivalent prior predictives.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (UNUSED because couldn't find equivalent predictive prior) function to sample Markov Bernoulli Distribution</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>r_markov_bernoulli_old <span class="ot">=</span> <span class="cf">function</span>(n, p_initial, p_after_1, p_after_0){</span>

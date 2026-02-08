@@ -4,29 +4,29 @@ title: "Exploring Tuned Lenses via Subspace Ablations"
 
 ### Background
 
-Tuned Lenses are a technique from mechanistic interpretability research that let you read off the model’s internal predictions at intermediate layers. Instead of only looking at the final output, a tuned lens trains a small transformation that maps hidden states directly into the vocabulary’s space, letting you see what the model *would predict* based on partial computation at each layer.
+Tuned Lenses let you read intermediate layer predictions by mapping hidden states directly into vocabulary-logit space, instead of only inspecting the final layer output.
 
 > More broadly, mechanistic interpretability is a field of AI research that tries to reverse-engineer how neural networks compute their outputs in human-understandable terms, rather than treating a model as a black box.
 
 ### Motivation
 
-Tuned Lenses provide a way to map intermediate model activations into a shared predictive space aligned with the final token distribution. This experiment explored whether that lens-aligned space admits a meaningful linear decomposition into directions that directly influence output logits versus directions with little direct effect, and whether such a distinction can be probed through targeted ablations.
+I wanted to test whether lens-aligned predictive space can be split into directions that strongly affect logits vs. directions that weakly affect logits.
 
 ### Core Idea
 
-Using a singular value decomposition of the unembedding matrix, we partitioned the lens-aligned predictive space into two subspaces: directions associated with large singular values (hypothesized to have strong influence on logits) and directions associated with small singular values (hypothesized to be weakly output-relevant). We then ablated activations within each subspace and measured changes in model predictions using KL divergence.
+Using SVD of the unembedding matrix, I split the lens-aligned space into high-singular-value and low-singular-value subspaces, then ablated each and measured prediction shifts with KL divergence.
 
 ### Results
 
-With pretrained Tuned Lenses, ablations of high–singular-value directions consistently produced substantially larger KL divergence than ablations of low–singular-value directions, with the effect generally increasing in later layers. In contrast, lenses trained on a small, low-quality subset of text data failed to show this separation, suggesting that the experiment is highly sensitive to lens quality and training distribution.
+With pretrained Tuned Lenses, ablating high-singular-value directions caused much larger KL divergence than ablating low-singular-value directions, especially in later layers. This separation disappeared with low-quality lenses trained on a small text subset, indicating high sensitivity to lens quality and training distribution.
 
 ### Interpretation and Limitations
 
-The results support the view that the lens-aligned space contains linearly identifiable directions with direct influence on the output distribution. However, conclusions are limited by dependence on pretrained lenses, lack of out-of-distribution validation, and the exploratory nature of the analysis. The experiment is best interpreted as a diagnostic probe of Tuned Lens behavior rather than a definitive decomposition of model computation.
+The results support a linearly identifiable output-relevant subspace in lens-aligned space, but this is still exploratory. Conclusions are limited by reliance on pretrained lenses, no OOD validation, and incomplete follow-up experiments.
 
 ### Status
 
-This work is exploratory and incomplete. Planned extensions included propagating output-subspace importance backward through lens maps to identify circuit endpoints, but these were not completed within the available time and infrastructure constraints.
+This project is exploratory and unfinished. A planned extension was to back-propagate subspace importance through lens maps to identify likely circuit endpoints, but this was not completed.
 
 
 ***
@@ -37,5 +37,4 @@ This work is exploratory and incomplete. Planned extensions included propagating
 Belrose, N., Henighan, T., Turner, A. M., et al. (2023).  
 *The Tuned Lens: Revealing Representations of LLMs without Intervention*.  
 arXiv:2303.08112. https://arxiv.org/abs/2303.08112
-
 

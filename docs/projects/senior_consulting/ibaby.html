@@ -70,6 +70,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-sidebar floating fullcontent quarto-light">
@@ -116,6 +117,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../../projects/blackholesim/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Black Hole Simulation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../projects/visualizations/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Visualization Gallery</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -176,12 +183,6 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../projects/visualizations/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Visualization Gallery</span></a>
-  </div>
-</li>
       </ul>
   </li>
     </ul>
@@ -214,27 +215,30 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="overview" class="level3">
 <h3 class="anchored" data-anchor-id="overview">Overview</h3>
-<p>This project supported an ongoing research study examining associations between maternal depression, parenting stress, and technology-related distraction during the first month postpartum. Using survey-based measures and demographic covariates, we evaluated whether stress and perceived distraction were associated with depression risk at one month postpartum.</p>
+<p>This project examined whether parenting stress and tech-related distraction are associated with depression risk one month postpartum.</p>
 </section>
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
-<p>The analysis used data from 65 mothers assessed one month after birth. Depression status was defined using a CES-D–based indicator (score ≥ 13). Predictors included summed parenting stress scores, perceived technology-related distraction, maternal age, household income, and marital status. To reduce dimensionality and improve stability given the sample size, summarized scale scores were used rather than individual survey items, and observations with substantial missing data were excluded.</p>
+<p>Sample: 65 mothers assessed one month after birth.<br>
+Outcome: CES-D–based depression indicator (score ≥ 13).<br>
+Predictors: parenting stress, perceived distraction, age, income, and marital status.</p>
+<p>Given sample size, we used summarized scale scores (instead of item-level inputs) and removed cases with substantial missingness.</p>
 </section>
 <section id="methodology" class="level3">
 <h3 class="anchored" data-anchor-id="methodology">Methodology</h3>
-<p>A logistic regression model was used to estimate associations between depression status and the predictors of interest. Backward stepwise selection was applied to balance interpretability with the limited sample size, and continuous predictors were standardized to facilitate comparison of effect sizes through odds ratios.</p>
+<p>We fit logistic regression for depression risk, used backward stepwise selection to keep the model interpretable, and standardized continuous predictors so odds ratios were easier to compare.</p>
 </section>
 <section id="key-findings" class="level3">
 <h3 class="anchored" data-anchor-id="key-findings">Key Findings</h3>
-<p>Higher parenting stress and higher perceived distraction were both associated with increased odds of depression at one month postpartum. Maternal age was negatively associated with depression risk, with older mothers showing lower odds of depression. Household income and marital status were also retained in the final model, indicating potential socioeconomic and contextual influences that warrant further investigation.</p>
+<p>Higher parenting stress and higher perceived distraction were both associated with higher odds of depression. Maternal age was negatively associated with depression risk. Income and marital status were retained, suggesting possible socioeconomic/context effects.</p>
 </section>
 <section id="model-performance-and-diagnostics" class="level3">
 <h3 class="anchored" data-anchor-id="model-performance-and-diagnostics">Model Performance and Diagnostics</h3>
-<p>The final model showed good discrimination between depressed and non-depressed cases on the available data (ROC AUC ≈ 0.91). Diagnostic checks did not indicate major violations of logistic regression assumptions or problematic multicollinearity.</p>
+<p>The final model showed strong in-sample discrimination (ROC AUC ≈ 0.91). Diagnostics did not suggest major assumption violations or severe multicollinearity.</p>
 </section>
 <section id="interpretation-and-limitations" class="level3">
 <h3 class="anchored" data-anchor-id="interpretation-and-limitations">Interpretation and Limitations</h3>
-<p>The results suggest that stress and technology-related distraction are meaningfully associated with early postpartum depression. Findings are observational and based on a modest sample, so effect estimates should be interpreted cautiously, particularly for demographic variables that may reflect sample imbalance or unmeasured confounding.</p>
+<p>Findings support a meaningful association between stress/distraction and early postpartum depression, but this is observational work with a modest sample. Effect sizes should be interpreted cautiously, especially for demographic terms that may be sensitive to sample imbalance and unmeasured confounding.</p>
 </section>
 <section id="tools" class="level3">
 <h3 class="anchored" data-anchor-id="tools">Tools</h3>

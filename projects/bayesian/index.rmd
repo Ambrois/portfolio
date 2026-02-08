@@ -23,24 +23,16 @@ source("helpers.R")
 
 ## Introduction
 
-In data analysis, models are never exactly correct. Simplifying assumptions, such as independence, homogeneity, or a specific distributional form, keep models tractable. While Bayesian methods are often viewed as robust because they incorporate uncertainty explicitly, they are still sensitive to model misspecification: where assumed model structure does not match the true data-generating process.
+Bayesian methods combine prior beliefs with observed data to update uncertainty, but they are still vulnerable to model misspecification, where assumed structure (like independence or hierarchy) does not match the true data-generating process.
 
-This project investigates how small, realistic forms of model misspecification can materially change Bayesian conclusions, even when prior assumptions appear reasonable. Rather than focusing on parameter estimates alone, we compare posterior predictive distributions, which directly reflects what the model believes future or unseen data will look like. This makes the analysis especially relevant for applied settings where Bayesian models are used to support forecasting, decision-making, or risk assessment.
+This project asks: if two models have nearly the same prior predictive behavior, how much can mild structural misspecification still change posterior predictions?
 
-To isolate the effect of misspecification, we construct pairs of models where:
+We test two cases:
 
-- One model matches the true data-generating process.
-- The other is a simpler, commonly used alternative.
-- Both models are calibrated to have nearly identical prior predictive behavior.
+1. Data are hierarchical, but the analysis model is flat.
+2. Data are dependent, but the analysis model assumes independence.
 
-By matching prior predictive distributions, any divergence observed after seeing data can be attributed primarily to differences in model structure rather than differences in prior assumptions. We quantify these differences using total variation distance and visualize how predictive beliefs diverge after updating on the same observations.
-
-Two scenarios are examined:
-
-1. Data generated from a hierarchical process but analyzed using a non-hierarchical model.
-2. Data with dependence between observations but analyzed under an independence assumption.
-
-Across both cases, we find that seemingly mild misspecification can lead to substantially different posterior predictions. The results highlight an important lesson for applied Bayesian modeling: a model that appears well-calibrated before seeing data may still produce misleading inferences if its structural assumptions are wrong.
+In both cases, posterior predictive distributions diverge meaningfully after seeing the same data. The practical takeaway is that a model can look well calibrated before observing data and still give misleading posterior inferences if its structure is wrong.
 
 ## Example 1. Real data is hierarchical, but assumed to be flat.
 
@@ -123,15 +115,15 @@ plot_pp_difference(real_sample = prior_pred_D1, real_model_name = "D1",
                    miss_sample = prior_pred_M, miss_model_name = "M",
                    prior_or_post = "Prior")
 ```
-As you can see, the predictive distributions for the two models are extremely similar, which suggests the two priors are effectively equivalent. 
+As shown, the prior predictive distributions are extremely similar, so these priors are effectively equivalent.
 
-This implies that any differences observed in the posterior distributions after updating on data are likely attributable to differences in the models themselves, rather than the priors.
+That means any posterior differences after updating on data should mostly come from model structure, not prior choice.
 
-Now let's find the posteriors of each and see how they vary.
+Now we update both models and compare the posterior predictives.
 
 ### Updating $D_1$
 
-Finding posterior via naive simulation
+We approximate the posterior with naive simulation (rejection sampling).
 ```{r}
 # We sample from the prior a lot, predict with the param values from the prior,
 # and keep if the prediction is equal to the observed data
@@ -182,18 +174,18 @@ plot_pp_difference(real_sample = df$post_pred, real_model_name = "D1",
                    prior_or_post = "Posterior")
 ```
 
-The posterior predictive distributions are quite different, with a Total Variational Distance of `r tvd_post` (a `r tvd_post/tvd_prior` time increase from the prior TVD), so the model misspecification in this case seems to have a significant impact on results.
+The posterior predictives are clearly different, with total variation distance `r tvd_post` (a `r tvd_post/tvd_prior`-fold increase over prior TVD). In this setup, misspecification has a meaningful effect on inference.
 
 ## Example 2. Real data is dependent, but assumed to be independent.
 
-Now, we explore what happens if our sample comes from a dependent model. Specifically, we generate a sample from summing a Markov Chain of $n$ drifting Bernoulli trials, denoted as model $D_2$.
+Now we test a dependence misspecification case. Data are generated by summing a Markov process of $n$ drifting Bernoulli trials (model $D_2$).
 
 $$
 Y \sim MC(n=100, \ p_0=0.4, \ \delta=0.1)
 $$
-(MC for Markov Counts, details for sampling are in the helper functions section)
+(MC = Markov Counts; sampling details are in helper functions.)
 
-Where for $n$ trials, $p_0$ is the initial probability of success, and $\delta$ is the standard deviation of gaussian drift added to the success probability after each trial.
+Here, $p_0$ is the initial success probability and $\delta$ is the standard deviation of Gaussian drift added to the success probability after each trial.
 
 ```{r}
 n_ops = 100
@@ -203,7 +195,7 @@ y_obs
 ```
 
 
-Again, we will misspecify the model by assuming the data comes from a binomial distribution. We assign the same $\text{Beta}(5, 3)$ prior on $p$. Again, we call this model $M$.
+Again, we intentionally misspecify by fitting a binomial model with the same $\text{Beta}(5, 3)$ prior on $p$ (model $M$).
 $$
 \begin{aligned}
 Y &\sim \text{Binom}(n=100, p) \\
@@ -211,7 +203,7 @@ Y &\sim \text{Binom}(n=100, p) \\
 \end{aligned}
 $$
 
-Let's then find an equivalent prior for model $D_2$.
+Now we choose an equivalent prior for model $D_2$.
 $$
 \begin{aligned}
 Y &\sim MC(n=100, p_0, \delta) \\
@@ -219,7 +211,7 @@ Y &\sim MC(n=100, p_0, \delta) \\
 (Prior)\quad \delta &\sim \text{Exp}(\lambda)
 \end{aligned}
 $$
-We'll need a function to sample a prior predictive distribution for $D_2$.
+We use the function below to sample from the prior predictive distribution of $D_2$.
 ```{r}
 sample_from_pp_D2 = function(n, size, alpha, beta, rate) {
     p0 = rbeta(n, alpha, beta)
@@ -229,7 +221,7 @@ sample_from_pp_D2 = function(n, size, alpha, beta, rate) {
 }
 ```
 
-Let's use this prior distribution:
+We use this prior distribution:
 $$
 \begin{aligned}
 Y &\sim MC(n=100, \ p_0, \ \delta) \\
@@ -238,7 +230,7 @@ Y &\sim MC(n=100, \ p_0, \ \delta) \\
 \end{aligned}
 $$
 
-And compare the prior predictive distributions:
+Now compare the prior predictive distributions:
 ```{r}
 prior_pred_D2 = sample_from_pp_D2(n=pp_sample_size,
                                   size = n_obs,
@@ -252,14 +244,14 @@ plot_pp_difference(real_sample = prior_pred_D2, real_model_name="D2",
                    prior_or_post = "Prior")
 ```
 
-As shown, the priors are effectively equivalent.
+Again, the prior predictives are effectively equivalent.
 
-Let's proceed with updating both models to see what kind of discrepancy there is.
+Next we update both models and measure how much the posterior predictives diverge.
 
 ### Updating $D_2$
 
-We use naive simulation again to create a posterior sample for D2.
-(This one is much slower, so we're also accepting if the predicted is within 1 of the observed, which makes the posterior a bit less accurate.)
+We use naive simulation again to get a posterior sample for $D_2$.  
+This step is slower, so we accept draws within 1 of the observed count, which makes the approximation slightly rougher.
 ```{r}
 df = data.frame(p0 = numeric(), drift_sd = numeric())
 
@@ -280,7 +272,7 @@ df <- mutate(df, post_pred = r_markov_counts(n(), n_obs, p0, drift_sd))
 ```
 
 ### Updating $M$
-Again, a straightforward updating of the Beta-Binomial Prior.
+Again, this is a straightforward Beta-Binomial update.
 ```{r}
 post_predictive_M = r_beta_binom(pp_sample_size, n_obs, 5+y_obs, 3+n_obs-y_obs)
 ```
@@ -294,21 +286,21 @@ plot_pp_difference(real_sample = df$post_pred, real_model_name = "D2",
                    prior_or_post = "Posterior")
 ```
 
-There is a Total Variational Distance of `r tvd_post` (a `r tvd_post/tvd_prior` time increase from the prior TVD), and we can see from the plot, the posterior predictive distributions are visibly different.
+The total variation distance is `r tvd_post` (a `r tvd_post/tvd_prior`-fold increase from prior TVD), and the posterior predictive distributions are visibly different.
 
 
 ## Conclusion
 
-These examples demonstrate that model misspecification can have significant impacts of the results of a bayesian analyses. In terms of real world implications, these examples can serve as a cautionary tale to not blindly trust a model, even one with a reasonable prior predictive distribution.
+These examples show that mild misspecification can materially change Bayesian conclusions, even when prior predictive checks look reasonable. In practice, this is a warning: prior calibration is helpful, but it does not protect you if structural assumptions are wrong.
 
 ### Future Work
 
-An end goal of this project would be to analyze which statistics and tests are robust to varying degrees of model misspecification. To do this, we anticipate we'll need to figure out the following:
+A next step is to identify which analyses and test statistics stay robust under different kinds and degrees of misspecification. To do that, we need:
 
-- Given a true underlying model, a method for quantifying or classifying how different (and therefore misspecified) a proposed model is.
-- Given a true model and proposed model (+prior distribution), an efficient method for finding prior distributions for the true model such that their predictive distribution matches that of the propsed model. This would let us find effectively equivalent prior distributions, which we need to isolate the effects of model differences. (2)
+- A principled way to quantify how far a proposed model is from the true data-generating process.
+- An efficient method for choosing priors on the true model that match the proposed model’s prior predictive distribution, so structural effects can be isolated cleanly. (2)
 
-(2) It has proven to be very difficult to find prior distributions such that they have some specified prior predictive distribution, because the search space of prior distributions is very very large. For future work, we could look for a more viable and general method of searching for priors.
+(2) In practice, matching a target prior predictive distribution is hard because the prior search space is large. A more general and computationally efficient search method would make this workflow much more usable.
 
 
 ## Appendix
@@ -324,7 +316,7 @@ cat("```r\n", paste(helper_lines, collapse = "\n"), "\n```\n")
 
 ### Errata
 
-We tried using grid search over parameterized priors to find priors with equivalent prior predictive distributions, but it did not work well at all.
+We first tried grid search over parameterized priors to match prior predictives, but it performed poorly.
 ```{r}
 # grid = expand.grid(
 #   mu1 = seq(1, 50, by=5),
@@ -349,7 +341,7 @@ We tried using grid search over parameterized priors to find priors with equival
 ```
 
 
-We tried to use a different kind of markov model originally, but could not find priors which made equivalent prior predictive distributions for it.
+We also tried a different Markov model variant, but could not find priors that produced equivalent prior predictives.
 ```{r}
 # (UNUSED because couldn't find equivalent predictive prior) function to sample Markov Bernoulli Distribution
 r_markov_bernoulli_old = function(n, p_initial, p_after_1, p_after_0){

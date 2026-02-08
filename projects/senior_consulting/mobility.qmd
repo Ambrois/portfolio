@@ -4,23 +4,30 @@ title: "Manual Task Performance Under Distraction and Biomechanical Constraints"
 
 ### Overview
 
-This project examined how cognitive distraction, screw-turning direction, and hand dominance affect performance on a constrained manual task. Participants unscrewed bolts under controlled conditions designed to mimic restricted wrist posture, allowing us to evaluate biomechanical and cognitive factors influencing task completion time.
+This project tested how distraction, screw-turn direction, and hand dominance affect performance on a constrained manual task.
 
 ### Data and Experimental Design
 
-Data were collected from 57 Cal Poly students. Each participant completed four trials using all combinations of dominant vs. nondominant hand and flexion vs. extension screw direction. Distraction (mental math vs. normal background noise) was assigned between subjects. The outcome was time to fully unscrew a bolt (seconds), yielding 228 total observations. The study followed a mixed 2×2×2 factorial design with repeated measures on hand and direction.
+Data came from 57 Cal Poly students. Each participant completed four trials covering dominant/nondominant hand and flexion/extension direction. Distraction (mental math vs. background noise) was assigned between subjects.
+
+Outcome: time to fully unscrew a bolt (seconds).  
+Total observations: 228.  
+Design: mixed 2×2×2 factorial with repeated measures on hand and direction.
 
 ### Methodology
 
-We analyzed log-transformed completion times using a mixed-effects ANOVA model to better satisfy normality assumptions. Distraction, hand, and direction were treated as fixed effects, with participant modeled as a random effect to account for repeated measures. The initial model included all main effects and interactions; non-informative interaction terms were removed to improve interpretability and model fit, leaving the hand-by-direction interaction.
+We modeled log completion time with mixed-effects ANOVA. Hand, direction, and distraction were fixed effects; participant was a random effect to account for repeated measures. The initial model included full interactions, then was simplified by removing non-informative terms while retaining the hand-by-direction interaction.
 
 ### Key Findings
 
-Screw direction had a large effect on performance: extension trials were substantially slower than flexion trials. Hand dominance also mattered, with slower performance using the nondominant hand. There was moderate evidence of an interaction between hand and direction, suggesting that the nondominant-hand penalty was less pronounced during extension than flexion. Distraction showed no measurable effect on task time, nor did it interact meaningfully with hand or direction.
+Direction was the largest effect: extension was slower than flexion.  
+Nondominant-hand trials were also slower.  
+There was moderate hand-by-direction interaction evidence, suggesting the nondominant-hand penalty was smaller in extension than flexion.  
+Distraction showed no clear main effect or interaction.
 
 ### Power Analysis and Design Implications
 
-The study was well powered to detect large biomechanical effects but underpowered for small effects such as distraction or subtle hand differences. A power analysis indicated that substantially more participants would be required to reliably detect small time differences. As a result, a key recommendation is to treat distraction as a within-subject factor in future studies, which would improve efficiency and sensitivity without increasing sample size.
+The study was powered for large biomechanical effects, but underpowered for small effects (like distraction). Power analysis suggested many more participants would be needed to detect subtle time differences. A better follow-up design is to make distraction a within-subject factor to improve sensitivity without increasing sample size as much.
 
 ### Tools
 
@@ -28,4 +35,3 @@ R (mixed-effects modeling, ANOVA, power analysis).
 
 ***
 [View technical report](assets/mobility-memo.pdf)
-

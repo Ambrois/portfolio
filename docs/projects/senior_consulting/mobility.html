@@ -70,6 +70,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-sidebar floating fullcontent quarto-light">
@@ -116,6 +117,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../../projects/blackholesim/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Black Hole Simulation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../projects/visualizations/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Visualization Gallery</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -176,12 +183,6 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../projects/visualizations/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Visualization Gallery</span></a>
-  </div>
-</li>
       </ul>
   </li>
     </ul>
@@ -214,23 +215,29 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="overview" class="level3">
 <h3 class="anchored" data-anchor-id="overview">Overview</h3>
-<p>This project examined how cognitive distraction, screw-turning direction, and hand dominance affect performance on a constrained manual task. Participants unscrewed bolts under controlled conditions designed to mimic restricted wrist posture, allowing us to evaluate biomechanical and cognitive factors influencing task completion time.</p>
+<p>This project tested how distraction, screw-turn direction, and hand dominance affect performance on a constrained manual task.</p>
 </section>
 <section id="data-and-experimental-design" class="level3">
 <h3 class="anchored" data-anchor-id="data-and-experimental-design">Data and Experimental Design</h3>
-<p>Data were collected from 57 Cal Poly students. Each participant completed four trials using all combinations of dominant vs.&nbsp;nondominant hand and flexion vs.&nbsp;extension screw direction. Distraction (mental math vs.&nbsp;normal background noise) was assigned between subjects. The outcome was time to fully unscrew a bolt (seconds), yielding 228 total observations. The study followed a mixed 2×2×2 factorial design with repeated measures on hand and direction.</p>
+<p>Data came from 57 Cal Poly students. Each participant completed four trials covering dominant/nondominant hand and flexion/extension direction. Distraction (mental math vs.&nbsp;background noise) was assigned between subjects.</p>
+<p>Outcome: time to fully unscrew a bolt (seconds).<br>
+Total observations: 228.<br>
+Design: mixed 2×2×2 factorial with repeated measures on hand and direction.</p>
 </section>
 <section id="methodology" class="level3">
 <h3 class="anchored" data-anchor-id="methodology">Methodology</h3>
-<p>We analyzed log-transformed completion times using a mixed-effects ANOVA model to better satisfy normality assumptions. Distraction, hand, and direction were treated as fixed effects, with participant modeled as a random effect to account for repeated measures. The initial model included all main effects and interactions; non-informative interaction terms were removed to improve interpretability and model fit, leaving the hand-by-direction interaction.</p>
+<p>We modeled log completion time with mixed-effects ANOVA. Hand, direction, and distraction were fixed effects; participant was a random effect to account for repeated measures. The initial model included full interactions, then was simplified by removing non-informative terms while retaining the hand-by-direction interaction.</p>
 </section>
 <section id="key-findings" class="level3">
 <h3 class="anchored" data-anchor-id="key-findings">Key Findings</h3>
-<p>Screw direction had a large effect on performance: extension trials were substantially slower than flexion trials. Hand dominance also mattered, with slower performance using the nondominant hand. There was moderate evidence of an interaction between hand and direction, suggesting that the nondominant-hand penalty was less pronounced during extension than flexion. Distraction showed no measurable effect on task time, nor did it interact meaningfully with hand or direction.</p>
+<p>Direction was the largest effect: extension was slower than flexion.<br>
+Nondominant-hand trials were also slower.<br>
+There was moderate hand-by-direction interaction evidence, suggesting the nondominant-hand penalty was smaller in extension than flexion.<br>
+Distraction showed no clear main effect or interaction.</p>
 </section>
 <section id="power-analysis-and-design-implications" class="level3">
 <h3 class="anchored" data-anchor-id="power-analysis-and-design-implications">Power Analysis and Design Implications</h3>
-<p>The study was well powered to detect large biomechanical effects but underpowered for small effects such as distraction or subtle hand differences. A power analysis indicated that substantially more participants would be required to reliably detect small time differences. As a result, a key recommendation is to treat distraction as a within-subject factor in future studies, which would improve efficiency and sensitivity without increasing sample size.</p>
+<p>The study was powered for large biomechanical effects, but underpowered for small effects (like distraction). Power analysis suggested many more participants would be needed to detect subtle time differences. A better follow-up design is to make distraction a within-subject factor to improve sensitivity without increasing sample size as much.</p>
 </section>
 <section id="tools" class="level3">
 <h3 class="anchored" data-anchor-id="tools">Tools</h3>
