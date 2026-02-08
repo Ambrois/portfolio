@@ -3,6 +3,8 @@
     "Book Antiqua", "Times New Roman", serif;
   --font-dark: "Fira Code", "JetBrains Mono", "Cascadia Code", "Consolas",
     "Monaco", "Courier New", monospace;
+  --font-code: "JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas",
+    "Monaco", "Courier New", monospace;
   --theme-font: var(--font-light);
   --font-size-scale: 1.05;
   --light-bg: #f6efe3;
@@ -96,12 +98,20 @@ select,
 table,
 th,
 td,
-code,
-pre,
-kbd,
-samp {
+table {
   font-family: var(--theme-font);
   font-size: calc(1em * var(--font-size-scale));
+}
+
+pre,
+code,
+kbd,
+samp,
+pre code,
+code span,
+.sourceCode,
+.sourceCode code {
+  font-family: var(--font-code) !important;
 }
 
 /* Keep prose readable on wide screens; leave figures/code unconstrained. */
