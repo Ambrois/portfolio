@@ -6,6 +6,7 @@
   --theme-font: var(--font-light);
   --font-size-scale: 1.05;
   --light-bg: #f6efe3;
+  --reading-width: 53ch;
   --dark-bg: #282828;
   --dark-fg: #ebdbb2;
   --dark-fg-muted: #d5c4a1;
@@ -101,4 +102,23 @@ kbd,
 samp {
   font-family: var(--theme-font);
   font-size: calc(1em * var(--font-size-scale));
+}
+
+/* Keep prose readable on wide screens; leave figures/code unconstrained. */
+body.fullcontent #quarto-document-content :is(
+  p,
+  ul,
+  ol,
+  blockquote,
+  dl,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6
+) {
+  max-width: var(--reading-width);
+  margin-left: 0;
+  margin-right: auto;
 }
