@@ -1,0 +1,45 @@
+:root {
+  --font-light: "Bitstream Vera Serif", "DejaVu Serif", "Palatino Linotype",
+    "Book Antiqua", "Times New Roman", serif;
+  --font-dark: "Fira Code", "JetBrains Mono", "Cascadia Code", "Consolas",
+    "Monaco", "Courier New", monospace;
+  --theme-font: var(--font-light);
+}
+
+/* Default for now: light typography site-wide */
+body.theme-light {
+  --theme-font: var(--font-light);
+}
+
+/* Ready for future dark mode toggle */
+body.theme-dark {
+  --theme-font: var(--font-dark);
+}
+
+body,
+.quarto-title,
+.sidebar-title,
+.sidebar-item-text,
+.quarto-secondary-nav-title,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+li,
+a,
+button,
+input,
+textarea,
+select,
+table,
+th,
+td,
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--theme-font);
+}

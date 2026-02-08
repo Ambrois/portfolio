@@ -7,6 +7,7 @@ categories: ["computer-graphics", "physics"]
 format:
   html:
     theme: darkly
+body-classes: theme-dark
 ---
 ## Introduction
 
