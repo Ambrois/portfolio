@@ -4,6 +4,14 @@
   --font-dark: "Fira Code", "JetBrains Mono", "Cascadia Code", "Consolas",
     "Monaco", "Courier New", monospace;
   --theme-font: var(--font-light);
+  --font-size-scale: 1.05;
+  --light-bg: #f6efe3;
+  --dark-bg: #282828;
+  --dark-fg: #ebdbb2;
+  --dark-fg-muted: #d5c4a1;
+  --dark-link: #83a598;
+  --dark-link-hover: #8ec07c;
+  --dark-border: #504945;
 }
 
 /* Default for now: light typography site-wide */
@@ -14,6 +22,56 @@ body.theme-light {
 /* Ready for future dark mode toggle */
 body.theme-dark {
   --theme-font: var(--font-dark);
+}
+
+body:not(.theme-dark),
+body:not(.theme-dark) #quarto-content,
+body:not(.theme-dark) #quarto-sidebar,
+body:not(.theme-dark) #quarto-margin-sidebar,
+body:not(.theme-dark) #quarto-header .quarto-secondary-nav {
+  background-color: var(--light-bg);
+}
+
+body.theme-dark,
+body.theme-dark #quarto-content,
+body.theme-dark #quarto-sidebar,
+body.theme-dark #quarto-margin-sidebar,
+body.theme-dark #quarto-header .quarto-secondary-nav {
+  background-color: var(--dark-bg);
+}
+
+body.theme-dark,
+body.theme-dark .quarto-title,
+body.theme-dark .sidebar-title,
+body.theme-dark .sidebar-item-text,
+body.theme-dark .quarto-secondary-nav-title,
+body.theme-dark h1,
+body.theme-dark h2,
+body.theme-dark h3,
+body.theme-dark h4,
+body.theme-dark h5,
+body.theme-dark h6 {
+  color: var(--dark-fg);
+}
+
+body.theme-dark p,
+body.theme-dark li,
+body.theme-dark td,
+body.theme-dark th {
+  color: var(--dark-fg-muted);
+}
+
+body.theme-dark a {
+  color: var(--dark-link);
+}
+
+body.theme-dark a:hover {
+  color: var(--dark-link-hover);
+}
+
+body.theme-dark #quarto-sidebar,
+body.theme-dark #quarto-margin-sidebar {
+  border-color: var(--dark-border);
 }
 
 body,
@@ -42,4 +100,5 @@ pre,
 kbd,
 samp {
   font-family: var(--theme-font);
+  font-size: calc(1em * var(--font-size-scale));
 }
