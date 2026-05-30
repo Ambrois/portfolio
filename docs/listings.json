@@ -1,11 +1,12 @@
 [
   {
-    "listing": "/programming.html",
+    "listing": "/stats.html",
     "items": []
   },
   {
     "listing": "/index.html",
     "items": [
+      "/projects/stockdb/index.html",
       "/projects/blackholesim/index.html",
       "/projects/visualizations/index.html",
       "/projects/bayesian/index.html",
@@ -14,7 +15,7 @@
     ]
   },
   {
-    "listing": "/stats.html",
+    "listing": "/programming.html",
     "items": []
   }
 ]

@@ -1,0 +1,36 @@
+---
+title: "Stock Database"
+date: 2026-05-20
+description: "Python, PostgreSQL, TimescaleDB, and R Shiny pipeline for collecting and visualizing minutely stock market data."
+categories: ["data-engineering"]
+image: candles.png
+format:
+  html:
+    theme: cosmo
+---
+
+## Overview
+
+This project is an automated Python/PostgreSQL data [pipeline](https://github.com/Ambrois/stock-data-collection) and R Shiny [dashboard](http://stockdb.ambrois.uk/) for collecting, storing, and visualizing minute-level stock market data from [Alpaca](https://alpaca.markets/).
+
+The database holds minutely price data for the S&P 500 companies since January 2016, and updates (market) daily. It is hosted on a small local server, where the data is stored securely in a bubblewrapped hard-drive. The dashboard is minimal and designed for checking database health and data quality. 
+
+The live dashboard is available at <https://stockdb.ambrois.uk>. *The dashboard link is .uk because .uk domains are very cheap on cloudflare. I am based in the US.*
+
+## Tools Used
+
+- **R Shiny** for the interactive dashboard
+- **PostgreSQL and TimescaleDB** for storing time-series stock data
+- **Python** for data collection scripts
+- **Alpaca Market Data API** for stock price data
+- **systemd** for scheduled updates and service monitoring
+- **Cloudflare DNS** for keeping the public dashboard reachable
+
+## What I Learned
+
+This project gave me experience building and connecting several parts of a simple production-style workflow: API ingestion, database storage, scheduled jobs, a web dashboard, and deployment behind a public URL.
+
+## Future work:
+
+- Add websocket ingestion.
+- Add options data.

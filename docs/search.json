@@ -1,72 +1,24 @@
 [
   {
-    "objectID": "programming.html",
-    "href": "programming.html",
-    "title": "Programming Projects",
+    "objectID": "projects_scratch/Stat365/index.html",
+    "href": "projects_scratch/Stat365/index.html",
+    "title": "Narrative Visualization (Scratch)",
     "section": "",
-    "text": "Programming-heavy work and experiments.\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "counts_male &lt;- age_gaps |&gt; \n  filter(character_1_gender == \"man\") |&gt; \n  count(age_difference)\ncounts_female &lt;- age_gaps |&gt; \n  filter(character_1_gender == \"woman\") |&gt; \n  count(age_difference)\n\nggplot() +\n  geom_col(data = counts_male, aes(x = age_difference, y = n), fill = \"steelblue\", width=1) +\n  geom_col(data = counts_female, aes(x = age_difference, y = -n), fill = \"pink\", width=1) +\n  geom_label(aes(x=30, y=40, label=\"Male\"), color=\"steelblue\")+\n  geom_label(aes(x=30, y=-20, label=\"Female\"), color=\"pink\")+\n  labs(title = \"Age Differences in Movie Couples\",\n       subtitle = \"By Gender of the Older Actor\",\n       x='', y='',\n       caption = \"Data sourced from hollywoodagegap.com.\") +\n  theme_minimal()\n\n\n\n\nFigure 1.2 shows the age differences in holywood movie couples. It’s clear that male older relationships are significantly more common than female older relationships, as well as having larger average age gaps.\n\n\n\n\n\nage_gaps &lt;- age_gaps |&gt;\n  mutate(maleFemDiff = case_when(\n    character_1_gender == \"woman\" ~ -1 * age_difference,\n    character_1_gender == \"man\" ~ age_difference\n  ))\n\nggplot() +\n  geom_histogram(data = age_gaps %&gt;% filter(maleFemDiff &gt;= 0), aes(x = maleFemDiff), fill = \"steelblue\", binwidth = 1) +\n  geom_histogram(data = age_gaps %&gt;% filter(maleFemDiff &lt; 0), aes(x = maleFemDiff), fill = \"pink\", binwidth = 1) +\n  geom_label(aes(x =20, y = 35, label = \"Male\"), color = \"steelblue\") +\n  geom_label(aes(x = -20, y = 35, label = \"Female\"), color = \"pink\")+\n    labs(\n    title = \"Age Differences in Heterosexual Movie Couples\",\n    subtitle = \"By age of Male character - Female character\",\n    y=\"Count\",\n    x=\"Male age - Female age\")+\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n# normality check:\nqqnorm(age_gaps$maleFemDiff)\nqqline(age_gaps$maleFemDiff)\n\n\n\n\n\n\n\n# t.test\nt.test(age_gaps$maleFemDiff, mu=0, alternative=\"greater\")\n\n\n    One Sample t-test\n\ndata:  age_gaps$maleFemDiff\nt = 27.434, df = 1154, p-value &lt; 2.2e-16\nalternative hypothesis: true mean is greater than 0\n95 percent confidence interval:\n 7.946419      Inf\nsample estimates:\nmean of x \n  8.45368"
   },
   {
-    "objectID": "projects_archived/transformers/index.html",
-    "href": "projects_archived/transformers/index.html",
-    "title": "Transformer Notes (Draft)",
+    "objectID": "stats.html",
+    "href": "stats.html",
+    "title": "Stats",
     "section": "",
-    "text": "Transformer Circuits Thread (transformer-circuits.pub)\nTESTING EDIT\n\n\nprivileged basis definition\n“activation”, in the context of activation vs parameter\nhow exactly is position embedded into a vector space (in the space that the key and query vectors are in) - and if it even does encode position (or like subsets of positions within context) - and can this position embedding be more generalized to other methods of storing tokens, instead of just a rly long string - hierarchical - graphical -\n\n\n\nresidual stream: linear combination of inputs and attention layer outputs - it’s entirely linear, and acts as a subspace - attention layers perform projections onto the subspace - due to linearity, at any 2 points, can make a matrix which represents the whole transformation up to that point - ? could this be used in actual transformers to reduce the amount of computation used? - has to be in parts which are linear\n\n\n\n\n\nT(t) : Predicted Logits from input tokens (the Transformer Output) (context x vocab) matrix - “Activation, Privileged Basis”\nt : a vector of tokens (each of which is a one-hot encoded vector) in the context (context x vocab) matrix - “Activation, Privileged Basis”\n\\(x^n\\) : vector of embedding vectors in the residual stream (at layer n) (context x semantic dims) matrix - each vector is the updated semantic representation of a context token after n layers - “Activation, Not Privileged Basis”\n\\(W_E\\) : Embedding Weights, a transformation from one-hot input vectors to embedding vectors (semantic dims x vocab) transformation matrix - input is a vector of tokens (the context), output is a vector of embedding vectors - only takes into account the type of tokens - (frequency?) - Parameter\n\\(W_P\\) : Positional Embedding Weights, a transformation from position in context to embedding vector (semantic dims x context) transformation matrix - input is a vector of tokens (the context), output is a vector of embedding vectors - only takes into account the positions - (time?) - Parameter\n\\(W_U\\) : Unembedding Weights, a transformation from embedding vectors to vocab vectors (logits) (vocab x semantic dims) transformation matrix - (is this the inverse of W_E?) - includes softmax? - Parameter\n\n\n\n\\(H_n\\) : Attention Heads, the set of attention heads at a layer n\n\\(h \\in H_n\\) : An attention head, a function from embedding vectors to embedding vectors\n\\(h(x)\\) : The output of attention head \\(h\\) given some embedding vectors \\(x\\) (context, semantic dims) matrix - a vector of semantic embedding vectors of each token of the context\n\\(\\bf{A}^h\\) : Attention pattern of head h, Not sure what this is, the matrix representing the linear transformation? a transformation from embedded context vectors to embedded context vectors? (context, context) transformation matrix\nFor each head h: this is how you go from input \\(x_i\\) to output \\(h(x)_i\\) Informally: embedding vector -(Value Matrix)-&gt; value vector -(Attention Pattern)-&gt; result vector -(Output Matrix)&gt; output embedding vector Formally: \\(W_V​x_i = v_i\\) , then \\(\\sum_j{ A_{i, j} v_j} = r_i\\) , then \\(W_Or_i=h(x)_i\\)\n\n\n\n\n\n\n“A privileged basis occurs when some aspect of a model’s architecture encourages neural network features to align with basis dimensions”\nConfusion: A privileged basis is when vectors (aka directions) have specific meanings and can’t be rotated without changing those meanings? - but don’t embedding values have meanings assigned to specific directions? unless the meanings are all relative to other vectors - what are the embedding values if their directions don’t have specific meanings - or maybe the directions do have specific meanings, but these meanings don’t have to align to particular neurons\nExamples: “for example (a privileged basis occurs) because of a sparse activation function such as ReLU”\nVectors which do not have a privileged basis: “it doesn’t really make sense to look at the”neurons” (ie. basis dimensions) of activations like the residual stream, keys, queries or values, which don’t have a privileged basis.” - residual stream / embedding - Output of attention head \\(h\\) - Query, key, value and result vectors of attention head \\(h\\) - Output of MLP layer \\(m\\)\nVectors which do have a privileged basis: - Transformer logits - One-hot encoded tokens - Attention pattern of attention head \\(h\\) - Activations of MLP layer \\(m\\)\n\n\n\nwhen combined, is the transformation of the input to output\nvalue matrix is the input token, output is the output token - and when multiplied together, they make up the transformation\nSpeculative what if you find the nearest token (or token sequence) to this final output value vector, to get a description\n\n\n\nFrom a point in embedding space, how to efficiently find a sequence of tokens which approximates that value - maybe given a minimum variance or distance from target - can we even actually represent sequences of tokens as a single point in the embedding space?\nhow to represent an arbitrary sequence of tokens as a single point in an embedding space - what are the scaling difficulties of representing more and more complex stuff in a single embedding space? - relationship of necessary dim size to token sequence length? - like maybe the more tokens in a sequence you’d like to represent, the more embedding dimensions you need to represent the semantic information - maybe instead of using the same embedding dim for everything, use different ones for different “levels” of token sequence length - sort of representing complexity? abstraction?\nconstruct graph relations from - attention to get"
-  },
-  {
-    "objectID": "projects_archived/transformers/index.html#things-i-dont-get",
-    "href": "projects_archived/transformers/index.html#things-i-dont-get",
-    "title": "Transformer Notes (Draft)",
-    "section": "",
-    "text": "privileged basis definition\n“activation”, in the context of activation vs parameter\nhow exactly is position embedded into a vector space (in the space that the key and query vectors are in) - and if it even does encode position (or like subsets of positions within context) - and can this position embedding be more generalized to other methods of storing tokens, instead of just a rly long string - hierarchical - graphical -"
-  },
-  {
-    "objectID": "projects_archived/transformers/index.html#notes",
-    "href": "projects_archived/transformers/index.html#notes",
-    "title": "Transformer Notes (Draft)",
-    "section": "",
-    "text": "residual stream: linear combination of inputs and attention layer outputs - it’s entirely linear, and acts as a subspace - attention layers perform projections onto the subspace - due to linearity, at any 2 points, can make a matrix which represents the whole transformation up to that point - ? could this be used in actual transformers to reduce the amount of computation used? - has to be in parts which are linear"
-  },
-  {
-    "objectID": "projects_archived/transformers/index.html#basic-definitions",
-    "href": "projects_archived/transformers/index.html#basic-definitions",
-    "title": "Transformer Notes (Draft)",
-    "section": "",
-    "text": "T(t) : Predicted Logits from input tokens (the Transformer Output) (context x vocab) matrix - “Activation, Privileged Basis”\nt : a vector of tokens (each of which is a one-hot encoded vector) in the context (context x vocab) matrix - “Activation, Privileged Basis”\n\\(x^n\\) : vector of embedding vectors in the residual stream (at layer n) (context x semantic dims) matrix - each vector is the updated semantic representation of a context token after n layers - “Activation, Not Privileged Basis”\n\\(W_E\\) : Embedding Weights, a transformation from one-hot input vectors to embedding vectors (semantic dims x vocab) transformation matrix - input is a vector of tokens (the context), output is a vector of embedding vectors - only takes into account the type of tokens - (frequency?) - Parameter\n\\(W_P\\) : Positional Embedding Weights, a transformation from position in context to embedding vector (semantic dims x context) transformation matrix - input is a vector of tokens (the context), output is a vector of embedding vectors - only takes into account the positions - (time?) - Parameter\n\\(W_U\\) : Unembedding Weights, a transformation from embedding vectors to vocab vectors (logits) (vocab x semantic dims) transformation matrix - (is this the inverse of W_E?) - includes softmax? - Parameter\n\n\n\n\\(H_n\\) : Attention Heads, the set of attention heads at a layer n\n\\(h \\in H_n\\) : An attention head, a function from embedding vectors to embedding vectors\n\\(h(x)\\) : The output of attention head \\(h\\) given some embedding vectors \\(x\\) (context, semantic dims) matrix - a vector of semantic embedding vectors of each token of the context\n\\(\\bf{A}^h\\) : Attention pattern of head h, Not sure what this is, the matrix representing the linear transformation? a transformation from embedded context vectors to embedded context vectors? (context, context) transformation matrix\nFor each head h: this is how you go from input \\(x_i\\) to output \\(h(x)_i\\) Informally: embedding vector -(Value Matrix)-&gt; value vector -(Attention Pattern)-&gt; result vector -(Output Matrix)&gt; output embedding vector Formally: \\(W_V​x_i = v_i\\) , then \\(\\sum_j{ A_{i, j} v_j} = r_i\\) , then \\(W_Or_i=h(x)_i\\)"
-  },
-  {
-    "objectID": "projects_archived/transformers/index.html#notes-1",
-    "href": "projects_archived/transformers/index.html#notes-1",
-    "title": "Transformer Notes (Draft)",
-    "section": "",
-    "text": "“A privileged basis occurs when some aspect of a model’s architecture encourages neural network features to align with basis dimensions”\nConfusion: A privileged basis is when vectors (aka directions) have specific meanings and can’t be rotated without changing those meanings? - but don’t embedding values have meanings assigned to specific directions? unless the meanings are all relative to other vectors - what are the embedding values if their directions don’t have specific meanings - or maybe the directions do have specific meanings, but these meanings don’t have to align to particular neurons\nExamples: “for example (a privileged basis occurs) because of a sparse activation function such as ReLU”\nVectors which do not have a privileged basis: “it doesn’t really make sense to look at the”neurons” (ie. basis dimensions) of activations like the residual stream, keys, queries or values, which don’t have a privileged basis.” - residual stream / embedding - Output of attention head \\(h\\) - Query, key, value and result vectors of attention head \\(h\\) - Output of MLP layer \\(m\\)\nVectors which do have a privileged basis: - Transformer logits - One-hot encoded tokens - Attention pattern of attention head \\(h\\) - Activations of MLP layer \\(m\\)\n\n\n\nwhen combined, is the transformation of the input to output\nvalue matrix is the input token, output is the output token - and when multiplied together, they make up the transformation\nSpeculative what if you find the nearest token (or token sequence) to this final output value vector, to get a description\n\n\n\nFrom a point in embedding space, how to efficiently find a sequence of tokens which approximates that value - maybe given a minimum variance or distance from target - can we even actually represent sequences of tokens as a single point in the embedding space?\nhow to represent an arbitrary sequence of tokens as a single point in an embedding space - what are the scaling difficulties of representing more and more complex stuff in a single embedding space? - relationship of necessary dim size to token sequence length? - like maybe the more tokens in a sequence you’d like to represent, the more embedding dimensions you need to represent the semantic information - maybe instead of using the same embedding dim for everything, use different ones for different “levels” of token sequence length - sort of representing complexity? abstraction?\nconstruct graph relations from - attention to get"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Matthew Huang",
-    "section": "",
-    "text": "I’m a 2025 Cal Poly SLO graduate with a bachelor’s in statistics and minors in math and computer science. I’m broadly interested in math and science, especially modeling and where models break.\nCurrently open to work.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#projects",
-    "href": "index.html#projects",
-    "title": "Matthew Huang",
-    "section": "Projects",
-    "text": "Projects",
-    "crumbs": [
-      "Home"
-    ]
+    "text": "Statistics and inference projects.\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "projects/blackholesim/index.html",
     "href": "projects/blackholesim/index.html",
     "title": "Black Hole Simulation",
     "section": "",
-    "text": "This is a real-time black hole renderer I built from scratch with C++, SFML, and GLSL.\nHow it works on a high level: every pixel is treated like a ray of light, which is stepped through curve spacetime by numerically integrating the appropriate equations. Depending on where the ray ends up (background stars or the accretion disk), that pixel gets its final color. Rays are processed in parallel.\nWhat I built:\n\nA custom GLSL ray-marching setup\nRK4 integration with adaptive step sizing\nC++ with SFML rendering pipeline\nA lot of performance tuning and so so much shader debugging\n\nMain goal was learning low-level graphics and numerical simulation in a hands-on way, and this is by on means a very scientifically accurate model. The black hole is not to scale, as the equation I used was dimensionless and the accretion ring coloring was decided by a random inner temperature that made it look cool.\nView Repository",
+    "text": "This is a real-time black hole renderer I built from scratch with C++, SFML, and GLSL.\nHow it works on a high level: every pixel is treated like a ray of light, which is stepped through curve spacetime by numerically integrating the appropriate equations. Depending on where the ray ends up (background stars or the accretion disk), that pixel gets its final color. Rays are processed in parallel.\nWhat I built:\n\nA custom GLSL ray-marching setup\nRK4 integration with adaptive step sizing\nC++ with SFML rendering pipeline\nA lot of performance tuning and so so much shader debugging\n\nMain goal was learning low-level graphics and numerical simulation in a hands-on way, and this is by no means a very scientifically accurate model. The black hole is not to scale, as the equation I used was dimensionless and the accretion ring coloring was decided by a random inner temperature that made it look cool.\nView Repository",
     "crumbs": [
       "Projects",
       "Black Hole Simulation"
@@ -77,18 +29,22 @@
     "href": "projects/blackholesim/index.html#introduction",
     "title": "Black Hole Simulation",
     "section": "",
-    "text": "This is a real-time black hole renderer I built from scratch with C++, SFML, and GLSL.\nHow it works on a high level: every pixel is treated like a ray of light, which is stepped through curve spacetime by numerically integrating the appropriate equations. Depending on where the ray ends up (background stars or the accretion disk), that pixel gets its final color. Rays are processed in parallel.\nWhat I built:\n\nA custom GLSL ray-marching setup\nRK4 integration with adaptive step sizing\nC++ with SFML rendering pipeline\nA lot of performance tuning and so so much shader debugging\n\nMain goal was learning low-level graphics and numerical simulation in a hands-on way, and this is by on means a very scientifically accurate model. The black hole is not to scale, as the equation I used was dimensionless and the accretion ring coloring was decided by a random inner temperature that made it look cool.\nView Repository",
+    "text": "This is a real-time black hole renderer I built from scratch with C++, SFML, and GLSL.\nHow it works on a high level: every pixel is treated like a ray of light, which is stepped through curve spacetime by numerically integrating the appropriate equations. Depending on where the ray ends up (background stars or the accretion disk), that pixel gets its final color. Rays are processed in parallel.\nWhat I built:\n\nA custom GLSL ray-marching setup\nRK4 integration with adaptive step sizing\nC++ with SFML rendering pipeline\nA lot of performance tuning and so so much shader debugging\n\nMain goal was learning low-level graphics and numerical simulation in a hands-on way, and this is by no means a very scientifically accurate model. The black hole is not to scale, as the equation I used was dimensionless and the accretion ring coloring was decided by a random inner temperature that made it look cool.\nView Repository",
     "crumbs": [
       "Projects",
       "Black Hole Simulation"
     ]
   },
   {
-    "objectID": "projects/blackholesim/index.html#progress-pictures",
-    "href": "projects/blackholesim/index.html#progress-pictures",
+    "objectID": "projects/blackholesim/index.html#screenshots",
+    "href": "projects/blackholesim/index.html#screenshots",
     "title": "Black Hole Simulation",
-    "section": "Progress pictures",
-    "text": "Progress pictures\n \n\nAdded background stars\nMade disk color more realistic: calculate temperature -&gt; approximate black body radiation -&gt; color\nMore realistic disk sizing, note that the photon ring is now visible! I’m not sure what that very thin ring inside the photon ring is, and it might be a bug, but that’s for future me to figure out.\n\n\n - Added adaptive step sizing and other optimizations - Fixed object edge rendering for arbitrary step size - Added prettier colors and a grid to see how spacetime curves, and it’s very clearly showing gravitational lensing\n\n\n\n\nOlder Screenshot\n\n\n\nImplementing RK4 for the null geodesic equations in 3D.\nParallelized everything via fragment shader, which was quite difficult, as debugging information could only be encoded through pixel color. I’ve since learned that I should have used a compute shader and passed to a simple fragment shader, which would have been easier to debug and manage.\n\n\n\n\n\nOlder Screenshot\n\n\n\nDerived the null geodesic equations in 2D via Lagrangian, here I learned the basics of general relativity.\nImplemented RK4 for numerically solving said equations.\n\n\n\n\n\nOlder Screenshot\n\n\n\nBuilt basic euclidean raymarching engine.\nMore of learning how to program in C++.\n\n\n\n\n\nOlder Screenshot\n\n\n\nDrew a circle!\nLearned the very basics of C++, SFML, and GLSL.\n\n\n\nContext\nI started this project independently to learn C++, shader programming, and touch on general relativity. It took about a month and is so far the most difficult project I’ve mostly completed. I plan to develop more but am really tired of thinking about this project for now.\n\nI learned C++ with this free book.\nI was able to learn some general relativity with Sean Carrol’s Spacetime and Geometry, which can be acquired through allegedly legal means.\nI was inspired to start this project by this cool video. I did not look at any of his code, and used a different derivation for the geodesic equations. I was also more generally inspired by Sebastian Lague’s very cool youtube channel to try shader programming."
+    "section": "Screenshots",
+    "text": "Screenshots\n\nThe resolution is low, but these were run on a mid-tier laptop from 2017 without a dedicated GPU.\n\n \n\nAdded background stars\nMade disk color more realistic: calculate temperature -&gt; approximate black body radiation -&gt; color\nMore realistic disk sizing, note that the photon ring is now visible! I’m not sure what that very thin ring inside the photon ring is, and it might be a bug, but that’s for future me to figure out.\n\n\n - Added adaptive step sizing and other optimizations - Fixed object edge rendering for arbitrary step size - Added prettier colors and a grid to see how spacetime curves, and it’s very clearly showing gravitational lensing\n\n\n\n\nOlder Screenshot\n\n\n\nImplementing RK4 for the null geodesic equations in 3D.\nParallelized everything via fragment shader, which was quite difficult, as debugging information could only be encoded through pixel color. I’ve since learned that I should have used a compute shader and passed to a simple fragment shader, which would have been easier to debug and manage.\n\n\n\n\n\nOlder Screenshot\n\n\n\nDerived the null geodesic equations in 2D via Lagrangian, here I learned the basics of general relativity.\nImplemented RK4 for numerically solving said equations.\n\n\n\n\n\nOlder Screenshot\n\n\n\nBuilt basic euclidean raymarching engine.\nMore of learning how to program in C++.\n\n\n\n\n\nOlder Screenshot\n\n\n\nDrew a circle!\nLearned the very basics of C++, SFML, and GLSL.",
+    "crumbs": [
+      "Projects",
+      "Black Hole Simulation"
+    ]
   },
   {
     "objectID": "projects/blackholesim/index.html#future-work",
@@ -99,6 +55,18 @@
     "crumbs": [
       "Projects",
       "Black Hole Simulation"
+    ]
+  },
+  {
+    "objectID": "projects/ml_experiments/skincancer.html",
+    "href": "projects/ml_experiments/skincancer.html",
+    "title": "Skin Cancer Detection under Extreme Class Imbalance (ISIC 2024)",
+    "section": "",
+    "text": "Overview\nCourse group project on skin cancer detection with ISIC 2024. The core challenge was extreme class imbalance (roughly 1000:1 benign to malignant), and the goal was to study model behavior and failure modes rather than optimize leaderboard rank.\n\n\nData and Approach\nWe modeled both metadata and images.\nMetadata models: logistic regression (PyTorch), random forest, XGBoost.\nImage models: simple CNN and ResNet-18 variants.\nEvaluation focused on malignant-class precision/recall, not accuracy.\n\n\nKey Challenges and Findings\nClass imbalance pushed many models toward mostly benign predictions. We tested weighted loss and weighted sampling; sampling made training more stable but did not reliably improve results. Across metadata and image models, loss often plateaued early, suggesting limited usable signal. High recall was achievable, but usually with very low precision.\n\n\nInterpretation\nStandard supervised pipelines struggled in this setting. Better performance likely needs stronger inductive bias (for example pretrained representations, specialized losses, or multi-task setups) plus better-targeted data. The main value of this project was diagnosing failure modes and using the right metrics for an imbalanced clinical task.\n\n\nTools\nPython, PyTorch, scikit-learn, XGBoost, CNNs, class-imbalance methods\n\nView Repository\nView Presentation Slides",
+    "crumbs": [
+      "Projects",
+      "ML Experiments",
+      "Skin Cancer"
     ]
   },
   {
@@ -124,18 +92,26 @@
     ]
   },
   {
-    "objectID": "projects/bayesian/index.html#example-1.-real-data-is-hierarchical-but-we-assume-flat",
-    "href": "projects/bayesian/index.html#example-1.-real-data-is-hierarchical-but-we-assume-flat",
+    "objectID": "projects/bayesian/index.html#example-1.-real-data-is-hierarchical-but-assumed-to-be-flat.",
+    "href": "projects/bayesian/index.html#example-1.-real-data-is-hierarchical-but-assumed-to-be-flat.",
     "title": "Analysis of Bayesian Model Misspecification",
-    "section": "Example 1. Real data is hierarchical, but we assume flat",
-    "text": "Example 1. Real data is hierarchical, but we assume flat\nOur data \\(y\\) follows the following hierarchical distribution, which we’ll denote \\(D_1\\).\n\\[\n\\begin{align}\nY &\\sim Binom(100, p) \\\\\np &\\sim Beta(3, 4)\n\\end{align}\n\\]\n\nn_obs = 100\ny = r_beta_bernoulli(n_obs, alpha = 3, 4)\ny_obs = sum(y)\ny_obs\n\n[1] 42\n\n\nNow, we will misspecify the model.\nWe now assume the data comes from a binomial distribution, and assign a beta(5,3) prior on the proportion, where Y is the sum of the data, We’ll call this model \\(M\\) (for “Misspecified”). \\[\n\\begin{aligned}\nY &\\sim \\text{Binom}(n = 100, p) \\\\\n(Prior)\\quad p &\\sim \\text{Beta}(5, 3)\n\\end{aligned}\n\\]\nPrior Predictive distribution:\n\npp_sample_size = 10000\n\n# the predictive distribution follows a beta-binomial\nprior_pred_M = r_beta_binom(pp_sample_size, n_obs, 5, 3)\n\nNow to find an equivalent prior for the real model\nThe real model (\\(D_1\\)): \\[\n\\begin{aligned}\nY &\\sim \\text{Binom}(n=100, p) \\\\\np &\\sim \\text{Beta}(\\alpha, \\beta) \\\\\n(Prior)\\quad \\alpha &\\sim \\log \\mathcal{N}(\\mu_1, \\sigma_1) \\\\\n(Prior)\\quad \\beta &\\sim \\log \\mathcal{N}(\\mu_2, \\sigma_2)\n\\end{aligned}\n\\]\nA function to sample from the prior predictive distribution:\n\n# function for sampling from prior predictive distrib of D2 model\nsample_from_pp_D1 = function(n, size, mu1, sigma1, mu2, sigma2) {\n  alphas = rlnorm(n, mu1, sigma1)\n  betas = rlnorm(n, mu2, sigma2)\n  probs = rbeta(n, alphas, betas)\n  sample = rbinom(n, size, probs)\n  return(sample)\n}\n\nWe will use lognormal \\(\\log \\mathcal{N}(\\log 5,\\ 0.01)\\) and \\(\\log \\mathcal{N}(\\log 3,\\ 0.01)\\) as the priors for \\(\\alpha\\) and \\(\\beta\\) in model \\(D_1\\), chosen to create a very similar prior predictive distribution to the prior for \\(M\\).\nThese are the prior predictive distributions compared:\n\nprior_pred_D1 = sample_from_pp_D1(n = pp_sample_size,\n                                 size = n_obs,\n                                 mu1 = log(5), sigma1 = 0.01,\n                                 mu2 = log(3), sigma2 = 0.01)\n\ntvd_prior = pp_sample_distance(prior_pred_D1, prior_pred_M)\ntvd_prior\n\n[1] 0.0447\n\nplot_pp_difference(real_sample = prior_pred_D1, real_model_name = \"D1\",\n                   miss_sample = prior_pred_M, miss_model_name = \"M\",\n                   prior_or_post = \"Prior\")\n\n\n\n\n\n\n\n\nAs you can see, the predictive distributions for the two models are extremely similar, which suggests the two priors are effectively equivalent.\nThis implies that any differences observed in the posterior distributions after updating on data are likely attributable to differences in the models themselves, rather than the priors.\nNow let’s find the posteriors of each and see how they vary.\n\nUpdating \\(D_1\\)\nFinding posterior via naive simulation\n\n# We sample from the prior a lot, predict with the param values from the prior,\n# and keep if the prediction is equal to the observed data\n\ndf = data.frame(alpha = numeric(), beta = numeric())\n\ni = 1\nwhile (i &lt;= pp_sample_size) {\n  alpha = rlnorm(1, log(5), 0.01)\n  beta = rlnorm(1, log(3), 0.01)\n  \n  y_pred = r_beta_binom(1, n_obs, alpha, beta)\n  \n  if (y_pred == y_obs) {\n    df = rbind(df, data.frame(alpha=alpha, beta=beta))\n    i = i+1\n  }\n}\n\ndf &lt;- mutate(df, post_pred = r_beta_binom(n(), n_obs, alpha, beta))\n\n\n\nUpdating \\(M\\)\nThis is a straightforward application of the Beta-Binomial Prior.\n\\[\nY \\sim Binom(100, p), \\quad p \\sim Beta(5, 3)\n\\]\nso \\[\np \\mid Y = 42 \\sim Beta\\!\\big(5+42,\\ 3+58\\big)\n\\]\n\npost_predictive_M = r_beta_binom(pp_sample_size, n_obs, 5+y_obs, 3+n_obs-y_obs)\n\n\n\nComparing analysis for \\(M\\) vs equivalent analysis for \\(D_1\\)\n\ntvd_post = pp_sample_distance(df$post_pred, post_predictive_M)\n\nplot_pp_difference(real_sample = df$post_pred, real_model_name = \"D1\",\n                   miss_sample = post_predictive_M, miss_model_name = \"M\",\n                   prior_or_post = \"Posterior\")\n\n\n\n\n\n\n\n\nThe posterior predictive distributions are quite different, with a Total Variational Distance of 0.648 (a 14.4966443 time increase from the prior TVD), so the model misspecification in this case seems to have a significant impact on results."
+    "section": "Example 1. Real data is hierarchical, but assumed to be flat.",
+    "text": "Example 1. Real data is hierarchical, but assumed to be flat.\nOur data \\(y\\) follows the following hierarchical distribution, which we’ll denote \\(D_1\\).\n\\[\n\\begin{align}\nY &\\sim Binom(100, p) \\\\\np &\\sim Beta(3, 4)\n\\end{align}\n\\]\n\nn_obs = 100\ny = r_beta_bernoulli(n_obs, alpha = 3, 4)\ny_obs = sum(y)\ny_obs\n\n[1] 42\n\n\nNow, we will misspecify the model.\nWe now assume the data comes from a binomial distribution, and assign a beta(5,3) prior on the proportion, where Y is the sum of the data, We’ll call this model \\(M\\) (for “Misspecified”). \\[\n\\begin{aligned}\nY &\\sim \\text{Binom}(n = 100, p) \\\\\n(Prior)\\quad p &\\sim \\text{Beta}(5, 3)\n\\end{aligned}\n\\]\nPrior Predictive distribution:\n\npp_sample_size = 10000\n\n# the predictive distribution follows a beta-binomial\nprior_pred_M = r_beta_binom(pp_sample_size, n_obs, 5, 3)\n\nNow to find an equivalent prior for the real model\nThe real model (\\(D_1\\)): \\[\n\\begin{aligned}\nY &\\sim \\text{Binom}(n=100, p) \\\\\np &\\sim \\text{Beta}(\\alpha, \\beta) \\\\\n(Prior)\\quad \\alpha &\\sim \\log \\mathcal{N}(\\mu_1, \\sigma_1) \\\\\n(Prior)\\quad \\beta &\\sim \\log \\mathcal{N}(\\mu_2, \\sigma_2)\n\\end{aligned}\n\\]\nA function to sample from the prior predictive distribution:\n\n# function for sampling from prior predictive distrib of D2 model\nsample_from_pp_D1 = function(n, size, mu1, sigma1, mu2, sigma2) {\n  alphas = rlnorm(n, mu1, sigma1)\n  betas = rlnorm(n, mu2, sigma2)\n  probs = rbeta(n, alphas, betas)\n  sample = rbinom(n, size, probs)\n  return(sample)\n}\n\nWe will use lognormal \\(\\log \\mathcal{N}(\\log 5,\\ 0.01)\\) and \\(\\log \\mathcal{N}(\\log 3,\\ 0.01)\\) as the priors for \\(\\alpha\\) and \\(\\beta\\) in model \\(D_1\\), chosen to create a very similar prior predictive distribution to the prior for \\(M\\).\nThese are the prior predictive distributions compared:\n\nprior_pred_D1 = sample_from_pp_D1(n = pp_sample_size,\n                                 size = n_obs,\n                                 mu1 = log(5), sigma1 = 0.01,\n                                 mu2 = log(3), sigma2 = 0.01)\n\ntvd_prior = pp_sample_distance(prior_pred_D1, prior_pred_M)\ntvd_prior\n\n[1] 0.0447\n\nplot_pp_difference(real_sample = prior_pred_D1, real_model_name = \"D1\",\n                   miss_sample = prior_pred_M, miss_model_name = \"M\",\n                   prior_or_post = \"Prior\")\n\n\n\n\n\n\n\n\nAs shown, the prior predictive distributions are extremely similar, so these priors are effectively equivalent.\nThat means any posterior differences after updating on data should mostly come from model structure, not prior choice.\nNow we update both models and compare the posterior predictives.\n\nUpdating \\(D_1\\)\nWe approximate the posterior with naive simulation (rejection sampling).\n\n# We sample from the prior a lot, predict with the param values from the prior,\n# and keep if the prediction is equal to the observed data\n\ndf = data.frame(alpha = numeric(), beta = numeric())\n\ni = 1\nwhile (i &lt;= pp_sample_size) {\n  alpha = rlnorm(1, log(5), 0.01)\n  beta = rlnorm(1, log(3), 0.01)\n  \n  y_pred = r_beta_binom(1, n_obs, alpha, beta)\n  \n  if (y_pred == y_obs) {\n    df = rbind(df, data.frame(alpha=alpha, beta=beta))\n    i = i+1\n  }\n}\n\ndf &lt;- mutate(df, post_pred = r_beta_binom(n(), n_obs, alpha, beta))\n\n\n\nUpdating \\(M\\)\nThis is a straightforward application of the Beta-Binomial Prior.\n\\[\nY \\sim Binom(100, p), \\quad p \\sim Beta(5, 3)\n\\]\nso \\[\np \\mid Y = 42 \\sim Beta\\!\\big(5+42,\\ 3+58\\big)\n\\]\n\npost_predictive_M = r_beta_binom(pp_sample_size, n_obs, 5+y_obs, 3+n_obs-y_obs)\n\n\n\nComparing analysis for \\(M\\) vs equivalent analysis for \\(D_1\\)\n\ntvd_post = pp_sample_distance(df$post_pred, post_predictive_M)\n\nplot_pp_difference(real_sample = df$post_pred, real_model_name = \"D1\",\n                   miss_sample = post_predictive_M, miss_model_name = \"M\",\n                   prior_or_post = \"Posterior\")\n\n\n\n\n\n\n\n\nThe posterior predictives are clearly different, with total variation distance 0.648 (a 14.4966443-fold increase over prior TVD). In this setup, misspecification has a meaningful effect on inference.",
+    "crumbs": [
+      "Projects",
+      "Bayesian Analysis"
+    ]
   },
   {
-    "objectID": "projects/bayesian/index.html#example-2.-real-data-is-dependent-but-we-assume-independent",
-    "href": "projects/bayesian/index.html#example-2.-real-data-is-dependent-but-we-assume-independent",
+    "objectID": "projects/bayesian/index.html#example-2.-real-data-is-dependent-but-assumed-to-be-independent.",
+    "href": "projects/bayesian/index.html#example-2.-real-data-is-dependent-but-assumed-to-be-independent.",
     "title": "Analysis of Bayesian Model Misspecification",
-    "section": "Example 2. Real data is dependent, but we assume independent",
-    "text": "Example 2. Real data is dependent, but we assume independent\nNow, we explore what happens if our sample comes from a dependent model. Specifically, we generate a sample from summing a Markov Chain of \\(n\\) drifting Bernoulli trials, denoted as model \\(D_2\\).\n\\[\nY \\sim MC(n=100, \\ p_0=0.4, \\ \\delta=0.1)\n\\] (MC for Markov Counts, details for sampling are in the helper functions section)\nWhere for \\(n\\) trials, \\(p_0\\) is the initial probability of success, and \\(\\delta\\) is the standard deviation of gaussian drift added to the success probability after each trial.\n\nn_ops = 100\ny = r_markov_bernoulli(n_ops, p0=0.4, drift_sd=0.1)\ny_obs = sum(y)\ny_obs\n\n[1] 34\n\n\nAgain, we will misspecify the model by assuming the data comes from a binomial distribution. We assign the same \\(\\text{Beta}(5, 3)\\) prior on \\(p\\). Again, we call this model \\(M\\). \\[\n\\begin{aligned}\nY &\\sim \\text{Binom}(n=100, p) \\\\\n(Prior)\\quad p &\\sim \\text{Beta}(5, 3)\n\\end{aligned}\n\\]\nLet’s then find an equivalent prior for model \\(D_2\\). \\[\n\\begin{aligned}\nY &\\sim MC(n=100, p_0, \\delta) \\\\\n(Prior)\\quad p_0 &\\sim \\text{Beta}(\\alpha, \\beta) \\\\\n(Prior)\\quad \\delta &\\sim \\text{Exp}(\\lambda)\n\\end{aligned}\n\\] We’ll need a function to sample a prior predictive distribution for \\(D_2\\).\n\nsample_from_pp_D2 = function(n, size, alpha, beta, rate) {\n    p0 = rbeta(n, alpha, beta)\n    drift_sd = rexp(n, rate)\n    sample = r_markov_counts(n, size, p0, drift_sd)\n    return(sample)\n}\n\nLet’s use this prior distribution: \\[\n\\begin{aligned}\nY &\\sim MC(n=100, \\ p_0, \\ \\delta) \\\\\n(Prior)\\quad p_0 &\\sim \\text{Beta}(5, 3) \\\\\n(Prior)\\quad \\delta &\\sim \\text{Exp}(100)\n\\end{aligned}\n\\]\nAnd compare the prior predictive distributions:\n\nprior_pred_D2 = sample_from_pp_D2(n=pp_sample_size,\n                                  size = n_obs,\n                                  alpha=5, beta=3, rate=100)\n\ntvd_prior = pp_sample_distance(prior_pred_D2, prior_pred_M)\ntvd_prior\n\n[1] 0.0601\n\nplot_pp_difference(real_sample = prior_pred_D2, real_model_name=\"D2\",\n                   miss_sample = prior_pred_M, miss_model_name=\"M\",\n                   prior_or_post = \"Prior\")\n\n\n\n\n\n\n\n\nAs shown, the priors are effectively equivalent.\nLet’s proceed with updating both models to see what kind of discrepancy there is.\n\nUpdating \\(D_2\\)\nWe use naive simulation again to create a posterior sample for D2. (This one is much slower, so we’re also accepting if the predicted is within 1 of the observed, which makes the posterior a bit less accurate.)\n\ndf = data.frame(p0 = numeric(), drift_sd = numeric())\n\ni = 1\nwhile (i &lt;= pp_sample_size) {\n  p0 = rbeta(1, 5, 3)\n  drift_sd = rexp(1, 100)\n  \n  y_pred = r_markov_counts(1, n_obs, p0, drift_sd)\n  \n  if (abs(y_pred - y_obs) &lt;= 1) {\n    df = rbind(df, data.frame(p0=p0, drift_sd=drift_sd))\n    i = i+1\n  }\n}\n\ndf &lt;- mutate(df, post_pred = r_markov_counts(n(), n_obs, p0, drift_sd))\n\n\n\nUpdating \\(M\\)\nAgain, a straightforward updating of the Beta-Binomial Prior.\n\npost_predictive_M = r_beta_binom(pp_sample_size, n_obs, 5+y_obs, 3+n_obs-y_obs)\n\n\n\nComparing Posterior Predictive Distributions:\n\ntvd_post = pp_sample_distance(df$post_pred, post_predictive_M, method = 'tvd')\n\nplot_pp_difference(real_sample = df$post_pred, real_model_name = \"D2\",\n                   miss_sample = post_predictive_M, miss_model_name = \"M\",\n                   prior_or_post = \"Posterior\")\n\n\n\n\n\n\n\n\nThere is a Total Variational Distance of 0.214 (a 3.5607321 time increase from the prior TVD), and we can see from the plot, the posterior predictive distributions are visibly different."
+    "section": "Example 2. Real data is dependent, but assumed to be independent.",
+    "text": "Example 2. Real data is dependent, but assumed to be independent.\nNow we test a dependence misspecification case. Data are generated by summing a Markov process of \\(n\\) drifting Bernoulli trials (model \\(D_2\\)).\n\\[\nY \\sim MC(n=100, \\ p_0=0.4, \\ \\delta=0.1)\n\\] (MC = Markov Counts; sampling details are in helper functions.)\nHere, \\(p_0\\) is the initial success probability and \\(\\delta\\) is the standard deviation of Gaussian drift added to the success probability after each trial.\n\nn_ops = 100\ny = r_markov_bernoulli(n_ops, p0=0.4, drift_sd=0.1)\ny_obs = sum(y)\ny_obs\n\n[1] 34\n\n\nAgain, we intentionally misspecify by fitting a binomial model with the same \\(\\text{Beta}(5, 3)\\) prior on \\(p\\) (model \\(M\\)). \\[\n\\begin{aligned}\nY &\\sim \\text{Binom}(n=100, p) \\\\\n(Prior)\\quad p &\\sim \\text{Beta}(5, 3)\n\\end{aligned}\n\\]\nNow we choose an equivalent prior for model \\(D_2\\). \\[\n\\begin{aligned}\nY &\\sim MC(n=100, p_0, \\delta) \\\\\n(Prior)\\quad p_0 &\\sim \\text{Beta}(\\alpha, \\beta) \\\\\n(Prior)\\quad \\delta &\\sim \\text{Exp}(\\lambda)\n\\end{aligned}\n\\] We use the function below to sample from the prior predictive distribution of \\(D_2\\).\n\nsample_from_pp_D2 = function(n, size, alpha, beta, rate) {\n    p0 = rbeta(n, alpha, beta)\n    drift_sd = rexp(n, rate)\n    sample = r_markov_counts(n, size, p0, drift_sd)\n    return(sample)\n}\n\nWe use this prior distribution: \\[\n\\begin{aligned}\nY &\\sim MC(n=100, \\ p_0, \\ \\delta) \\\\\n(Prior)\\quad p_0 &\\sim \\text{Beta}(5, 3) \\\\\n(Prior)\\quad \\delta &\\sim \\text{Exp}(100)\n\\end{aligned}\n\\]\nNow compare the prior predictive distributions:\n\nprior_pred_D2 = sample_from_pp_D2(n=pp_sample_size,\n                                  size = n_obs,\n                                  alpha=5, beta=3, rate=100)\n\ntvd_prior = pp_sample_distance(prior_pred_D2, prior_pred_M)\ntvd_prior\n\n[1] 0.0601\n\nplot_pp_difference(real_sample = prior_pred_D2, real_model_name=\"D2\",\n                   miss_sample = prior_pred_M, miss_model_name=\"M\",\n                   prior_or_post = \"Prior\")\n\n\n\n\n\n\n\n\nAgain, the prior predictives are effectively equivalent.\nNext we update both models and measure how much the posterior predictives diverge.\n\nUpdating \\(D_2\\)\nWe use naive simulation again to get a posterior sample for \\(D_2\\).\nThis step is slower, so we accept draws within 1 of the observed count, which makes the approximation slightly rougher.\n\ndf = data.frame(p0 = numeric(), drift_sd = numeric())\n\ni = 1\nwhile (i &lt;= pp_sample_size) {\n  p0 = rbeta(1, 5, 3)\n  drift_sd = rexp(1, 100)\n  \n  y_pred = r_markov_counts(1, n_obs, p0, drift_sd)\n  \n  if (abs(y_pred - y_obs) &lt;= 1) {\n    df = rbind(df, data.frame(p0=p0, drift_sd=drift_sd))\n    i = i+1\n  }\n}\n\ndf &lt;- mutate(df, post_pred = r_markov_counts(n(), n_obs, p0, drift_sd))\n\n\n\nUpdating \\(M\\)\nAgain, this is a straightforward Beta-Binomial update.\n\npost_predictive_M = r_beta_binom(pp_sample_size, n_obs, 5+y_obs, 3+n_obs-y_obs)\n\n\n\nComparing Posterior Predictive Distributions:\n\ntvd_post = pp_sample_distance(df$post_pred, post_predictive_M, method = 'tvd')\n\nplot_pp_difference(real_sample = df$post_pred, real_model_name = \"D2\",\n                   miss_sample = post_predictive_M, miss_model_name = \"M\",\n                   prior_or_post = \"Posterior\")\n\n\n\n\n\n\n\n\nThe total variation distance is 0.214 (a 3.5607321-fold increase from prior TVD), and the posterior predictive distributions are visibly different.",
+    "crumbs": [
+      "Projects",
+      "Bayesian Analysis"
+    ]
   },
   {
     "objectID": "projects/bayesian/index.html#conclusion",
@@ -160,39 +136,112 @@
     ]
   },
   {
-    "objectID": "projects/skincancer/index.html",
-    "href": "projects/skincancer/index.html",
-    "title": "Melanoma Risk Prediction, Kaggle ISIC 2024",
+    "objectID": "projects/senior_consulting/mobility.html",
+    "href": "projects/senior_consulting/mobility.html",
+    "title": "Manual Task Performance Under Distraction and Biomechanical Constraints",
     "section": "",
-    "text": "Link to Code"
+    "text": "Overview\nThis project tested how distraction, screw-turn direction, and hand dominance affect performance on a constrained manual task.\n\n\nData and Experimental Design\nData came from 57 Cal Poly students. Each participant completed four trials covering dominant/nondominant hand and flexion/extension direction. Distraction (mental math vs. background noise) was assigned between subjects.\nOutcome: time to fully unscrew a bolt (seconds).\nTotal observations: 228.\nDesign: mixed 2×2×2 factorial with repeated measures on hand and direction.\n\n\nMethodology\nWe modeled log completion time with mixed-effects ANOVA. Hand, direction, and distraction were fixed effects; participant was a random effect to account for repeated measures. The initial model included full interactions, then was simplified by removing non-informative terms while retaining the hand-by-direction interaction.\n\n\nKey Findings\nDirection was the largest effect: extension was slower than flexion.\nNondominant-hand trials were also slower.\nThere was moderate hand-by-direction interaction evidence, suggesting the nondominant-hand penalty was smaller in extension than flexion.\nDistraction showed no clear main effect or interaction.\n\n\nPower Analysis and Design Implications\nThe study was powered for large biomechanical effects, but underpowered for small effects (like distraction). Power analysis suggested many more participants would be needed to detect subtle time differences. A better follow-up design is to make distraction a within-subject factor to improve sensitivity without increasing sample size as much.\n\n\nTools\nR (mixed-effects modeling, ANOVA, power analysis).\n\nView technical report",
+    "crumbs": [
+      "Projects",
+      "Statistical Consulting",
+      "Mobility"
+    ]
   },
   {
-    "objectID": "projects_archived/Stat365/index.html",
-    "href": "projects_archived/Stat365/index.html",
-    "title": "Narrative Visualization (Scratch)",
+    "objectID": "projects/senior_consulting/ibaby.html",
+    "href": "projects/senior_consulting/ibaby.html",
+    "title": "IBaby Month One: Maternal Depression, Stress, and Technology Use",
     "section": "",
-    "text": "counts_male &lt;- age_gaps |&gt; \n  filter(character_1_gender == \"man\") |&gt; \n  count(age_difference)\ncounts_female &lt;- age_gaps |&gt; \n  filter(character_1_gender == \"woman\") |&gt; \n  count(age_difference)\n\nggplot() +\n  geom_col(data = counts_male, aes(x = age_difference, y = n), fill = \"steelblue\", width=1) +\n  geom_col(data = counts_female, aes(x = age_difference, y = -n), fill = \"pink\", width=1) +\n  geom_label(aes(x=30, y=40, label=\"Male\"), color=\"steelblue\")+\n  geom_label(aes(x=30, y=-20, label=\"Female\"), color=\"pink\")+\n  labs(title = \"Age Differences in Movie Couples\",\n       subtitle = \"By Gender of the Older Actor\",\n       x='', y='',\n       caption = \"Data sourced from hollywoodagegap.com.\") +\n  theme_minimal()\n\n\n\n\nFigure 1.2 shows the age differences in holywood movie couples. It’s clear that male older relationships are significantly more common than female older relationships, as well as having larger average age gaps.\n\n\n\n\n\nage_gaps &lt;- age_gaps |&gt;\n  mutate(maleFemDiff = case_when(\n    character_1_gender == \"woman\" ~ -1 * age_difference,\n    character_1_gender == \"man\" ~ age_difference\n  ))\n\nggplot() +\n  geom_histogram(data = age_gaps %&gt;% filter(maleFemDiff &gt;= 0), aes(x = maleFemDiff), fill = \"steelblue\", binwidth = 1) +\n  geom_histogram(data = age_gaps %&gt;% filter(maleFemDiff &lt; 0), aes(x = maleFemDiff), fill = \"pink\", binwidth = 1) +\n  geom_label(aes(x =20, y = 35, label = \"Male\"), color = \"steelblue\") +\n  geom_label(aes(x = -20, y = 35, label = \"Female\"), color = \"pink\")+\n    labs(\n    title = \"Age Differences in Heterosexual Movie Couples\",\n    subtitle = \"By age of Male character - Female character\",\n    y=\"Count\",\n    x=\"Male age - Female age\")+\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n# normality check:\nqqnorm(age_gaps$maleFemDiff)\nqqline(age_gaps$maleFemDiff)\n\n\n\n\n\n\n\n# t.test\nt.test(age_gaps$maleFemDiff, mu=0, alternative=\"greater\")\n\n\n    One Sample t-test\n\ndata:  age_gaps$maleFemDiff\nt = 27.434, df = 1154, p-value &lt; 2.2e-16\nalternative hypothesis: true mean is greater than 0\n95 percent confidence interval:\n 7.946419      Inf\nsample estimates:\nmean of x \n  8.45368"
+    "text": "Overview\nThis project examined whether parenting stress and tech-related distraction are associated with depression risk one month postpartum.\n\n\nData\nSample: 65 mothers assessed one month after birth.\nOutcome: CES-D–based depression indicator (score ≥ 13).\nPredictors: parenting stress, perceived distraction, age, income, and marital status.\nGiven sample size, we used summarized scale scores (instead of item-level inputs) and removed cases with substantial missingness.\n\n\nMethodology\nWe fit logistic regression for depression risk, used backward stepwise selection to keep the model interpretable, and standardized continuous predictors so odds ratios were easier to compare.\n\n\nKey Findings\nHigher parenting stress and higher perceived distraction were both associated with higher odds of depression. Maternal age was negatively associated with depression risk. Income and marital status were retained, suggesting possible socioeconomic/context effects.\n\n\nModel Performance and Diagnostics\nThe final model showed strong in-sample discrimination (ROC AUC ≈ 0.91). Diagnostics did not suggest major assumption violations or severe multicollinearity.\n\n\nInterpretation and Limitations\nFindings support a meaningful association between stress/distraction and early postpartum depression, but this is observational work with a modest sample. Effect sizes should be interpreted cautiously, especially for demographic terms that may be sensitive to sample imbalance and unmeasured confounding.\n\n\nTools\nSAS (logistic regression, model selection, diagnostics).\n\nView technical report",
+    "crumbs": [
+      "Projects",
+      "Statistical Consulting",
+      "IBaby"
+    ]
   },
   {
-    "objectID": "stats.html",
-    "href": "stats.html",
-    "title": "Stats",
+    "objectID": "projects/senior_consulting/index.html",
+    "href": "projects/senior_consulting/index.html",
+    "title": "Statistical Consulting Senior Projects",
     "section": "",
-    "text": "Statistics and inference projects.\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Overview\nCapstone consulting projects from my undergraduate statistics program.\n\n\nProjects\n\nIBaby Month One: Maternal Depression and Technology Use\nLogistic regression on postpartum survey data. Higher parenting stress and tech-related distraction were both associated with higher depression risk after demographic controls.\n\n\nSustainability Literacy: Environmental and Educational Predictors of Knowledge\nMultiple regression on survey + census-linked features. College exposure predicted sustainability knowledge more strongly than most background variables.\n\n\nManual Task Performance Under Distraction and Biomechanical Constraints\nMixed-effects analysis of repeated manual-task trials. Hand dominance, wrist constraints, and distraction all affected performance, with power limits considered in interpretation.",
+    "crumbs": [
+      "Projects",
+      "Statistical Consulting"
+    ]
   },
   {
-    "objectID": "projects_scratch/skincancer/index.html",
-    "href": "projects_scratch/skincancer/index.html",
-    "title": "Skin Cancer Detection under Extreme Class Impabalance (ISIC 2024)",
+    "objectID": "projects/senior_consulting/sustainability.html",
+    "href": "projects/senior_consulting/sustainability.html",
+    "title": "Sustainability Literacy: Environmental and Educational Predictors of Knowledge",
     "section": "",
-    "text": "Overview\nThis group project was part of a Artificial Intelligence course and explored supervised learning approaches for skin cancer detection using the ISIC 2024 dataset, which consists of over 400,000 lesion images extracted from 3D total body photography along with structured metadata. The task was to classify lesions as benign or malignant in a setting characterized by extreme class imbalance (approximately 1000:1 benign to malignant). The goal was not leaderboard optimization, but to understand how standard machine learning methods behave under severe imbalance and limited signal.\n\n\nData and Approach\nWe evaluated both metadata-based and image-based models. Metadata features included patient age, lesion size, and body location, which were cleaned, normalized, and encoded prior to modeling. For structured data, we implemented logistic regression (in PyTorch), random forests, and XGBoost. For image data, we trained several convolutional architectures ranging from a simple CNN to deeper models, including a ResNet-18 variant. Models were evaluated using malignant-class precision and recall rather than overall accuracy.\n\n\nKey Challenges and Findings\nThe dominant challenge was extreme class imbalance, which caused many models to default to predicting the benign class. We experimented with loss weighting and weighted sampling strategies to mitigate this effect; weighted sampling produced more stable training behavior but did not yield consistently strong predictive performance. Across both metadata and image models, training loss often failed to exhibit a clear downward trend, suggesting limited learnable signal under the given constraints. Some configurations achieved high recall at the expense of very low precision, limiting practical usefulness.\n\n\nInterpretation\nThis project highlighted the limits of standard supervised learning pipelines in highly imbalanced medical imaging tasks without substantial prior structure. The results suggest that meaningful improvements would likely require stronger inductive bias (e.g., pretrained representations, asymmetric or focal loss functions, or multi-task learning) or additional curated data. The primary contribution of this work lies in diagnosing failure modes, appropriate metric selection, and understanding when increased model complexity does not compensate for data limitations.\n\n\nTools\nPython, PyTorch, scikit-learn, XGBoost, convolutional neural networks, class-imbalance handling techniques.\n\nView Repository\nView Presentation Slides"
+    "text": "Overview\nThis project studied what predicts students’ sustainability literacy scores (SKS), with a focus on educational exposure vs. background environment.\n\n\nData\nWe combined Cal Poly survey responses with ZIP-code-linked census/environment variables.\nOutcome: sustainability knowledge score.\nPredictors: PM2.5, greenspace, fire frequency, ZIP-code area, neighborhood educational attainment, and year in college.\nSampling mixed classroom recruitment and voluntary responses, so results should not be treated as fully population-representative.\n\n\nMethodology\nI fit multiple linear regression models with year in college as a control:\n\nEnvironmental predictors model\nEducational background predictors model\n\nInteraction terms were excluded to limit overfitting and keep interpretation clear.\n\n\nKey Findings\nYear in college was the strongest and most consistent positive predictor in both models.\nIn the environmental model, higher PM2.5 and larger ZIP-code area were associated with modestly lower SKS.\nIn the educational model, higher neighborhood college-degree attainment was associated with higher SKS.\n\n\nInterpretation and Limitations\nResults suggest institutional exposure (curriculum/time in college) may matter more than background environment alone. This is associative, not causal, and uncertainty remains due to self-selection and ZIP-code-level aggregation.\n\n\nTools\nR (linear modeling, data visualization), census and environmental datasets.\n\nView technical report",
+    "crumbs": [
+      "Projects",
+      "Statistical Consulting",
+      "Sustainability"
+    ]
   },
   {
-    "objectID": "projects_scratch/Stat365/index.html",
-    "href": "projects_scratch/Stat365/index.html",
-    "title": "Narrative Visualization (Scratch)",
+    "objectID": "projects/visualizations/index.html",
+    "href": "projects/visualizations/index.html",
+    "title": "Data Visualization Gallery",
     "section": "",
-    "text": "counts_male &lt;- age_gaps |&gt; \n  filter(character_1_gender == \"man\") |&gt; \n  count(age_difference)\ncounts_female &lt;- age_gaps |&gt; \n  filter(character_1_gender == \"woman\") |&gt; \n  count(age_difference)\n\nggplot() +\n  geom_col(data = counts_male, aes(x = age_difference, y = n), fill = \"steelblue\", width=1) +\n  geom_col(data = counts_female, aes(x = age_difference, y = -n), fill = \"pink\", width=1) +\n  geom_label(aes(x=30, y=40, label=\"Male\"), color=\"steelblue\")+\n  geom_label(aes(x=30, y=-20, label=\"Female\"), color=\"pink\")+\n  labs(title = \"Age Differences in Movie Couples\",\n       subtitle = \"By Gender of the Older Actor\",\n       x='', y='',\n       caption = \"Data sourced from hollywoodagegap.com.\") +\n  theme_minimal()\n\n\n\n\nFigure 1.2 shows the age differences in holywood movie couples. It’s clear that male older relationships are significantly more common than female older relationships, as well as having larger average age gaps.\n\n\n\n\n\nage_gaps &lt;- age_gaps |&gt;\n  mutate(maleFemDiff = case_when(\n    character_1_gender == \"woman\" ~ -1 * age_difference,\n    character_1_gender == \"man\" ~ age_difference\n  ))\n\nggplot() +\n  geom_histogram(data = age_gaps %&gt;% filter(maleFemDiff &gt;= 0), aes(x = maleFemDiff), fill = \"steelblue\", binwidth = 1) +\n  geom_histogram(data = age_gaps %&gt;% filter(maleFemDiff &lt; 0), aes(x = maleFemDiff), fill = \"pink\", binwidth = 1) +\n  geom_label(aes(x =20, y = 35, label = \"Male\"), color = \"steelblue\") +\n  geom_label(aes(x = -20, y = 35, label = \"Female\"), color = \"pink\")+\n    labs(\n    title = \"Age Differences in Heterosexual Movie Couples\",\n    subtitle = \"By age of Male character - Female character\",\n    y=\"Count\",\n    x=\"Male age - Female age\")+\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n# normality check:\nqqnorm(age_gaps$maleFemDiff)\nqqline(age_gaps$maleFemDiff)\n\n\n\n\n\n\n\n# t.test\nt.test(age_gaps$maleFemDiff, mu=0, alternative=\"greater\")\n\n\n    One Sample t-test\n\ndata:  age_gaps$maleFemDiff\nt = 27.434, df = 1154, p-value &lt; 2.2e-16\nalternative hypothesis: true mean is greater than 0\n95 percent confidence interval:\n 7.946419      Inf\nsample estimates:\nmean of x \n  8.45368"
+    "text": "A collection of small visualization projects from classwork and personal practice.\n\n\n\nCode\neverest_plot |&gt; \n  ggplot(aes(x = year, y = duration,\n             color = as.factor(success_indicator),\n             shape = as.factor(success_indicator))) +\n    geom_point(alpha=0.25) +\n    scale_color_manual(values = c(\"0\" = \"deepskyblue4\", \"1\" = \"darkorange3\"),\n                       labels = c(\"Unsuccessful\", \"Successful\")) +\n    scale_shape_manual(values = c(16, 17),\n                       labels = c(\"Unsuccessful\", \"Successful\")) +\n    labs(color = \"\", shape=\"\",\n         title = \"Duration and Success of Everest Expeditions Over Time\",\n         subtitle = \"Duration (days)\",\n         x = \"Year\",\n         y = \"\",\n         caption = \"Note: Success defined as reaching the summit.\") +\n    scale_x_continuous(breaks = seq(min(everest$year)-1, max(everest$year), by = 10))+\n    theme_minimal()\n\n\n\n\n\neverest-vis\n\n\nDot plot of Everest expedition duration by year, split by summit success. Durations become more consistent over time, with major drops during disaster years: the 2014 Khumbu Icefall avalanche and the 2015 Nepal earthquake/avalanche season.\n\n\n\nCode\ncounts_male &lt;- age_gaps |&gt;\n  filter(character_1_gender == \"man\") |&gt;\n  count(age_difference)\n\ncounts_female &lt;- age_gaps |&gt;\n  filter(character_1_gender == \"woman\") |&gt;\n  count(age_difference)\n\nggplot() +\n  geom_col(\n    data = counts_male,\n    aes(x = age_difference, y = n),\n    fill = \"steelblue\"\n  ) +\n  geom_col(\n    data = counts_female,\n    aes(x = age_difference, y = -n),\n    fill = \"pink\"\n  ) +\n  geom_label(\n    aes(x = 30, y = 40, label = \"Male\")\n  ) +\n  geom_label(\n    aes(x = 30, y = -20, label = \"Female\")\n  ) +\n  labs(\n    title = \"Age Differences in Movie Couples\",\n    subtitle = \"By Gender of the Older Actor\",\n    x = \"Age Difference (years)\",\n    y = \"Count\"\n  ) +\n  theme_minimal()\n\n\n\n\n\nage-gap-mirrored\n\n\nMirrored histogram of age gaps in movie couples by gender of the older actor. When the older actor is male, age gaps are generally larger and more variable; when the older actor is female, gaps are tighter and usually smaller.\n\n\n\n\nage-gap-hist\n\n\nHistogram of age differences in heterosexual movie couples (male age minus female age). The distribution is mostly positive, which means men are more often older than their female co-stars, and often by larger margins.\n\n\n\nCode\nanimated_plot &lt;- ggplot(murder_happiness,\n                        aes(x = log(murder_rate_per_100k),\n                            y = happiness_score)) +\n  geom_point(color = \"steelblue\") +\n  geom_smooth(method = \"lm\", color = \"black\") +\n  labs(title = \"Relationship Between Murder Rate and Happiness Score (2005-2019)\",\n       subtitle = \"Happiness Score (0-100)\",\n       x = \"Log-Scaled Murder Rate (per 100k)\",\n       y = \"\",\n       caption = \"Year: {frame_time}\") +\n  transition_time(as.integer(year)) +\n  enter_fade() +\n  exit_fade() +\n  theme_bw() +\n  theme(plot.caption = element_text(size = 11))\n\nanimate(animated_plot, renderer = gifski_renderer())\n\n\n\n\n\nmurder-happiness-1\n\n\nCountry-level scatter plot of murder rate vs. happiness score with a fitted trend line over time. Higher murder rates are generally associated with lower happiness, though the strength of that relationship shifts year to year.\n\n\n\nCode\nset.seed(42)\n\npredictions &lt;- predict(linear_model, country_murder_happiness)\nresidual_se &lt;- sigma(linear_model)\nsimulated_y &lt;- predictions + rnorm(n = length(predictions), mean = 0, sd = sigma(linear_model))\n\nobserved &lt;- ggplot(country_murder_happiness, \n             aes(x = log(avg_murder_rate), \n                 y = avg_happiness_score)\n             ) +\n  geom_point(color = \"steelblue\") +\n  labs(title = \"Observed Data\",\n       subtitle = \"Observed Happiness Score (0-100)\",\n       x = \"Log-Scaled Average Murder Rate (per 100k)\", \n       y = \"\") +\n  theme_bw()\n\n# Plot Simulated Data\npredicted &lt;- ggplot(country_murder_happiness, \n             aes(x = log(avg_murder_rate), \n                 y = simulated_y)\n             ) +\n  geom_point(color = \"orange3\") +\n  labs(title = \"Simulated Data\",\n       subtitle = \"Simulated Happiness Score (0-100)\",\n       x = \"Log-Scaled Average Murder Rate (per 100k)\", \n       y = \"\") +\n  theme_bw()\n\nobserved + predicted\n\n\n\n\n\nmurder-happiness-2\n\n\nObserved vs. simulated scatter plots from a linear model. The simulation captures the overall trend but is more tightly clustered than the real data, suggesting the model underestimates variability.\n\n\n\nCode\nggplot(data = penguins,\n       aes(x = bill_length_mm**2, y = log(bill_depth_mm),\n           shape = species, color = island)) +\n  geom_point(size = 0.1, alpha = 0.5) +\n  labs(title = \"PENGUIN\",\n       x = \"length (squared)\",\n       y = \"depth (log)\") +\n  annotate(\"rect\",\n           xmin = 500, xmax = 3240,\n           ymin = -0.7, ymax = 2.2,\n           fill = \"yellow\", alpha = 0.5) +\n  annotate(\"text\",\n           x = 1850, y = 1.3,\n           label = \"WARNING: Your Computer May Be Infected!\",\n           color = \"red\", size = 4, fontface = \"bold\",\n           hjust = 0.5) +\n  annotate(\"text\",\n           x = 1850, y = 0.2,\n           label = \"Call Now for Support:\\n1800-433-5055\",\n           color = \"blue\", size = 3,\n           hjust = 0.5) +\n  scale_shape_discrete(labels = c(\"Species\",\n                                  \"Second Species\",\n                                  \"Species C\")) +\n  scale_color_discrete(labels = c(\"Bisco\",\n                                  \"Island 2\",\n                                  \"Forgot the name\"))\n\n\n\n\n\nugly-vis\n\n\nAn intentionally bad chart: unclear labels, noisy styling, unnecessary transforms, and distracting annotations. The point is to show how design choices can hide signal and mislead interpretation.",
+    "crumbs": [
+      "Projects",
+      "Data Visualization Gallery"
+    ]
+  },
+  {
+    "objectID": "projects/ml_experiments/index.html",
+    "href": "projects/ml_experiments/index.html",
+    "title": "Machine Learning Experiments",
+    "section": "",
+    "text": "Experiments\n\nSkin Cancer Detection\nCourse group project on skin cancer classification under extreme class imbalance (ISIC 2024), focused on failure modes and metric choice over leaderboard tuning.\n\n\nTuned Lens Exploration\nSolo interpretability experiment on Tuned Lenses using subspace decomposition and targeted ablations.",
+    "crumbs": [
+      "Projects",
+      "ML Experiments"
+    ]
+  },
+  {
+    "objectID": "projects/ml_experiments/tunedlens.html",
+    "href": "projects/ml_experiments/tunedlens.html",
+    "title": "Exploring Tuned Lenses via Subspace Ablations",
+    "section": "",
+    "text": "Background\nTuned Lenses let you read intermediate layer predictions by mapping hidden states directly into vocabulary-logit space, instead of only inspecting the final layer output.\n\nMore broadly, mechanistic interpretability is a field of AI research that tries to reverse-engineer how neural networks compute their outputs in human-understandable terms, rather than treating a model as a black box.\n\n\n\nMotivation\nI wanted to test whether lens-aligned predictive space can be split into directions that strongly affect logits vs. directions that weakly affect logits.\n\n\nCore Idea\nUsing SVD of the unembedding matrix, I split the lens-aligned space into high-singular-value and low-singular-value subspaces, then ablated each and measured prediction shifts with KL divergence.\n\n\nResults\nWith pretrained Tuned Lenses, ablating high-singular-value directions caused much larger KL divergence than ablating low-singular-value directions, especially in later layers. This separation disappeared with low-quality lenses trained on a small text subset, indicating high sensitivity to lens quality and training distribution.\n\n\nInterpretation and Limitations\nThe results support a linearly identifiable output-relevant subspace in lens-aligned space, but this is still exploratory. Conclusions are limited by reliance on pretrained lenses, no OOD validation, and incomplete follow-up experiments.\n\n\nStatus\nThis project is exploratory and unfinished. A planned extension was to back-propagate subspace importance through lens maps to identify likely circuit endpoints, but this was not completed.\n\nView Repository\n\n\nReferences\nBelrose, N., Henighan, T., Turner, A. M., et al. (2023).\nThe Tuned Lens: Revealing Representations of LLMs without Intervention.\narXiv:2303.08112. https://arxiv.org/abs/2303.08112",
+    "crumbs": [
+      "Projects",
+      "ML Experiments",
+      "Tuned Lens"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Matthew Huang",
+    "section": "",
+    "text": "I’m a master’s student in Applied Mathematics at UC Davis graduating in 2027. I also have a bachelor’s in Statistics from Cal Poly SLO.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#projects",
+    "href": "index.html#projects",
+    "title": "Matthew Huang",
+    "section": "Projects",
+    "text": "Projects",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "programming.html",
+    "href": "programming.html",
+    "title": "Programming Projects",
+    "section": "",
+    "text": "Programming-heavy work and experiments.\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "projects_scratch/transformers/index.html",
@@ -230,434 +279,73 @@
     "text": "“A privileged basis occurs when some aspect of a model’s architecture encourages neural network features to align with basis dimensions”\nConfusion: A privileged basis is when vectors (aka directions) have specific meanings and can’t be rotated without changing those meanings? - but don’t embedding values have meanings assigned to specific directions? unless the meanings are all relative to other vectors - what are the embedding values if their directions don’t have specific meanings - or maybe the directions do have specific meanings, but these meanings don’t have to align to particular neurons\nExamples: “for example (a privileged basis occurs) because of a sparse activation function such as ReLU”\nVectors which do not have a privileged basis: “it doesn’t really make sense to look at the”neurons” (ie. basis dimensions) of activations like the residual stream, keys, queries or values, which don’t have a privileged basis.” - residual stream / embedding - Output of attention head \\(h\\) - Query, key, value and result vectors of attention head \\(h\\) - Output of MLP layer \\(m\\)\nVectors which do have a privileged basis: - Transformer logits - One-hot encoded tokens - Attention pattern of attention head \\(h\\) - Activations of MLP layer \\(m\\)\n\n\n\nwhen combined, is the transformation of the input to output\nvalue matrix is the input token, output is the output token - and when multiplied together, they make up the transformation\nSpeculative what if you find the nearest token (or token sequence) to this final output value vector, to get a description\n\n\n\nFrom a point in embedding space, how to efficiently find a sequence of tokens which approximates that value - maybe given a minimum variance or distance from target - can we even actually represent sequences of tokens as a single point in the embedding space?\nhow to represent an arbitrary sequence of tokens as a single point in an embedding space - what are the scaling difficulties of representing more and more complex stuff in a single embedding space? - relationship of necessary dim size to token sequence length? - like maybe the more tokens in a sequence you’d like to represent, the more embedding dimensions you need to represent the semantic information - maybe instead of using the same embedding dim for everything, use different ones for different “levels” of token sequence length - sort of representing complexity? abstraction?\nconstruct graph relations from - attention to get"
   },
   {
-    "objectID": "projects/senior_consulting/index.html",
-    "href": "projects/senior_consulting/index.html",
-    "title": "Statistical Consulting Senior Projects",
+    "objectID": "projects_scratch/stockdb/index.html",
+    "href": "projects_scratch/stockdb/index.html",
+    "title": "Stock Database",
     "section": "",
-    "text": "Overview\nCapstone consulting projects from my undergraduate statistics program.\n\n\nProjects\n\nIBaby Month One: Maternal Depression and Technology Use\nLogistic regression on postpartum survey data. Higher parenting stress and tech-related distraction were both associated with higher depression risk after demographic controls.\n\n\nSustainability Literacy: Environmental and Educational Predictors of Knowledge\nMultiple regression on survey + census-linked features. College exposure predicted sustainability knowledge more strongly than most background variables.\n\n\nManual Task Performance Under Distraction and Biomechanical Constraints\nMixed-effects analysis of repeated manual-task trials. Hand dominance, wrist constraints, and distraction all affected performance, with power limits considered in interpretation.",
-    "crumbs": [
-      "Projects",
-      "Statistical Consulting"
-    ]
+    "text": "An automated Python/PostgreSQL data pipeline and R Shiny dashboard for collecting, storing, and visualizing minute-level stock market data from Alpaca.\nThe database holds minutely price data for the SP500 since January 2016, and updates (market) daily. It is hosted on a small local server, where the data is stored securely in a bubblewrapped hard-drive. The dashboard is designed for checking database health and data quality.\nThe dashboard link is .uk because .uk domains are very cheap on cloudflare. I am based in the US."
   },
   {
-    "objectID": "projects/senior_consulting/index.html#introduction",
-    "href": "projects/senior_consulting/index.html#introduction",
-    "title": "Black Hole Visualizer",
+    "objectID": "projects_scratch/stockdb/index.html#introduction",
+    "href": "projects_scratch/stockdb/index.html#introduction",
+    "title": "Stock Database",
     "section": "",
-    "text": "TODO write more better explanation, tex up derivation\nUsing C++, SFML, and GLSL\n\nmy first C++ and graphics project so please forgive strange and bad design choices\n\nThe simulation marches a grid of light rays (one per pixel) from the camera and numerically approximates the null geodesic equations for the Schwarzschild metric. The light rays curve and hit objects, which determine the color of the pixel.\n\nnumerical approximation is done via RK4 with adaptive step size\n\nThe metric equations I used are unitless, so the black hole being simulated is not of any fixed size, and has some arbitrary scale. The color of the ring is given by an arbitrarily chosen inner ring temperature of 5000 Kelvin, which makes for a pretty golden color.\n\nLink to Repository"
+    "text": "An automated Python/PostgreSQL data pipeline and R Shiny dashboard for collecting, storing, and visualizing minute-level stock market data from Alpaca.\nThe database holds minutely price data for the SP500 since January 2016, and updates (market) daily. It is hosted on a small local server, where the data is stored securely in a bubblewrapped hard-drive. The dashboard is designed for checking database health and data quality.\nThe dashboard link is .uk because .uk domains are very cheap on cloudflare. I am based in the US."
   },
   {
-    "objectID": "projects/senior_consulting/index.html#progress-pictures",
-    "href": "projects/senior_consulting/index.html#progress-pictures",
-    "title": "Black Hole Visualizer",
-    "section": "Progress pictures",
-    "text": "Progress pictures\n \n\nAdded background stars\nMade disk color more realistic: calculate temperature -&gt; approximate black body radiation -&gt; color\nMore realistic disk sizing, note that the photon ring is now visible! I’m not sure what that very thin ring inside the photon ring is, and it might be a bug, but that’s for future me to figure out.\n\n\n - Added adaptive step sizing and other optimizations - Fixed object edge rendering for arbitrary step size - Added prettier colors and a grid to see how spacetime curves, and it’s very clearly showing gravitational lensing\n\n\n\n\nOlder Screenshot\n\n\n\nImplementing RK4 for the null geodesic equations in 3D.\nParallelized everything via fragment shader, which was quite difficult, as debugging information could only be encoded through pixel color. I’ve since learned that I should have used a compute shader and passed to a simple fragment shader, which would have been easier to debug and manage.\n\n\n\n\n\nOlder Screenshot\n\n\n\nDerived the null geodesic equations in 2D via Lagrangian, here I learned the basics of general relativity.\nImplemented RK4 for numerically solving said equations.\n\n\n\n\n\nOlder Screenshot\n\n\n\nBuilt basic euclidean raymarching engine.\nMore of learning how to program in C++.\n\n\n\n\n\nOlder Screenshot\n\n\n\nDrew a circle!\nLearned the very basics of C++, SFML, and GLSL.\n\n\n\nContext\nI started this project independently to learn C++, shader programming, and touch on general relativity. It took about a month and is so far the most difficult project I’ve mostly completed. I plan to develop more but am really tired of thinking about this project for now.\n\nI learned C++ with this free book.\nI was able to learn some general relativity with Sean Carrol’s Spacetime and Geometry, which can be acquired through allegedly legal means.\nI was inspired to start this project by this cool video. I did not look at any of his code, and used a different derivation for the geodesic equations. I was also more generally inspired by Sebastian Lague’s very cool youtube channel to try shader programming."
-  },
-  {
-    "objectID": "projects/senior_consulting/index.html#future-work",
-    "href": "projects/senior_consulting/index.html#future-work",
-    "title": "Black Hole Visualizer",
+    "objectID": "projects_scratch/stockdb/index.html#future-work",
+    "href": "projects_scratch/stockdb/index.html#future-work",
+    "title": "Stock Database",
     "section": "Future work:",
-    "text": "Future work:\n\nthe center of the bh has trouble rendering bc parameterizing with phi, I’ll try to minimize this by adjusting the dynamic step size to account for starting angle\nif you move, the camera turns on its own, because I’ve yet to implement parallel transport of the camera directions, but this will be done\naccretion disk adjustments\n\nneeds better boundary detection\nits shape should be flared out a little for more realism\nadd doppler effect coloring"
+    "text": "Future work:\n\nAdd websocket ingestion.\nAdd options data."
   },
   {
-    "objectID": "projects/senior_consulting/index.html#overview",
-    "href": "projects/senior_consulting/index.html#overview",
-    "title": "Statistical Consulting Senior Projects",
+    "objectID": "projects/stockdb/index.html",
+    "href": "projects/stockdb/index.html",
+    "title": "Stock Database",
     "section": "",
-    "text": "These projects were completed as part of an undergraduate capstone in statistical consulting, involving real data and stakeholders."
+    "text": "This project is an automated Python/PostgreSQL data pipeline and R Shiny dashboard for collecting, storing, and visualizing minute-level stock market data from Alpaca.\nThe database holds minutely price data for the S&P 500 companies since January 2016, and updates (market) daily. It is hosted on a small local server, where the data is stored securely in a bubblewrapped hard-drive. The dashboard is minimal and designed for checking database health and data quality.\nThe live dashboard is available at https://stockdb.ambrois.uk. The dashboard link is .uk because .uk domains are very cheap on cloudflare. I am based in the US."
   },
   {
-    "objectID": "projects/senior_consulting/index.html#data",
-    "href": "projects/senior_consulting/index.html#data",
-    "title": "Statistical Consulting Senior Projects",
+    "objectID": "projects/stockdb/index.html#introduction",
+    "href": "projects/stockdb/index.html#introduction",
+    "title": "Stock Database",
     "section": "",
-    "text": "The analysis used survey responses from Cal Poly students combined with environmental and educational variables derived from home ZIP-code census data. The response variable was a sustainability knowledge score. Predictors included air quality (PM2.5 concentration), greenspace coverage, fire frequency, ZIP-code area, and neighborhood educational attainment. Data collection involved a mix of random classroom sampling and voluntary responses, which limited population-level generalization."
+    "text": "An automated Python/PostgreSQL data pipeline and R Shiny dashboard for collecting, storing, and visualizing minute-level stock market data from Alpaca.\nThe database holds minutely price data for the SP500 since January 2016, and updates (market) daily. It is hosted on a small local server, where the data is stored securely in a bubblewrapped hard-drive. The dashboard is designed for checking database health and data quality.\nThe dashboard link is .uk because .uk domains are very cheap on cloudflare. I am based in the US."
   },
   {
-    "objectID": "projects/senior_consulting/index.html#methodology",
-    "href": "projects/senior_consulting/index.html#methodology",
-    "title": "Statistical Consulting Senior Projects",
+    "objectID": "projects/stockdb/index.html#future-work",
+    "href": "projects/stockdb/index.html#future-work",
+    "title": "Stock Database",
+    "section": "Future work:",
+    "text": "Future work:\n\nAdd websocket ingestion.\nAdd options data."
+  },
+  {
+    "objectID": "projects/stockdb/index.html#description",
+    "href": "projects/stockdb/index.html#description",
+    "title": "Stock Database",
     "section": "",
-    "text": "I used multiple linear regression to estimate adjusted associations between background factors and sustainability knowledge. Two models were fit: one focusing on environmental variables and one on educational background variables. In both models, year in college was included as a control variable to account for institutional exposure. Interaction terms were intentionally excluded to reduce overfitting and preserve interpretability."
+    "text": "An automated Python/PostgreSQL data pipeline and R Shiny dashboard for collecting, storing, and visualizing minute-level stock market data from Alpaca.\nThe database holds minutely price data for the SP500 since January 2016, and updates (market) daily. It is hosted on a small local server, where the data is stored securely in a bubblewrapped hard-drive. The dashboard is minimal and designed for checking database health and data quality.\nThe dashboard link is .uk because .uk domains are very cheap on cloudflare. I am based in the US."
   },
   {
-    "objectID": "projects/senior_consulting/index.html#key-findings",
-    "href": "projects/senior_consulting/index.html#key-findings",
-    "title": "Statistical Consulting Senior Projects",
+    "objectID": "projects/stockdb/index.html#overview",
+    "href": "projects/stockdb/index.html#overview",
+    "title": "Stock Database",
     "section": "",
-    "text": "Across both models, year in college was the strongest and most consistent predictor of higher sustainability knowledge scores, indicating that institutional exposure plays a dominant role. In the environmental model, higher PM2.5 concentration and larger ZIP-code area were associated with modest decreases in SKS. In the educational model, higher neighborhood college-degree attainment was associated with higher SKS, even after adjusting for year in college."
+    "text": "This project is an automated Python/PostgreSQL data pipeline and R Shiny dashboard for collecting, storing, and visualizing minute-level stock market data from Alpaca.\nThe database holds minutely price data for the S&P 500 companies since January 2016, and updates (market) daily. It is hosted on a small local server, where the data is stored securely in a bubblewrapped hard-drive. The dashboard is minimal and designed for checking database health and data quality.\nThe live dashboard is available at https://stockdb.ambrois.uk. The dashboard link is .uk because .uk domains are very cheap on cloudflare. I am based in the US."
   },
   {
-    "objectID": "projects/senior_consulting/index.html#interpretation-and-limitations",
-    "href": "projects/senior_consulting/index.html#interpretation-and-limitations",
-    "title": "Statistical Consulting Senior Projects",
-    "section": "",
-    "text": "The results suggest that curriculum exposure may have a larger impact on sustainability knowledge than background factors alone, supporting curriculum-level interventions. Findings are associative rather than causal, and self-selection in survey responses and ZIP-code-level aggregation introduce uncertainty that should be considered when applying results beyond the sampled population."
+    "objectID": "projects/stockdb/index.html#tools-used",
+    "href": "projects/stockdb/index.html#tools-used",
+    "title": "Stock Database",
+    "section": "Tools Used",
+    "text": "Tools Used\n\nR Shiny for the interactive dashboard\nPostgreSQL and TimescaleDB for storing time-series stock data\nPython for data collection scripts\nAlpaca Market Data API for stock price data\nsystemd for scheduled updates and service monitoring\nCloudflare DNS for keeping the public dashboard reachable"
   },
   {
-    "objectID": "projects/senior_consulting/index.html#tools",
-    "href": "projects/senior_consulting/index.html#tools",
-    "title": "Statistical Consulting Senior Projects",
-    "section": "",
-    "text": "R (linear modeling, data visualization), census and environmental datasets.\nFull technical memo (PDF)"
-  },
-  {
-    "objectID": "projects/blackholesim/index.html#current-and-progress-pictures",
-    "href": "projects/blackholesim/index.html#current-and-progress-pictures",
-    "title": "Black Hole Simulation",
-    "section": "Current and Progress pictures",
-    "text": "Current and Progress pictures\n \n\nAdded background stars\nMade disk color more realistic: calculate temperature -&gt; approximate black body radiation -&gt; color\nMore realistic disk sizing, note that the photon ring is now visible! I’m not sure what that very thin ring inside the photon ring is, and it might be a bug, but that’s for future me to figure out.\n\n\n - Added adaptive step sizing and other optimizations - Fixed object edge rendering for arbitrary step size - Added prettier colors and a grid to see how spacetime curves, and it’s very clearly showing gravitational lensing\n\n\n\n\nOlder Screenshot\n\n\n\nImplementing RK4 for the null geodesic equations in 3D.\nParallelized everything via fragment shader, which was quite difficult, as debugging information could only be encoded through pixel color. I’ve since learned that I should have used a compute shader and passed to a simple fragment shader, which would have been easier to debug and manage.\n\n\n\n\n\nOlder Screenshot\n\n\n\nDerived the null geodesic equations in 2D via Lagrangian, here I learned the basics of general relativity.\nImplemented RK4 for numerically solving said equations.\n\n\n\n\n\nOlder Screenshot\n\n\n\nBuilt basic euclidean raymarching engine.\nMore of learning how to program in C++.\n\n\n\n\n\nOlder Screenshot\n\n\n\nDrew a circle!\nLearned the very basics of C++, SFML, and GLSL.\n\n\n\nContext\nI started this project independently to learn C++, shader programming, and touch on general relativity. It took about a month and is so far the most difficult project I’ve mostly completed. I plan to develop more but am really tired of thinking about this project for now.\n\nI learned C++ with this free book.\nI was able to learn some general relativity with Sean Carrol’s Spacetime and Geometry, which can be acquired through allegedly legal means.\nI was inspired to start this project by this cool video. I did not look at any of his code, and used a different derivation for the geodesic equations. I was also more generally inspired by Sebastian Lague’s very cool youtube channel to try shader programming."
-  },
-  {
-    "objectID": "projects/blackholesim/index.html#screenshots",
-    "href": "projects/blackholesim/index.html#screenshots",
-    "title": "Black Hole Simulation",
-    "section": "Screenshots",
-    "text": "Screenshots\n\nThe resolution is low, but these were run on a mid-tier laptop from 2017 without a dedicated GPU.\n\n \n\nAdded background stars\nMade disk color more realistic: calculate temperature -&gt; approximate black body radiation -&gt; color\nMore realistic disk sizing, note that the photon ring is now visible! I’m not sure what that very thin ring inside the photon ring is, and it might be a bug, but that’s for future me to figure out.\n\n\n - Added adaptive step sizing and other optimizations - Fixed object edge rendering for arbitrary step size - Added prettier colors and a grid to see how spacetime curves, and it’s very clearly showing gravitational lensing\n\n\n\n\nOlder Screenshot\n\n\n\nImplementing RK4 for the null geodesic equations in 3D.\nParallelized everything via fragment shader, which was quite difficult, as debugging information could only be encoded through pixel color. I’ve since learned that I should have used a compute shader and passed to a simple fragment shader, which would have been easier to debug and manage.\n\n\n\n\n\nOlder Screenshot\n\n\n\nDerived the null geodesic equations in 2D via Lagrangian, here I learned the basics of general relativity.\nImplemented RK4 for numerically solving said equations.\n\n\n\n\n\nOlder Screenshot\n\n\n\nBuilt basic euclidean raymarching engine.\nMore of learning how to program in C++.\n\n\n\n\n\nOlder Screenshot\n\n\n\nDrew a circle!\nLearned the very basics of C++, SFML, and GLSL.",
-    "crumbs": [
-      "Projects",
-      "Black Hole Simulation"
-    ]
-  },
-  {
-    "objectID": "projects/bayesian/index.html#example-1.-real-data-is-hierarchical-but-assumed-to-be-flat",
-    "href": "projects/bayesian/index.html#example-1.-real-data-is-hierarchical-but-assumed-to-be-flat",
-    "title": "Analysis of Bayesian Model Misspecification",
-    "section": "Example 1. Real data is hierarchical, but assumed to be flat",
-    "text": "Example 1. Real data is hierarchical, but assumed to be flat\nOur data \\(y\\) follows the following hierarchical distribution, which we’ll denote \\(D_1\\).\n\\[\n\\begin{align}\nY &\\sim Binom(100, p) \\\\\np &\\sim Beta(3, 4)\n\\end{align}\n\\]\n\nn_obs = 100\ny = r_beta_bernoulli(n_obs, alpha = 3, 4)\ny_obs = sum(y)\ny_obs\n\n[1] 42\n\n\nNow, we will misspecify the model.\nWe now assume the data comes from a binomial distribution, and assign a beta(5,3) prior on the proportion, where Y is the sum of the data, We’ll call this model \\(M\\) (for “Misspecified”). \\[\n\\begin{aligned}\nY &\\sim \\text{Binom}(n = 100, p) \\\\\n(Prior)\\quad p &\\sim \\text{Beta}(5, 3)\n\\end{aligned}\n\\]\nPrior Predictive distribution:\n\npp_sample_size = 10000\n\n# the predictive distribution follows a beta-binomial\nprior_pred_M = r_beta_binom(pp_sample_size, n_obs, 5, 3)\n\nNow to find an equivalent prior for the real model\nThe real model (\\(D_1\\)): \\[\n\\begin{aligned}\nY &\\sim \\text{Binom}(n=100, p) \\\\\np &\\sim \\text{Beta}(\\alpha, \\beta) \\\\\n(Prior)\\quad \\alpha &\\sim \\log \\mathcal{N}(\\mu_1, \\sigma_1) \\\\\n(Prior)\\quad \\beta &\\sim \\log \\mathcal{N}(\\mu_2, \\sigma_2)\n\\end{aligned}\n\\]\nA function to sample from the prior predictive distribution:\n\n# function for sampling from prior predictive distrib of D2 model\nsample_from_pp_D1 = function(n, size, mu1, sigma1, mu2, sigma2) {\n  alphas = rlnorm(n, mu1, sigma1)\n  betas = rlnorm(n, mu2, sigma2)\n  probs = rbeta(n, alphas, betas)\n  sample = rbinom(n, size, probs)\n  return(sample)\n}\n\nWe will use lognormal \\(\\log \\mathcal{N}(\\log 5,\\ 0.01)\\) and \\(\\log \\mathcal{N}(\\log 3,\\ 0.01)\\) as the priors for \\(\\alpha\\) and \\(\\beta\\) in model \\(D_1\\), chosen to create a very similar prior predictive distribution to the prior for \\(M\\).\nThese are the prior predictive distributions compared:\n\nprior_pred_D1 = sample_from_pp_D1(n = pp_sample_size,\n                                 size = n_obs,\n                                 mu1 = log(5), sigma1 = 0.01,\n                                 mu2 = log(3), sigma2 = 0.01)\n\ntvd_prior = pp_sample_distance(prior_pred_D1, prior_pred_M)\ntvd_prior\n\n[1] 0.0447\n\nplot_pp_difference(real_sample = prior_pred_D1, real_model_name = \"D1\",\n                   miss_sample = prior_pred_M, miss_model_name = \"M\",\n                   prior_or_post = \"Prior\")\n\n\n\n\n\n\n\n\nAs you can see, the predictive distributions for the two models are extremely similar, which suggests the two priors are effectively equivalent.\nThis implies that any differences observed in the posterior distributions after updating on data are likely attributable to differences in the models themselves, rather than the priors.\nNow let’s find the posteriors of each and see how they vary.\n\nUpdating \\(D_1\\)\nFinding posterior via naive simulation\n\n# We sample from the prior a lot, predict with the param values from the prior,\n# and keep if the prediction is equal to the observed data\n\ndf = data.frame(alpha = numeric(), beta = numeric())\n\ni = 1\nwhile (i &lt;= pp_sample_size) {\n  alpha = rlnorm(1, log(5), 0.01)\n  beta = rlnorm(1, log(3), 0.01)\n  \n  y_pred = r_beta_binom(1, n_obs, alpha, beta)\n  \n  if (y_pred == y_obs) {\n    df = rbind(df, data.frame(alpha=alpha, beta=beta))\n    i = i+1\n  }\n}\n\ndf &lt;- mutate(df, post_pred = r_beta_binom(n(), n_obs, alpha, beta))\n\n\n\nUpdating \\(M\\)\nThis is a straightforward application of the Beta-Binomial Prior.\n\\[\nY \\sim Binom(100, p), \\quad p \\sim Beta(5, 3)\n\\]\nso \\[\np \\mid Y = 42 \\sim Beta\\!\\big(5+42,\\ 3+58\\big)\n\\]\n\npost_predictive_M = r_beta_binom(pp_sample_size, n_obs, 5+y_obs, 3+n_obs-y_obs)\n\n\n\nComparing analysis for \\(M\\) vs equivalent analysis for \\(D_1\\)\n\ntvd_post = pp_sample_distance(df$post_pred, post_predictive_M)\n\nplot_pp_difference(real_sample = df$post_pred, real_model_name = \"D1\",\n                   miss_sample = post_predictive_M, miss_model_name = \"M\",\n                   prior_or_post = \"Posterior\")\n\n\n\n\n\n\n\n\nThe posterior predictive distributions are quite different, with a Total Variational Distance of 0.648 (a 14.4966443 time increase from the prior TVD), so the model misspecification in this case seems to have a significant impact on results."
-  },
-  {
-    "objectID": "projects/bayesian/index.html#example-2.-real-data-is-dependent-but-assumed-to-be-independent",
-    "href": "projects/bayesian/index.html#example-2.-real-data-is-dependent-but-assumed-to-be-independent",
-    "title": "Analysis of Bayesian Model Misspecification",
-    "section": "Example 2. Real data is dependent, but assumed to be independent",
-    "text": "Example 2. Real data is dependent, but assumed to be independent\nNow, we explore what happens if our sample comes from a dependent model. Specifically, we generate a sample from summing a Markov Chain of \\(n\\) drifting Bernoulli trials, denoted as model \\(D_2\\).\n\\[\nY \\sim MC(n=100, \\ p_0=0.4, \\ \\delta=0.1)\n\\] (MC for Markov Counts, details for sampling are in the helper functions section)\nWhere for \\(n\\) trials, \\(p_0\\) is the initial probability of success, and \\(\\delta\\) is the standard deviation of gaussian drift added to the success probability after each trial.\n\nn_ops = 100\ny = r_markov_bernoulli(n_ops, p0=0.4, drift_sd=0.1)\ny_obs = sum(y)\ny_obs\n\n[1] 34\n\n\nAgain, we will misspecify the model by assuming the data comes from a binomial distribution. We assign the same \\(\\text{Beta}(5, 3)\\) prior on \\(p\\). Again, we call this model \\(M\\). \\[\n\\begin{aligned}\nY &\\sim \\text{Binom}(n=100, p) \\\\\n(Prior)\\quad p &\\sim \\text{Beta}(5, 3)\n\\end{aligned}\n\\]\nLet’s then find an equivalent prior for model \\(D_2\\). \\[\n\\begin{aligned}\nY &\\sim MC(n=100, p_0, \\delta) \\\\\n(Prior)\\quad p_0 &\\sim \\text{Beta}(\\alpha, \\beta) \\\\\n(Prior)\\quad \\delta &\\sim \\text{Exp}(\\lambda)\n\\end{aligned}\n\\] We’ll need a function to sample a prior predictive distribution for \\(D_2\\).\n\nsample_from_pp_D2 = function(n, size, alpha, beta, rate) {\n    p0 = rbeta(n, alpha, beta)\n    drift_sd = rexp(n, rate)\n    sample = r_markov_counts(n, size, p0, drift_sd)\n    return(sample)\n}\n\nLet’s use this prior distribution: \\[\n\\begin{aligned}\nY &\\sim MC(n=100, \\ p_0, \\ \\delta) \\\\\n(Prior)\\quad p_0 &\\sim \\text{Beta}(5, 3) \\\\\n(Prior)\\quad \\delta &\\sim \\text{Exp}(100)\n\\end{aligned}\n\\]\nAnd compare the prior predictive distributions:\n\nprior_pred_D2 = sample_from_pp_D2(n=pp_sample_size,\n                                  size = n_obs,\n                                  alpha=5, beta=3, rate=100)\n\ntvd_prior = pp_sample_distance(prior_pred_D2, prior_pred_M)\ntvd_prior\n\n[1] 0.0601\n\nplot_pp_difference(real_sample = prior_pred_D2, real_model_name=\"D2\",\n                   miss_sample = prior_pred_M, miss_model_name=\"M\",\n                   prior_or_post = \"Prior\")\n\n\n\n\n\n\n\n\nAs shown, the priors are effectively equivalent.\nLet’s proceed with updating both models to see what kind of discrepancy there is.\n\nUpdating \\(D_2\\)\nWe use naive simulation again to create a posterior sample for D2. (This one is much slower, so we’re also accepting if the predicted is within 1 of the observed, which makes the posterior a bit less accurate.)\n\ndf = data.frame(p0 = numeric(), drift_sd = numeric())\n\ni = 1\nwhile (i &lt;= pp_sample_size) {\n  p0 = rbeta(1, 5, 3)\n  drift_sd = rexp(1, 100)\n  \n  y_pred = r_markov_counts(1, n_obs, p0, drift_sd)\n  \n  if (abs(y_pred - y_obs) &lt;= 1) {\n    df = rbind(df, data.frame(p0=p0, drift_sd=drift_sd))\n    i = i+1\n  }\n}\n\ndf &lt;- mutate(df, post_pred = r_markov_counts(n(), n_obs, p0, drift_sd))\n\n\n\nUpdating \\(M\\)\nAgain, a straightforward updating of the Beta-Binomial Prior.\n\npost_predictive_M = r_beta_binom(pp_sample_size, n_obs, 5+y_obs, 3+n_obs-y_obs)\n\n\n\nComparing Posterior Predictive Distributions:\n\ntvd_post = pp_sample_distance(df$post_pred, post_predictive_M, method = 'tvd')\n\nplot_pp_difference(real_sample = df$post_pred, real_model_name = \"D2\",\n                   miss_sample = post_predictive_M, miss_model_name = \"M\",\n                   prior_or_post = \"Posterior\")\n\n\n\n\n\n\n\n\nThere is a Total Variational Distance of 0.214 (a 3.5607321 time increase from the prior TVD), and we can see from the plot, the posterior predictive distributions are visibly different."
-  },
-  {
-    "objectID": "projects/bayesian/index.html#example-1.-real-data-is-hierarchical-but-assumed-to-be-flat.",
-    "href": "projects/bayesian/index.html#example-1.-real-data-is-hierarchical-but-assumed-to-be-flat.",
-    "title": "Analysis of Bayesian Model Misspecification",
-    "section": "Example 1. Real data is hierarchical, but assumed to be flat.",
-    "text": "Example 1. Real data is hierarchical, but assumed to be flat.\nOur data \\(y\\) follows the following hierarchical distribution, which we’ll denote \\(D_1\\).\n\\[\n\\begin{align}\nY &\\sim Binom(100, p) \\\\\np &\\sim Beta(3, 4)\n\\end{align}\n\\]\n\nn_obs = 100\ny = r_beta_bernoulli(n_obs, alpha = 3, 4)\ny_obs = sum(y)\ny_obs\n\n[1] 42\n\n\nNow, we will misspecify the model.\nWe now assume the data comes from a binomial distribution, and assign a beta(5,3) prior on the proportion, where Y is the sum of the data, We’ll call this model \\(M\\) (for “Misspecified”). \\[\n\\begin{aligned}\nY &\\sim \\text{Binom}(n = 100, p) \\\\\n(Prior)\\quad p &\\sim \\text{Beta}(5, 3)\n\\end{aligned}\n\\]\nPrior Predictive distribution:\n\npp_sample_size = 10000\n\n# the predictive distribution follows a beta-binomial\nprior_pred_M = r_beta_binom(pp_sample_size, n_obs, 5, 3)\n\nNow to find an equivalent prior for the real model\nThe real model (\\(D_1\\)): \\[\n\\begin{aligned}\nY &\\sim \\text{Binom}(n=100, p) \\\\\np &\\sim \\text{Beta}(\\alpha, \\beta) \\\\\n(Prior)\\quad \\alpha &\\sim \\log \\mathcal{N}(\\mu_1, \\sigma_1) \\\\\n(Prior)\\quad \\beta &\\sim \\log \\mathcal{N}(\\mu_2, \\sigma_2)\n\\end{aligned}\n\\]\nA function to sample from the prior predictive distribution:\n\n# function for sampling from prior predictive distrib of D2 model\nsample_from_pp_D1 = function(n, size, mu1, sigma1, mu2, sigma2) {\n  alphas = rlnorm(n, mu1, sigma1)\n  betas = rlnorm(n, mu2, sigma2)\n  probs = rbeta(n, alphas, betas)\n  sample = rbinom(n, size, probs)\n  return(sample)\n}\n\nWe will use lognormal \\(\\log \\mathcal{N}(\\log 5,\\ 0.01)\\) and \\(\\log \\mathcal{N}(\\log 3,\\ 0.01)\\) as the priors for \\(\\alpha\\) and \\(\\beta\\) in model \\(D_1\\), chosen to create a very similar prior predictive distribution to the prior for \\(M\\).\nThese are the prior predictive distributions compared:\n\nprior_pred_D1 = sample_from_pp_D1(n = pp_sample_size,\n                                 size = n_obs,\n                                 mu1 = log(5), sigma1 = 0.01,\n                                 mu2 = log(3), sigma2 = 0.01)\n\ntvd_prior = pp_sample_distance(prior_pred_D1, prior_pred_M)\ntvd_prior\n\n[1] 0.0447\n\nplot_pp_difference(real_sample = prior_pred_D1, real_model_name = \"D1\",\n                   miss_sample = prior_pred_M, miss_model_name = \"M\",\n                   prior_or_post = \"Prior\")\n\n\n\n\n\n\n\n\nAs shown, the prior predictive distributions are extremely similar, so these priors are effectively equivalent.\nThat means any posterior differences after updating on data should mostly come from model structure, not prior choice.\nNow we update both models and compare the posterior predictives.\n\nUpdating \\(D_1\\)\nWe approximate the posterior with naive simulation (rejection sampling).\n\n# We sample from the prior a lot, predict with the param values from the prior,\n# and keep if the prediction is equal to the observed data\n\ndf = data.frame(alpha = numeric(), beta = numeric())\n\ni = 1\nwhile (i &lt;= pp_sample_size) {\n  alpha = rlnorm(1, log(5), 0.01)\n  beta = rlnorm(1, log(3), 0.01)\n  \n  y_pred = r_beta_binom(1, n_obs, alpha, beta)\n  \n  if (y_pred == y_obs) {\n    df = rbind(df, data.frame(alpha=alpha, beta=beta))\n    i = i+1\n  }\n}\n\ndf &lt;- mutate(df, post_pred = r_beta_binom(n(), n_obs, alpha, beta))\n\n\n\nUpdating \\(M\\)\nThis is a straightforward application of the Beta-Binomial Prior.\n\\[\nY \\sim Binom(100, p), \\quad p \\sim Beta(5, 3)\n\\]\nso \\[\np \\mid Y = 42 \\sim Beta\\!\\big(5+42,\\ 3+58\\big)\n\\]\n\npost_predictive_M = r_beta_binom(pp_sample_size, n_obs, 5+y_obs, 3+n_obs-y_obs)\n\n\n\nComparing analysis for \\(M\\) vs equivalent analysis for \\(D_1\\)\n\ntvd_post = pp_sample_distance(df$post_pred, post_predictive_M)\n\nplot_pp_difference(real_sample = df$post_pred, real_model_name = \"D1\",\n                   miss_sample = post_predictive_M, miss_model_name = \"M\",\n                   prior_or_post = \"Posterior\")\n\n\n\n\n\n\n\n\nThe posterior predictives are clearly different, with total variation distance 0.648 (a 14.4966443-fold increase over prior TVD). In this setup, misspecification has a meaningful effect on inference.",
-    "crumbs": [
-      "Projects",
-      "Bayesian Analysis"
-    ]
-  },
-  {
-    "objectID": "projects/bayesian/index.html#example-2.-real-data-is-dependent-but-assumed-to-be-independent.",
-    "href": "projects/bayesian/index.html#example-2.-real-data-is-dependent-but-assumed-to-be-independent.",
-    "title": "Analysis of Bayesian Model Misspecification",
-    "section": "Example 2. Real data is dependent, but assumed to be independent.",
-    "text": "Example 2. Real data is dependent, but assumed to be independent.\nNow we test a dependence misspecification case. Data are generated by summing a Markov process of \\(n\\) drifting Bernoulli trials (model \\(D_2\\)).\n\\[\nY \\sim MC(n=100, \\ p_0=0.4, \\ \\delta=0.1)\n\\] (MC = Markov Counts; sampling details are in helper functions.)\nHere, \\(p_0\\) is the initial success probability and \\(\\delta\\) is the standard deviation of Gaussian drift added to the success probability after each trial.\n\nn_ops = 100\ny = r_markov_bernoulli(n_ops, p0=0.4, drift_sd=0.1)\ny_obs = sum(y)\ny_obs\n\n[1] 34\n\n\nAgain, we intentionally misspecify by fitting a binomial model with the same \\(\\text{Beta}(5, 3)\\) prior on \\(p\\) (model \\(M\\)). \\[\n\\begin{aligned}\nY &\\sim \\text{Binom}(n=100, p) \\\\\n(Prior)\\quad p &\\sim \\text{Beta}(5, 3)\n\\end{aligned}\n\\]\nNow we choose an equivalent prior for model \\(D_2\\). \\[\n\\begin{aligned}\nY &\\sim MC(n=100, p_0, \\delta) \\\\\n(Prior)\\quad p_0 &\\sim \\text{Beta}(\\alpha, \\beta) \\\\\n(Prior)\\quad \\delta &\\sim \\text{Exp}(\\lambda)\n\\end{aligned}\n\\] We use the function below to sample from the prior predictive distribution of \\(D_2\\).\n\nsample_from_pp_D2 = function(n, size, alpha, beta, rate) {\n    p0 = rbeta(n, alpha, beta)\n    drift_sd = rexp(n, rate)\n    sample = r_markov_counts(n, size, p0, drift_sd)\n    return(sample)\n}\n\nWe use this prior distribution: \\[\n\\begin{aligned}\nY &\\sim MC(n=100, \\ p_0, \\ \\delta) \\\\\n(Prior)\\quad p_0 &\\sim \\text{Beta}(5, 3) \\\\\n(Prior)\\quad \\delta &\\sim \\text{Exp}(100)\n\\end{aligned}\n\\]\nNow compare the prior predictive distributions:\n\nprior_pred_D2 = sample_from_pp_D2(n=pp_sample_size,\n                                  size = n_obs,\n                                  alpha=5, beta=3, rate=100)\n\ntvd_prior = pp_sample_distance(prior_pred_D2, prior_pred_M)\ntvd_prior\n\n[1] 0.0601\n\nplot_pp_difference(real_sample = prior_pred_D2, real_model_name=\"D2\",\n                   miss_sample = prior_pred_M, miss_model_name=\"M\",\n                   prior_or_post = \"Prior\")\n\n\n\n\n\n\n\n\nAgain, the prior predictives are effectively equivalent.\nNext we update both models and measure how much the posterior predictives diverge.\n\nUpdating \\(D_2\\)\nWe use naive simulation again to get a posterior sample for \\(D_2\\).\nThis step is slower, so we accept draws within 1 of the observed count, which makes the approximation slightly rougher.\n\ndf = data.frame(p0 = numeric(), drift_sd = numeric())\n\ni = 1\nwhile (i &lt;= pp_sample_size) {\n  p0 = rbeta(1, 5, 3)\n  drift_sd = rexp(1, 100)\n  \n  y_pred = r_markov_counts(1, n_obs, p0, drift_sd)\n  \n  if (abs(y_pred - y_obs) &lt;= 1) {\n    df = rbind(df, data.frame(p0=p0, drift_sd=drift_sd))\n    i = i+1\n  }\n}\n\ndf &lt;- mutate(df, post_pred = r_markov_counts(n(), n_obs, p0, drift_sd))\n\n\n\nUpdating \\(M\\)\nAgain, this is a straightforward Beta-Binomial update.\n\npost_predictive_M = r_beta_binom(pp_sample_size, n_obs, 5+y_obs, 3+n_obs-y_obs)\n\n\n\nComparing Posterior Predictive Distributions:\n\ntvd_post = pp_sample_distance(df$post_pred, post_predictive_M, method = 'tvd')\n\nplot_pp_difference(real_sample = df$post_pred, real_model_name = \"D2\",\n                   miss_sample = post_predictive_M, miss_model_name = \"M\",\n                   prior_or_post = \"Posterior\")\n\n\n\n\n\n\n\n\nThe total variation distance is 0.214 (a 3.5607321-fold increase from prior TVD), and the posterior predictive distributions are visibly different.",
-    "crumbs": [
-      "Projects",
-      "Bayesian Analysis"
-    ]
-  },
-  {
-    "objectID": "projects/senior_consulting/index.html#projects",
-    "href": "projects/senior_consulting/index.html#projects",
-    "title": "Statistical Consulting Senior Projects",
-    "section": "Projects",
-    "text": "Projects\n\nIBaby Month One: Maternal Depression and Technology Use\nAnalyzed postpartum survey data to evaluate whether parenting stress and technology-related distraction are associated with maternal depression at one month postpartum. Built an interpretable logistic regression model with careful variable selection, finding strong associations between higher stress, higher perceived distraction, and elevated depression risk, while accounting for demographic covariates.\n\n\nSustainability Literacy: Environmental and Educational Predictors of Knowledge\nEvaluated whether environmental and educational background variables were associated with sustainability knowledge scores, adjusting for time in college. Used multiple linear regression on survey and census-linked data; results suggested institutional exposure dominated background effects.\n\n\nManual Task Performance Under Distraction and Biomechanical Constraints\nAnalyzed how hand dominance, wrist motion direction, and cognitive distraction affect performance on a constrained manual task using a mixed-effects factorial design, with emphasis on repeated measures and power-aware interpretation."
-  },
-  {
-    "objectID": "projects/senior_consulting/sustainability.html",
-    "href": "projects/senior_consulting/sustainability.html",
-    "title": "Sustainability Literacy: Environmental and Educational Predictors of Knowledge",
-    "section": "",
-    "text": "Overview\nThis project studied what predicts students’ sustainability literacy scores (SKS), with a focus on educational exposure vs. background environment.\n\n\nData\nWe combined Cal Poly survey responses with ZIP-code-linked census/environment variables.\nOutcome: sustainability knowledge score.\nPredictors: PM2.5, greenspace, fire frequency, ZIP-code area, neighborhood educational attainment, and year in college.\nSampling mixed classroom recruitment and voluntary responses, so results should not be treated as fully population-representative.\n\n\nMethodology\nI fit multiple linear regression models with year in college as a control:\n\nEnvironmental predictors model\nEducational background predictors model\n\nInteraction terms were excluded to limit overfitting and keep interpretation clear.\n\n\nKey Findings\nYear in college was the strongest and most consistent positive predictor in both models.\nIn the environmental model, higher PM2.5 and larger ZIP-code area were associated with modestly lower SKS.\nIn the educational model, higher neighborhood college-degree attainment was associated with higher SKS.\n\n\nInterpretation and Limitations\nResults suggest institutional exposure (curriculum/time in college) may matter more than background environment alone. This is associative, not causal, and uncertainty remains due to self-selection and ZIP-code-level aggregation.\n\n\nTools\nR (linear modeling, data visualization), census and environmental datasets.\n\nView technical report",
-    "crumbs": [
-      "Projects",
-      "Statistical Consulting",
-      "Sustainability"
-    ]
-  },
-  {
-    "objectID": "projects/senior_consulting/sustainability.html#overview",
-    "href": "projects/senior_consulting/sustainability.html#overview",
-    "title": "Sustainability Literacy: Environmental and Educational Predictors of Knowledge",
-    "section": "",
-    "text": "This project analyzed survey and census-linked data to understand factors associated with students’ sustainability literacy knowledge scores (SKS). The goal was to inform potential improvements to general education curriculum by identifying whether background environmental conditions or educational context meaningfully relate to sustainability knowledge, after accounting for time spent in college."
-  },
-  {
-    "objectID": "projects/senior_consulting/sustainability.html#data",
-    "href": "projects/senior_consulting/sustainability.html#data",
-    "title": "Sustainability Literacy: Environmental and Educational Predictors of Knowledge",
-    "section": "Data",
-    "text": "Data\nThe analysis used survey responses from Cal Poly students combined with environmental and educational variables derived from home ZIP-code census data. The response variable was a sustainability knowledge score. Predictors included air quality (PM2.5 concentration), greenspace coverage, fire frequency, ZIP-code area, and neighborhood educational attainment. Data collection involved a mix of random classroom sampling and voluntary responses, which limited population-level generalization."
-  },
-  {
-    "objectID": "projects/senior_consulting/sustainability.html#methodology",
-    "href": "projects/senior_consulting/sustainability.html#methodology",
-    "title": "Sustainability Literacy: Environmental and Educational Predictors of Knowledge",
-    "section": "Methodology",
-    "text": "Methodology\nI used multiple linear regression to estimate adjusted associations between background factors and sustainability knowledge. Two models were fit: one focusing on environmental variables and one on educational background variables. In both models, year in college was included as a control variable to account for institutional exposure. Interaction terms were intentionally excluded to reduce overfitting and preserve interpretability."
-  },
-  {
-    "objectID": "projects/senior_consulting/sustainability.html#key-findings",
-    "href": "projects/senior_consulting/sustainability.html#key-findings",
-    "title": "Sustainability Literacy: Environmental and Educational Predictors of Knowledge",
-    "section": "Key Findings",
-    "text": "Key Findings\nAcross both models, year in college was the strongest and most consistent predictor of higher sustainability knowledge scores, indicating that institutional exposure plays a dominant role. In the environmental model, higher PM2.5 concentration and larger ZIP-code area were associated with modest decreases in SKS. In the educational model, higher neighborhood college-degree attainment was associated with higher SKS, even after adjusting for year in college."
-  },
-  {
-    "objectID": "projects/senior_consulting/sustainability.html#interpretation-and-limitations",
-    "href": "projects/senior_consulting/sustainability.html#interpretation-and-limitations",
-    "title": "Sustainability Literacy: Environmental and Educational Predictors of Knowledge",
-    "section": "Interpretation and Limitations",
-    "text": "Interpretation and Limitations\nThe results suggest that curriculum exposure may have a larger impact on sustainability knowledge than background factors alone, supporting curriculum-level interventions. Findings are associative rather than causal, and self-selection in survey responses and ZIP-code-level aggregation introduce uncertainty that should be considered when applying results beyond the sampled population."
-  },
-  {
-    "objectID": "projects/senior_consulting/sustainability.html#tools",
-    "href": "projects/senior_consulting/sustainability.html#tools",
-    "title": "Sustainability Literacy: Environmental and Educational Predictors of Knowledge",
-    "section": "Tools",
-    "text": "Tools\nR (linear modeling, data visualization), census and environmental datasets."
-  },
-  {
-    "objectID": "projects/senior_consulting/ibaby.html",
-    "href": "projects/senior_consulting/ibaby.html",
-    "title": "IBaby Month One: Maternal Depression, Stress, and Technology Use",
-    "section": "",
-    "text": "Overview\nThis project examined whether parenting stress and tech-related distraction are associated with depression risk one month postpartum.\n\n\nData\nSample: 65 mothers assessed one month after birth.\nOutcome: CES-D–based depression indicator (score ≥ 13).\nPredictors: parenting stress, perceived distraction, age, income, and marital status.\nGiven sample size, we used summarized scale scores (instead of item-level inputs) and removed cases with substantial missingness.\n\n\nMethodology\nWe fit logistic regression for depression risk, used backward stepwise selection to keep the model interpretable, and standardized continuous predictors so odds ratios were easier to compare.\n\n\nKey Findings\nHigher parenting stress and higher perceived distraction were both associated with higher odds of depression. Maternal age was negatively associated with depression risk. Income and marital status were retained, suggesting possible socioeconomic/context effects.\n\n\nModel Performance and Diagnostics\nThe final model showed strong in-sample discrimination (ROC AUC ≈ 0.91). Diagnostics did not suggest major assumption violations or severe multicollinearity.\n\n\nInterpretation and Limitations\nFindings support a meaningful association between stress/distraction and early postpartum depression, but this is observational work with a modest sample. Effect sizes should be interpreted cautiously, especially for demographic terms that may be sensitive to sample imbalance and unmeasured confounding.\n\n\nTools\nSAS (logistic regression, model selection, diagnostics).\n\nView technical report",
-    "crumbs": [
-      "Projects",
-      "Statistical Consulting",
-      "IBaby"
-    ]
-  },
-  {
-    "objectID": "projects/senior_consulting/ibaby.html#overview",
-    "href": "projects/senior_consulting/ibaby.html#overview",
-    "title": "IBaby Month One: Predictors of Maternal Depression at One Month Postpartum",
-    "section": "",
-    "text": "This project supported an ongoing research study examining relationships between maternal depression, parenting stress, and technology-related distraction during the first month postpartum. Using survey-derived scales and demographic covariates, we built an interpretable predictive model to evaluate whether higher stress and higher technology-related distraction are associated with elevated depression risk at one month postpartum."
-  },
-  {
-    "objectID": "projects/senior_consulting/ibaby.html#data",
-    "href": "projects/senior_consulting/ibaby.html#data",
-    "title": "IBaby Month One: Predictors of Maternal Depression at One Month Postpartum",
-    "section": "Data",
-    "text": "Data\nWe analyzed data from ~65 mothers assessed at one month postpartum. The primary outcome was a binary depression indicator derived from the CES-D scale (depressed if CES-D score ≥ 13). Key predictors included:\n\nParenting stress score (18-item Likert scale summed into a total stress score)\nPerceived technology-related distraction (standardized)\nMaternal age\nHousehold income (binary indicator for low income)\nMarital status (married to baby’s biological father vs. other)\n\nTo improve reliability and reduce overfitting risk given the sample size, we used summary scale scores rather than individual survey items. Variables with substantial missingness were removed, and observations with missing or withheld income were excluded."
-  },
-  {
-    "objectID": "projects/senior_consulting/ibaby.html#methodology",
-    "href": "projects/senior_consulting/ibaby.html#methodology",
-    "title": "IBaby Month One: Predictors of Maternal Depression at One Month Postpartum",
-    "section": "Methodology",
-    "text": "Methodology\nBecause the outcome was binary, we used logistic regression to model the probability of depression as a function of stress, perceived distraction, and demographic covariates. To balance interpretability with the small sample size, we performed backward stepwise selection (retaining predictors significant at the 0.10 level during selection). Continuous predictors were standardized to enable effect-size comparison via odds ratios."
-  },
-  {
-    "objectID": "projects/senior_consulting/ibaby.html#key-findings",
-    "href": "projects/senior_consulting/ibaby.html#key-findings",
-    "title": "IBaby Month One: Predictors of Maternal Depression at One Month Postpartum",
-    "section": "Key Findings",
-    "text": "Key Findings\nThe final model retained five predictors: stress score, perceived distraction, maternal age, household income, and marital status.\n\nHigher parenting stress was strongly associated with higher odds of depression (p = 0.002).\nHigher perceived distraction was strongly associated with higher odds of depression (p = 0.004).\nOlder maternal age was associated with lower odds of depression (p = 0.040).\nLow income and marital status were also associated with substantially higher odds of depression in this sample (p = 0.010 and p = 0.036, respectively), suggesting potential confounding, subgroup effects, or sampling-related artifacts that merit further investigation."
-  },
-  {
-    "objectID": "projects/senior_consulting/ibaby.html#model-performance-and-diagnostics",
-    "href": "projects/senior_consulting/ibaby.html#model-performance-and-diagnostics",
-    "title": "IBaby Month One: Predictors of Maternal Depression at One Month Postpartum",
-    "section": "Model Performance and Diagnostics",
-    "text": "Model Performance and Diagnostics\nOn the available dataset, the model achieved ROC AUC ≈ 0.915 and accuracy ≈ 74%, indicating strong separation between depressed vs. non-depressed classifications. Standard diagnostic checks did not indicate major violations of key logistic regression assumptions (e.g., lack of strong multicollinearity; no clear evidence against linearity in the logit for continuous predictors)."
-  },
-  {
-    "objectID": "projects/senior_consulting/ibaby.html#interpretation-and-limitations",
-    "href": "projects/senior_consulting/ibaby.html#interpretation-and-limitations",
-    "title": "IBaby Month One: Predictors of Maternal Depression at One Month Postpartum",
-    "section": "Interpretation and Limitations",
-    "text": "Interpretation and Limitations\nResults support the study hypothesis that higher postpartum stress and higher technology-related distraction are associated with elevated depression risk at one month postpartum. Because the data are observational and the sample size is modest, findings should be interpreted as associations, not causal effects. Some estimated effects (notably income and marital status) were large, which may reflect small-sample instability, imbalanced subgroups, or unmeasured confounding; these variables are best treated as signals for follow-up rather than definitive conclusions."
-  },
-  {
-    "objectID": "projects/senior_consulting/ibaby.html#tools",
-    "href": "projects/senior_consulting/ibaby.html#tools",
-    "title": "IBaby Month One: Predictors of Maternal Depression at One Month Postpartum",
-    "section": "Tools",
-    "text": "Tools\nR (logistic regression, stepwise selection, ROC/AUC evaluation, diagnostics).\n\nView technical report"
-  },
-  {
-    "objectID": "projects/senior_consulting/mobility.html",
-    "href": "projects/senior_consulting/mobility.html",
-    "title": "Manual Task Performance Under Distraction and Biomechanical Constraints",
-    "section": "",
-    "text": "Overview\nThis project tested how distraction, screw-turn direction, and hand dominance affect performance on a constrained manual task.\n\n\nData and Experimental Design\nData came from 57 Cal Poly students. Each participant completed four trials covering dominant/nondominant hand and flexion/extension direction. Distraction (mental math vs. background noise) was assigned between subjects.\nOutcome: time to fully unscrew a bolt (seconds).\nTotal observations: 228.\nDesign: mixed 2×2×2 factorial with repeated measures on hand and direction.\n\n\nMethodology\nWe modeled log completion time with mixed-effects ANOVA. Hand, direction, and distraction were fixed effects; participant was a random effect to account for repeated measures. The initial model included full interactions, then was simplified by removing non-informative terms while retaining the hand-by-direction interaction.\n\n\nKey Findings\nDirection was the largest effect: extension was slower than flexion.\nNondominant-hand trials were also slower.\nThere was moderate hand-by-direction interaction evidence, suggesting the nondominant-hand penalty was smaller in extension than flexion.\nDistraction showed no clear main effect or interaction.\n\n\nPower Analysis and Design Implications\nThe study was powered for large biomechanical effects, but underpowered for small effects (like distraction). Power analysis suggested many more participants would be needed to detect subtle time differences. A better follow-up design is to make distraction a within-subject factor to improve sensitivity without increasing sample size as much.\n\n\nTools\nR (mixed-effects modeling, ANOVA, power analysis).\n\nView technical report",
-    "crumbs": [
-      "Projects",
-      "Statistical Consulting",
-      "Mobility"
-    ]
-  },
-  {
-    "objectID": "projects/senior_consulting/mobility.html#overview",
-    "href": "projects/senior_consulting/mobility.html#overview",
-    "title": "Manual Task Performance Under Distraction and Biomechanical Constraints",
-    "section": "",
-    "text": "This project examined how cognitive distraction, screw-turning direction, and hand dominance affect performance on a constrained manual task. Participants unscrewed bolts under controlled conditions designed to mimic restricted wrist posture, allowing us to evaluate biomechanical and cognitive factors influencing task completion time."
-  },
-  {
-    "objectID": "projects/senior_consulting/mobility.html#data-and-experimental-design",
-    "href": "projects/senior_consulting/mobility.html#data-and-experimental-design",
-    "title": "Manual Task Performance Under Distraction and Biomechanical Constraints",
-    "section": "Data and Experimental Design",
-    "text": "Data and Experimental Design\nData were collected from 57 Cal Poly students. Each participant completed four trials using all combinations of dominant vs. nondominant hand and flexion vs. extension screw direction. Distraction (mental math vs. normal background noise) was assigned between subjects. The outcome was time to fully unscrew a bolt (seconds), yielding 228 total observations. The study followed a mixed 2×2×2 factorial design with repeated measures on hand and direction."
-  },
-  {
-    "objectID": "projects/senior_consulting/mobility.html#methodology",
-    "href": "projects/senior_consulting/mobility.html#methodology",
-    "title": "Manual Task Performance Under Distraction and Biomechanical Constraints",
-    "section": "Methodology",
-    "text": "Methodology\nWe analyzed log-transformed completion times using a mixed-effects ANOVA model to better satisfy normality assumptions. Distraction, hand, and direction were treated as fixed effects, with participant modeled as a random effect to account for repeated measures. The initial model included all main effects and interactions; non-informative interaction terms were removed to improve interpretability and model fit, leaving the hand-by-direction interaction."
-  },
-  {
-    "objectID": "projects/senior_consulting/mobility.html#key-findings",
-    "href": "projects/senior_consulting/mobility.html#key-findings",
-    "title": "Manual Task Performance Under Distraction and Biomechanical Constraints",
-    "section": "Key Findings",
-    "text": "Key Findings\nScrew direction had a large effect on performance: extension trials were substantially slower than flexion trials. Hand dominance also mattered, with slower performance using the nondominant hand. There was moderate evidence of an interaction between hand and direction, suggesting that the nondominant-hand penalty was less pronounced during extension than flexion. Distraction showed no measurable effect on task time, nor did it interact meaningfully with hand or direction."
-  },
-  {
-    "objectID": "projects/senior_consulting/mobility.html#power-analysis-and-design-implications",
-    "href": "projects/senior_consulting/mobility.html#power-analysis-and-design-implications",
-    "title": "Manual Task Performance Under Distraction and Biomechanical Constraints",
-    "section": "Power Analysis and Design Implications",
-    "text": "Power Analysis and Design Implications\nThe study was well powered to detect large biomechanical effects but underpowered for small effects such as distraction or subtle hand differences. A power analysis indicated that substantially more participants would be required to reliably detect small time differences. As a result, a key recommendation is to treat distraction as a within-subject factor in future studies, which would improve efficiency and sensitivity without increasing sample size."
-  },
-  {
-    "objectID": "projects/senior_consulting/mobility.html#tools",
-    "href": "projects/senior_consulting/mobility.html#tools",
-    "title": "Manual Task Performance Under Distraction and Biomechanical Constraints",
-    "section": "Tools",
-    "text": "Tools\nR (mixed-effects modeling, ANOVA, power analysis).\n\nView technical report"
-  },
-  {
-    "objectID": "projects_scratch/skincancer/index.html#overview",
-    "href": "projects_scratch/skincancer/index.html#overview",
-    "title": "Skin Cancer Detection under Extreme Class Impabalance (ISIC 2024)",
-    "section": "",
-    "text": "This project explored supervised learning approaches for skin cancer detection using the ISIC 2024 dataset, which consists of over 400,000 lesion images extracted from 3D total body photography along with structured metadata. The task was to classify lesions as benign or malignant in a setting characterized by extreme class imbalance (approximately 1000:1 benign to malignant). The goal was not leaderboard optimization, but to understand how standard machine learning methods behave under severe imbalance and limited signal."
-  },
-  {
-    "objectID": "projects_scratch/skincancer/index.html#data-and-approach",
-    "href": "projects_scratch/skincancer/index.html#data-and-approach",
-    "title": "Skin Cancer Detection under Extreme Class Impabalance (ISIC 2024)",
-    "section": "Data and Approach",
-    "text": "Data and Approach\nWe evaluated both metadata-based and image-based models. Metadata features included patient age, lesion size, and body location, which were cleaned, normalized, and encoded prior to modeling. For structured data, we implemented logistic regression (in PyTorch), random forests, and XGBoost. For image data, we trained several convolutional architectures ranging from a simple CNN to deeper models, including a ResNet-18 variant. Models were evaluated using malignant-class precision and recall rather than overall accuracy."
-  },
-  {
-    "objectID": "projects_scratch/skincancer/index.html#key-challenges-and-findings",
-    "href": "projects_scratch/skincancer/index.html#key-challenges-and-findings",
-    "title": "Skin Cancer Detection under Extreme Class Impabalance (ISIC 2024)",
-    "section": "Key Challenges and Findings",
-    "text": "Key Challenges and Findings\nThe dominant challenge was extreme class imbalance, which caused many models to default to predicting the benign class. We experimented with loss weighting and weighted sampling strategies to mitigate this effect; weighted sampling produced more stable training behavior but did not yield consistently strong predictive performance. Across both metadata and image models, training loss often failed to exhibit a clear downward trend, suggesting limited learnable signal under the given constraints. Some configurations achieved high recall at the expense of very low precision, limiting practical usefulness."
-  },
-  {
-    "objectID": "projects_scratch/skincancer/index.html#interpretation",
-    "href": "projects_scratch/skincancer/index.html#interpretation",
-    "title": "Skin Cancer Detection under Extreme Class Impabalance (ISIC 2024)",
-    "section": "Interpretation",
-    "text": "Interpretation\nThis project highlighted the limits of standard supervised learning pipelines in highly imbalanced medical imaging tasks without substantial prior structure. The results suggest that meaningful improvements would likely require stronger inductive bias (e.g., pretrained representations, asymmetric or focal loss functions, or multi-task learning) or additional curated data. The primary contribution of this work lies in diagnosing failure modes, appropriate metric selection, and understanding when increased model complexity does not compensate for data limitations."
-  },
-  {
-    "objectID": "projects_scratch/skincancer/index.html#tools",
-    "href": "projects_scratch/skincancer/index.html#tools",
-    "title": "Skin Cancer Detection under Extreme Class Impabalance (ISIC 2024)",
-    "section": "Tools",
-    "text": "Tools\nPython, PyTorch, scikit-learn, XGBoost, convolutional neural networks, class-imbalance handling techniques.\nView Repository\nView Presentation Slides"
-  },
-  {
-    "objectID": "projects/ml_experiments/index.html#projects",
-    "href": "projects/ml_experiments/index.html#projects",
-    "title": "Machine Learning Experiments",
-    "section": "Projects",
-    "text": "Projects\n\nTuned Lens Exploration\nExploratory mechanistic interpretability experiment investigating Tuned Lenses by decomposing the lens-aligned predictive space into output-relevant and weakly output-relevant subspaces and probing their effects via targeted ablations, highlighting both diagnostic successes and sensitivity to lens quality.\n\n\nSkin Cancer Detection\nGroup project from a university course exploring skin cancer classification under extreme class imbalance using the ISIC 2024 dataset, with emphasis on diagnosing model failure modes, metric choice, and limits of standard supervised learning approaches rather than leaderboard performance.",
-    "crumbs": [
-      "Projects",
-      "ML Experiments"
-    ]
-  },
-  {
-    "objectID": "projects/ml_experiments/skincancer.html",
-    "href": "projects/ml_experiments/skincancer.html",
-    "title": "Skin Cancer Detection under Extreme Class Imbalance (ISIC 2024)",
-    "section": "",
-    "text": "Overview\nCourse group project on skin cancer detection with ISIC 2024. The core challenge was extreme class imbalance (roughly 1000:1 benign to malignant), and the goal was to study model behavior and failure modes rather than optimize leaderboard rank.\n\n\nData and Approach\nWe modeled both metadata and images.\nMetadata models: logistic regression (PyTorch), random forest, XGBoost.\nImage models: simple CNN and ResNet-18 variants.\nEvaluation focused on malignant-class precision/recall, not accuracy.\n\n\nKey Challenges and Findings\nClass imbalance pushed many models toward mostly benign predictions. We tested weighted loss and weighted sampling; sampling made training more stable but did not reliably improve results. Across metadata and image models, loss often plateaued early, suggesting limited usable signal. High recall was achievable, but usually with very low precision.\n\n\nInterpretation\nStandard supervised pipelines struggled in this setting. Better performance likely needs stronger inductive bias (for example pretrained representations, specialized losses, or multi-task setups) plus better-targeted data. The main value of this project was diagnosing failure modes and using the right metrics for an imbalanced clinical task.\n\n\nTools\nPython, PyTorch, scikit-learn, XGBoost, CNNs, class-imbalance methods\n\nView Repository\nView Presentation Slides",
-    "crumbs": [
-      "Projects",
-      "ML Experiments",
-      "Skin Cancer"
-    ]
-  },
-  {
-    "objectID": "projects/ml_experiments/tunedlens.html",
-    "href": "projects/ml_experiments/tunedlens.html",
-    "title": "Exploring Tuned Lenses via Subspace Ablations",
-    "section": "",
-    "text": "Background\nTuned Lenses let you read intermediate layer predictions by mapping hidden states directly into vocabulary-logit space, instead of only inspecting the final layer output.\n\nMore broadly, mechanistic interpretability is a field of AI research that tries to reverse-engineer how neural networks compute their outputs in human-understandable terms, rather than treating a model as a black box.\n\n\n\nMotivation\nI wanted to test whether lens-aligned predictive space can be split into directions that strongly affect logits vs. directions that weakly affect logits.\n\n\nCore Idea\nUsing SVD of the unembedding matrix, I split the lens-aligned space into high-singular-value and low-singular-value subspaces, then ablated each and measured prediction shifts with KL divergence.\n\n\nResults\nWith pretrained Tuned Lenses, ablating high-singular-value directions caused much larger KL divergence than ablating low-singular-value directions, especially in later layers. This separation disappeared with low-quality lenses trained on a small text subset, indicating high sensitivity to lens quality and training distribution.\n\n\nInterpretation and Limitations\nThe results support a linearly identifiable output-relevant subspace in lens-aligned space, but this is still exploratory. Conclusions are limited by reliance on pretrained lenses, no OOD validation, and incomplete follow-up experiments.\n\n\nStatus\nThis project is exploratory and unfinished. A planned extension was to back-propagate subspace importance through lens maps to identify likely circuit endpoints, but this was not completed.\n\nView Repository\n\n\nReferences\nBelrose, N., Henighan, T., Turner, A. M., et al. (2023).\nThe Tuned Lens: Revealing Representations of LLMs without Intervention.\narXiv:2303.08112. https://arxiv.org/abs/2303.08112",
-    "crumbs": [
-      "Projects",
-      "ML Experiments",
-      "Tuned Lens"
-    ]
-  },
-  {
-    "objectID": "projects/ml_experiments/tunedlens.html#motivation",
-    "href": "projects/ml_experiments/tunedlens.html#motivation",
-    "title": "Exploring Tuned Lenses via Subspace Ablations",
-    "section": "",
-    "text": "Tuned Lenses provide a way to map intermediate model activations into a shared predictive space aligned with the final token distribution. This experiment explored whether that lens-aligned space admits a meaningful linear decomposition into directions that directly influence output logits versus directions with little direct effect, and whether such a distinction can be probed through targeted ablations."
-  },
-  {
-    "objectID": "projects/ml_experiments/tunedlens.html#core-idea",
-    "href": "projects/ml_experiments/tunedlens.html#core-idea",
-    "title": "Exploring Tuned Lenses via Subspace Ablations",
-    "section": "Core Idea",
-    "text": "Core Idea\nUsing a singular value decomposition of the unembedding matrix, we partitioned the lens-aligned predictive space into two subspaces: directions associated with large singular values (hypothesized to have strong influence on logits) and directions associated with small singular values (hypothesized to be weakly output-relevant). We then ablated activations within each subspace and measured changes in model predictions using KL divergence."
-  },
-  {
-    "objectID": "projects/ml_experiments/tunedlens.html#results",
-    "href": "projects/ml_experiments/tunedlens.html#results",
-    "title": "Exploring Tuned Lenses via Subspace Ablations",
-    "section": "Results",
-    "text": "Results\nWith pretrained Tuned Lenses, ablations of high–singular-value directions consistently produced substantially larger KL divergence than ablations of low–singular-value directions, with the effect generally increasing in later layers. In contrast, lenses trained on a small, low-quality subset of text data failed to show this separation, suggesting that the experiment is highly sensitive to lens quality and training distribution."
-  },
-  {
-    "objectID": "projects/ml_experiments/tunedlens.html#interpretation-and-limitations",
-    "href": "projects/ml_experiments/tunedlens.html#interpretation-and-limitations",
-    "title": "Exploring Tuned Lenses via Subspace Ablations",
-    "section": "Interpretation and Limitations",
-    "text": "Interpretation and Limitations\nThe results support the view that the lens-aligned space contains linearly identifiable directions with direct influence on the output distribution. However, conclusions are limited by dependence on pretrained lenses, lack of out-of-distribution validation, and the exploratory nature of the analysis. The experiment is best interpreted as a diagnostic probe of Tuned Lens behavior rather than a definitive decomposition of model computation."
-  },
-  {
-    "objectID": "projects/ml_experiments/tunedlens.html#status",
-    "href": "projects/ml_experiments/tunedlens.html#status",
-    "title": "Exploring Tuned Lenses via Subspace Ablations",
-    "section": "Status",
-    "text": "Status\nThis work is exploratory and incomplete. Planned extensions included propagating output-subspace importance backward through lens maps to identify circuit endpoints, but these were not completed within the available time and infrastructure constraints.\n\nView Repository\n\nReferences\nBelrose, N., Henighan, T., Turner, A. M., et al. (2023).\nThe Tuned Lens: Revealing Representations of LLMs without Intervention.\narXiv:2303.08112. https://arxiv.org/abs/2303.08112"
-  },
-  {
-    "objectID": "projects/ml_experiments/index.html",
-    "href": "projects/ml_experiments/index.html",
-    "title": "Machine Learning Experiments",
-    "section": "",
-    "text": "Experiments\n\nSkin Cancer Detection\nCourse group project on skin cancer classification under extreme class imbalance (ISIC 2024), focused on failure modes and metric choice over leaderboard tuning.\n\n\nTuned Lens Exploration\nSolo interpretability experiment on Tuned Lenses using subspace decomposition and targeted ablations.",
-    "crumbs": [
-      "Projects",
-      "ML Experiments"
-    ]
-  },
-  {
-    "objectID": "projects/visualizations/index.html",
-    "href": "projects/visualizations/index.html",
-    "title": "Data Visualization Gallery",
-    "section": "",
-    "text": "A collection of small visualization projects from classwork and personal practice.\n\n\n\nCode\neverest_plot |&gt; \n  ggplot(aes(x = year, y = duration,\n             color = as.factor(success_indicator),\n             shape = as.factor(success_indicator))) +\n    geom_point(alpha=0.25) +\n    scale_color_manual(values = c(\"0\" = \"deepskyblue4\", \"1\" = \"darkorange3\"),\n                       labels = c(\"Unsuccessful\", \"Successful\")) +\n    scale_shape_manual(values = c(16, 17),\n                       labels = c(\"Unsuccessful\", \"Successful\")) +\n    labs(color = \"\", shape=\"\",\n         title = \"Duration and Success of Everest Expeditions Over Time\",\n         subtitle = \"Duration (days)\",\n         x = \"Year\",\n         y = \"\",\n         caption = \"Note: Success defined as reaching the summit.\") +\n    scale_x_continuous(breaks = seq(min(everest$year)-1, max(everest$year), by = 10))+\n    theme_minimal()\n\n\n\n\n\neverest-vis\n\n\nDot plot of Everest expedition duration by year, split by summit success. Durations become more consistent over time, with major drops during disaster years: the 2014 Khumbu Icefall avalanche and the 2015 Nepal earthquake/avalanche season.\n\n\n\nCode\ncounts_male &lt;- age_gaps |&gt;\n  filter(character_1_gender == \"man\") |&gt;\n  count(age_difference)\n\ncounts_female &lt;- age_gaps |&gt;\n  filter(character_1_gender == \"woman\") |&gt;\n  count(age_difference)\n\nggplot() +\n  geom_col(\n    data = counts_male,\n    aes(x = age_difference, y = n),\n    fill = \"steelblue\"\n  ) +\n  geom_col(\n    data = counts_female,\n    aes(x = age_difference, y = -n),\n    fill = \"pink\"\n  ) +\n  geom_label(\n    aes(x = 30, y = 40, label = \"Male\")\n  ) +\n  geom_label(\n    aes(x = 30, y = -20, label = \"Female\")\n  ) +\n  labs(\n    title = \"Age Differences in Movie Couples\",\n    subtitle = \"By Gender of the Older Actor\",\n    x = \"Age Difference (years)\",\n    y = \"Count\"\n  ) +\n  theme_minimal()\n\n\n\n\n\nage-gap-mirrored\n\n\nMirrored histogram of age gaps in movie couples by gender of the older actor. When the older actor is male, age gaps are generally larger and more variable; when the older actor is female, gaps are tighter and usually smaller.\n\n\n\n\nage-gap-hist\n\n\nHistogram of age differences in heterosexual movie couples (male age minus female age). The distribution is mostly positive, which means men are more often older than their female co-stars, and often by larger margins.\n\n\n\nCode\nanimated_plot &lt;- ggplot(murder_happiness,\n                        aes(x = log(murder_rate_per_100k),\n                            y = happiness_score)) +\n  geom_point(color = \"steelblue\") +\n  geom_smooth(method = \"lm\", color = \"black\") +\n  labs(title = \"Relationship Between Murder Rate and Happiness Score (2005-2019)\",\n       subtitle = \"Happiness Score (0-100)\",\n       x = \"Log-Scaled Murder Rate (per 100k)\",\n       y = \"\",\n       caption = \"Year: {frame_time}\") +\n  transition_time(as.integer(year)) +\n  enter_fade() +\n  exit_fade() +\n  theme_bw() +\n  theme(plot.caption = element_text(size = 11))\n\nanimate(animated_plot, renderer = gifski_renderer())\n\n\n\n\n\nmurder-happiness-1\n\n\nCountry-level scatter plot of murder rate vs. happiness score with a fitted trend line over time. Higher murder rates are generally associated with lower happiness, though the strength of that relationship shifts year to year.\n\n\n\nCode\nset.seed(42)\n\npredictions &lt;- predict(linear_model, country_murder_happiness)\nresidual_se &lt;- sigma(linear_model)\nsimulated_y &lt;- predictions + rnorm(n = length(predictions), mean = 0, sd = sigma(linear_model))\n\nobserved &lt;- ggplot(country_murder_happiness, \n             aes(x = log(avg_murder_rate), \n                 y = avg_happiness_score)\n             ) +\n  geom_point(color = \"steelblue\") +\n  labs(title = \"Observed Data\",\n       subtitle = \"Observed Happiness Score (0-100)\",\n       x = \"Log-Scaled Average Murder Rate (per 100k)\", \n       y = \"\") +\n  theme_bw()\n\n# Plot Simulated Data\npredicted &lt;- ggplot(country_murder_happiness, \n             aes(x = log(avg_murder_rate), \n                 y = simulated_y)\n             ) +\n  geom_point(color = \"orange3\") +\n  labs(title = \"Simulated Data\",\n       subtitle = \"Simulated Happiness Score (0-100)\",\n       x = \"Log-Scaled Average Murder Rate (per 100k)\", \n       y = \"\") +\n  theme_bw()\n\nobserved + predicted\n\n\n\n\n\nmurder-happiness-2\n\n\nObserved vs. simulated scatter plots from a linear model. The simulation captures the overall trend but is more tightly clustered than the real data, suggesting the model underestimates variability.\n\n\n\nCode\nggplot(data = penguins,\n       aes(x = bill_length_mm**2, y = log(bill_depth_mm),\n           shape = species, color = island)) +\n  geom_point(size = 0.1, alpha = 0.5) +\n  labs(title = \"PENGUIN\",\n       x = \"length (squared)\",\n       y = \"depth (log)\") +\n  annotate(\"rect\",\n           xmin = 500, xmax = 3240,\n           ymin = -0.7, ymax = 2.2,\n           fill = \"yellow\", alpha = 0.5) +\n  annotate(\"text\",\n           x = 1850, y = 1.3,\n           label = \"WARNING: Your Computer May Be Infected!\",\n           color = \"red\", size = 4, fontface = \"bold\",\n           hjust = 0.5) +\n  annotate(\"text\",\n           x = 1850, y = 0.2,\n           label = \"Call Now for Support:\\n1800-433-5055\",\n           color = \"blue\", size = 3,\n           hjust = 0.5) +\n  scale_shape_discrete(labels = c(\"Species\",\n                                  \"Second Species\",\n                                  \"Species C\")) +\n  scale_color_discrete(labels = c(\"Bisco\",\n                                  \"Island 2\",\n                                  \"Forgot the name\"))\n\n\n\n\n\nugly-vis\n\n\nAn intentionally bad chart: unclear labels, noisy styling, unnecessary transforms, and distracting annotations. The point is to show how design choices can hide signal and mislead interpretation.",
-    "crumbs": [
-      "Projects",
-      "Data Visualization Gallery"
-    ]
+    "objectID": "projects/stockdb/index.html#what-i-learned",
+    "href": "projects/stockdb/index.html#what-i-learned",
+    "title": "Stock Database",
+    "section": "What I Learned",
+    "text": "What I Learned\nThis project gave me experience building and connecting several parts of a simple production-style workflow: API ingestion, database storage, scheduled jobs, a web dashboard, and deployment behind a public URL."
   }
 ]
