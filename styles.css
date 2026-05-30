@@ -138,3 +138,10 @@ body:not(.theme-dark) #quarto-document-content img,
 body:not(.theme-dark) .thumbnail-image {
   mix-blend-mode: multiply;
 }
+
+@media (max-width: 991.98px) {
+  div.quarto-about-solana .about-entity {
+    align-items: flex-start;
+    text-align: left;
+  }
+}

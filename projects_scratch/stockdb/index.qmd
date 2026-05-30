@@ -1,0 +1,10 @@
+---
+title: ""
+date: 5/20/2026
+description: "Daily Stock Data Scraping and Storage"
+categories: ["data"]
+format:
+  html:
+    theme: cosmo
+---
+
