@@ -22,7 +22,7 @@ body-classes: theme-dark
   - C++ with SFML rendering pipeline
   - A lot of performance tuning and so so much shader debugging
 
-  Main goal was learning low-level graphics and numerical simulation in a hands-on way, and this is by on means a very scientifically accurate model. The black hole is not to scale, as the equation I used was dimensionless and the accretion ring coloring was decided by a random inner temperature that made it look cool.
+  Main goal was learning low-level graphics and numerical simulation in a hands-on way, and this is by no means a very scientifically accurate model. The black hole is not to scale, as the equation I used was dimensionless and the accretion ring coloring was decided by a random inner temperature that made it look cool.
 
 
 [View Repository](https://github.com/Ambrois/Black-Hole-Sim)
