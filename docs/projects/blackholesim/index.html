@@ -117,20 +117,26 @@ ul.task-list li input[type="checkbox"] {
       <ul id="" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../projects/stockdb/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stock Database</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../projects/blackholesim/index.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Black Hole Simulation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../projects/visualizations/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Visualization Gallery</span></a>
+  <a href="../../projects/bayesian/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian Analysis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../projects/bayesian/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bayesian Analysis</span></a>
+  <a href="../../projects/visualizations/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Past Data Visualizations</span></a>
   </div>
 </li>
           <li class="sidebar-item sidebar-item-section">
@@ -230,8 +236,8 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>This is a real-time black hole renderer I built from scratch with C++, SFML, and GLSL.</p>
 <p>How it works on a high level: every pixel is treated like a ray of light, which is stepped through curve spacetime by numerically integrating the appropriate equations. Depending on where the ray ends up (background stars or the accretion disk), that pixel gets its final color. Rays are processed in parallel.</p>
 <p>What I built:</p>

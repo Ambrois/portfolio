@@ -9,7 +9,7 @@ format:
     theme: darkly
 body-classes: theme-dark
 ---
-## Introduction
+## Overview
 
  This is a real-time black hole renderer I built from scratch with C++, SFML, and GLSL.
 

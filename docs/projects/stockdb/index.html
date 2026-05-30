@@ -117,20 +117,26 @@ ul.task-list li input[type="checkbox"] {
       <ul id="" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../projects/stockdb/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Stock Database</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../projects/blackholesim/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Black Hole Simulation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../projects/visualizations/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Visualization Gallery</span></a>
+  <a href="../../projects/bayesian/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian Analysis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../projects/bayesian/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bayesian Analysis</span></a>
+  <a href="../../projects/visualizations/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Past Data Visualizations</span></a>
   </div>
 </li>
           <li class="sidebar-item sidebar-item-section">
@@ -200,7 +206,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title">
 <h1 class="title d-none d-lg-block">Stock Database</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">data-engineering</div>
+    <div class="quarto-category">data</div>
   </div>
   </div>
 
@@ -231,16 +237,18 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>This project is an automated Python/PostgreSQL data <a href="https://github.com/Ambrois/stock-data-collection">pipeline</a> and R Shiny <a href="http://stockdb.ambrois.uk/">dashboard</a> for collecting, storing, and visualizing minute-level stock market data from <a href="https://alpaca.markets/">Alpaca</a>.</p>
-<p>The database holds minutely price data for the S&amp;P 500 companies since January 2016, and updates (market) daily. It is hosted on a small local server, where the data is stored securely in a bubblewrapped hard-drive. The dashboard is minimal and designed for checking database health and data quality.</p>
-<p>The live dashboard is available at <a href="https://stockdb.ambrois.uk" class="uri">https://stockdb.ambrois.uk</a>. <em>The dashboard link is .uk because .uk domains are very cheap on cloudflare. I am based in the US.</em></p>
+<p>This project is an automated Python/PostgreSQL data pipeline and R Shiny dashboard for collecting, storing, and visualizing minute-level stock market data from Alpaca Markets.</p>
+<p>The database holds minutely price data for the S&amp;P 500 companies since January 2016, and updates (market) daily. It is hosted on a small local server, where the data is stored securely in a bubblewrapped hard-drive.</p>
+<p>The dashboard is minimal and designed for checking database health and data quality.</p>
+<p><a href="stockdb.ambrois.uk">View Dashboard</a> <em>The domain is .uk because they are especially cheap on cloudflare. I am based in the US.</em></p>
+<p><a href="https://github.com/Ambrois/stock-data-collection">View Repository</a></p>
 </section>
 <section id="tools-used" class="level2">
 <h2 class="anchored" data-anchor-id="tools-used">Tools Used</h2>
 <ul>
-<li><strong>R Shiny</strong> for the interactive dashboard</li>
 <li><strong>PostgreSQL and TimescaleDB</strong> for storing time-series stock data</li>
 <li><strong>Python</strong> for data collection scripts</li>
+<li><strong>R Shiny</strong> for the interactive dashboard</li>
 <li><strong>Alpaca Market Data API</strong> for stock price data</li>
 <li><strong>systemd</strong> for scheduled updates and service monitoring</li>
 <li><strong>Cloudflare DNS</strong> for keeping the public dashboard reachable</li>

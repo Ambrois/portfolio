@@ -2,7 +2,7 @@
 title: "Stock Database"
 date: 2026-05-20
 description: "Python, PostgreSQL, TimescaleDB, and R Shiny pipeline for collecting and visualizing minutely stock market data."
-categories: ["data-engineering"]
+categories: ["data"]
 image: candles.png
 format:
   html:
@@ -11,17 +11,21 @@ format:
 
 ## Overview
 
-This project is an automated Python/PostgreSQL data [pipeline](https://github.com/Ambrois/stock-data-collection) and R Shiny [dashboard](http://stockdb.ambrois.uk/) for collecting, storing, and visualizing minute-level stock market data from [Alpaca](https://alpaca.markets/).
+This project is an automated Python/PostgreSQL data pipeline and R Shiny dashboard for collecting, storing, and visualizing minute-level stock market data from Alpaca Markets.
 
-The database holds minutely price data for the S&P 500 companies since January 2016, and updates (market) daily. It is hosted on a small local server, where the data is stored securely in a bubblewrapped hard-drive. The dashboard is minimal and designed for checking database health and data quality. 
+The database holds minutely price data for the S&P 500 companies since January 2016, and updates (market) daily. It is hosted on a small local server, where the data is stored securely in a bubblewrapped hard-drive. 
 
-The live dashboard is available at <https://stockdb.ambrois.uk>. *The dashboard link is .uk because .uk domains are very cheap on cloudflare. I am based in the US.*
+The dashboard is minimal and designed for checking database health and data quality. 
+
+[View Dashboard](stockdb.ambrois.uk) *The domain is .uk because they are especially cheap on cloudflare. I am based in the US.*
+
+[View Repository](https://github.com/Ambrois/stock-data-collection)
 
 ## Tools Used
 
-- **R Shiny** for the interactive dashboard
 - **PostgreSQL and TimescaleDB** for storing time-series stock data
 - **Python** for data collection scripts
+- **R Shiny** for the interactive dashboard
 - **Alpaca Market Data API** for stock price data
 - **systemd** for scheduled updates and service monitoring
 - **Cloudflare DNS** for keeping the public dashboard reachable

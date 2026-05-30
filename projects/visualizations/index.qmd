@@ -1,7 +1,7 @@
 ---
-title: "Data Visualization Gallery"
-date: 7/1/2025
-description: "A collection of miscellaneous data visualizations I have made."
+title: "Past Data Visualizations"
+date: 5/10/2025
+description: "A collection of miscellaneous R GGPlot plots."
 categories: ["statistics"]
 format:
   html:

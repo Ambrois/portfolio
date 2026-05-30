@@ -13,12 +13,14 @@ website:
       - text: "Projects"
         href: index.qmd
         contents:
+          - text: "Stock Database"
+            href: projects/stockdb/index.qmd
           - text: "Black Hole Simulation"
             href: projects/blackholesim/index.qmd
-          - text: "Data Visualization Gallery"
-            href: projects/visualizations/index.qmd
           - text: "Bayesian Analysis"
             href: projects/bayesian/index.rmd
+          - text: "Past Data Visualizations"
+            href: projects/visualizations/index.qmd
           - text: "Statistical Consulting"
             href: projects/senior_consulting/index.qmd
             contents:
