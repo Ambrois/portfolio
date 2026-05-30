@@ -21,19 +21,6 @@ The dashboard is minimal and designed for checking database health and data qual
 
 [View Repository](https://github.com/Ambrois/stock-data-collection)
 
-## Tools Used
-
-- **PostgreSQL and TimescaleDB** for storing time-series stock data
-- **Python** for data collection scripts
-- **R Shiny** for the interactive dashboard
-- **Alpaca Market Data API** for stock price data
-- **systemd** for scheduled updates and service monitoring
-- **Cloudflare DNS** for keeping the public dashboard reachable
-
-## What I Learned
-
-This project gave me experience building and connecting several parts of a simple production-style workflow: API ingestion, database storage, scheduled jobs, a web dashboard, and deployment behind a public URL.
-
 ## Future work:
 
 - Add websocket ingestion.
